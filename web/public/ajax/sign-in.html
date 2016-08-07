@@ -1,0 +1,57 @@
+<div class="modal-dialog modal-sm" role="document">
+  <div class="modal-content">  
+    <div class="modal-body">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h3 class="headers">Вход</h3>
+      <div class="zero-20"></div>
+      <div class="m-warning" style="margin:20px;font-size:11px"></div>
+      <div class="row">
+
+        <div class="col-sm-9 col-sm-offset-1">
+          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-1 form-text">
+          <p>Email</p>
+          <input class="form-control" name = "login" placeholder="Email" id ="email">
+        </div>
+      </div>
+      <div class="zero-20"></div>
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-1 form-text">
+          <p>Пароль</p>
+          <input type="password" class="form-control" name = "password" placeholder="Password" id = "password">
+        </div>
+      </div>
+      <div class="row">
+    </div>
+    <div class="zero-20"></div>
+      <div class = "row">
+        <div class="col-sm-4 col-sm-offset-1">
+          <div class="btn-green">Войти</div>
+        </div>
+        <div class="col-sm-4 col-sm-offset-1">
+          <div class="btn-red" data-dismiss="modal">Отмена</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  
+$('.btn-green').click(function(){
+  $.post(system.login,{password:$('#password').val(),email:$('#email').val()},function(json){
+    if (json.error){
+      $('.m-warning').html('');
+      for (var i = json.message.length - 1; i >= 0; i--) {
+
+        $('.m-warning').append('<li>'+json.message[i]+'</li>');
+      }; 
+    } else {
+      window.location.replace(system.profile);
+    }
+  });
+});
+
+</script>

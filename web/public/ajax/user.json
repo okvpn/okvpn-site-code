@@ -1,0 +1,9 @@
+{
+	"signup":
+	{
+		"free":"http://localhost/project/kohana/faq",
+		"full":"http://localhost/project/kohana/faq",
+	},
+	"login":false
+
+}

@@ -1,0 +1,163 @@
+<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="modal-dialog modal-md" role="document">
+  <div class="modal-content">  
+    <div class="modal-body">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-info">
+        <h3 class="headers">Регистрация</h3>
+        <div class="zero-20"></div>
+        <div class="m-warning"></div>
+        <div class="loader"></div>
+        <div class="zero-20"></div>
+
+        <form id ="m-form">
+        
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 form-text">
+              <p>Email*</p>
+              <input class="form-control" name = "email" placeholder="Email">
+            </div>
+          </div>
+
+          <div class="zero-20"></div>
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 form-text">
+              <p>Пароль (мин. 6 символов)</p>
+              <input type="password" class="form-control" name = "password" placeholder="Password">
+            </div>
+          </div>
+
+          <div class="zero-20"></div>
+          <div class="row">
+            <div class="col-sm-7 col-sm-offset-3 form-text" >
+              <p>Капча</p>
+              <div id = "capcha"></div>
+            </div>
+          </div>
+        </form>
+        <div class="zero-20"></div>
+        <div class = "row">
+          <div class="col-sm-2 col-sm-offset-3">
+
+            <div class="btn-green">Далее</div>
+          </div>
+          <div class="col-sm-2 col-sm-offset-1">
+            <div class="btn-red" data-dismiss="modal">Отмена</div>
+          </div>
+        </div>
+        <div class="zero-20"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+
+
+.loader {
+
+  margin: 0px auto;
+  width: 80px;
+}
+
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100%;
+  transform-origin: center center;
+  width: 100%;
+
+  top: 0; bottom: 0; left: 0; right: 0;
+  margin: auto;
+}
+
+
+.path {
+  stroke-dasharray: 1,200;
+  stroke-dashoffset: 0;
+  animation: 
+   dash 1.5s ease-in-out infinite,
+   color 6s ease-in-out infinite
+  ;
+  stroke-linecap: round;
+}
+
+@keyframes rotate{
+ 100%{
+  transform: rotate(360deg);
+ }
+}
+@keyframes dash{
+ 0%{
+  stroke-dasharray: 1,200;
+  stroke-dashoffset: 0;
+ }
+ 50%{
+  stroke-dasharray: 89,200;
+  stroke-dashoffset: -35px;
+ }
+ 100%{
+  stroke-dasharray: 89,200;
+  stroke-dashoffset: -124px;
+ }
+}
+@keyframes color{
+  100%, 0%{
+    stroke: #008744;
+  }
+  40%{
+    stroke: #0057e7;
+  }
+  66%{
+    stroke: #d62d20;
+  }
+  80%, 90%{
+    stroke: #008744;
+  }
+}
+
+
+</style>
+
+<script type="text/javascript">
+
+aaa = function(){
+  var div = '<div class="g-recaptcha" data-sitekey="';
+  div+=system.sitekey;
+  div+='"</div>';
+  $('#capcha').append("");
+  $('#capcha').append(div);
+}
+aaa();
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
+var loader = '<div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>';
+
+$('.btn-green').click(function(e){
+  var form = $('#m-form').serialize();
+  $('.m-warning').html('');
+  $(".loader").html(loader);
+
+
+
+  $.post(system.signup,form,function(json){
+      setTimeout(function(){
+        $('.m-warning').html(''); 
+        if (json.error) {
+          $('.loader').html('');
+          $('.m-warning').html(''); 
+          for (var i = json.message.length - 1; i >= 0; i--) {
+            $('.m-warning').append('<li>'+json.message[i]+'</li>');
+          }; 
+        } else {
+          $('.modal-info').html('');
+          $('.modal-info').append(json.message[0]);
+        }
+
+    }, 1000);
+  },'json');
+});
+
+</script>

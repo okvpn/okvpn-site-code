@@ -1,0 +1,13 @@
+application/cache/*
+application/logs/*
+.idea
+sftp-config.json
+application/out/*
+application/openssl/*
+.svn
+*.log
+*~
+*.swp
+*.test
+*.mwb
+*.bak
