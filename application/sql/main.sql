@@ -216,66 +216,65 @@ end
 
 -- postgresql
 
-DROP FUNCTION IF EXISTS testVpnRegi(integer, integer);
 
-CREATE FUNCTION testVpnRegi(idd integer, vpnId integer) RETURNS 
+create view v_usersinfo as (
+    select  t1.email, t1.id, t2.traffic, t4.name from users t1
+    right join (
+        select sum(count) as traffic, uid  from traffic group by uid) t2
+    on t2.uid = t1.id
+    right join vpn_user t3
+    on t3.user_id = t2.uid
+    right join vpn_hosts t4 
+    on t3.vpn_id = t4.id where t2.uid is not null order by t1.id
+)
+
+drop function IF EXISTS testVpnRegi(integer, integer);
+
+create function testVpnRegi(idd integer, vpnId integer) RETURNS 
 varchar(256) AS $$
 DECLARE
 roles integer;
 c1 integer;
 c2 integer;
 c3 real;
+c4 real;
     BEGIN
     -- check free places
-    SELECT (T1.free - COALESCE(T2.cnt,0)) AS free INTO c1
-    FROM (
-        SELECT id, free_places as free FROM vpn_hosts WHERE id = vpnId
+    select (T1.free - COALESCE(T2.cnt,0)) as free into c1
+    from (
+        select id, free_places as free from vpn_hosts where id = vpnId
     ) T1 
-    LEFT JOIN (
-        SELECT count(E1.id) as cnt, MAX(E1.id) as id FROM (
-        SELECT count(vpn_id) AS cnt, MAX(vpn_id) as id
-        FROM vpn_user WHERE vpn_id = vpnId GROUP BY user_id 
+    left join (
+        select count(E1.id) as cnt, MAX(E1.id) as id from (
+            select count(vpn_id) AS cnt, max(vpn_id) as id
+        from vpn_user where vpn_id = vpnId and active = true group by user_id 
         ) E1
-    ) T2 ON T1.id = T2.id;
-    IF c1 = 0 OR c1 IS NULL THEN
-        RETURN 'На выбранном Вами сервере нет свободных мест';
-    END IF;
+    ) T2 on T1.id = T2.id;
+    if c1 <= 0 or c1 is null then
+        return 'vpnPlacesOut';
+    end if;
 
-    SELECT role INTO roles FROM users WHERE id = idd;
-    IF roles = 1 THEN
-        -- vpn 
-        SELECT count(*) INTO c1 FROM vpn_user WHERE user_id = idd;
+    select count(*) into c1 from vpn_user where user_id = idd and active = true;
+    -- traffic 
+    select sum(count) into c4 from traffic where uid = idd 
+        and date > (select now() - interval '1 month');
+    -- amount
+    select COALESCE(sum(amount), 0) into c3 from billing where uid = idd;
 
-        -- traffic 
-        SELECT sum(count) INTO c2 FROM traffic WHERE uid = idd 
-            AND date > (SELECT now() - interval '1 month');
-        IF c2 > 4096 THEN 
-            RETURN 'Отказано. Превышен месячный лимит трафика в 4GB';
-        END IF;
-        IF c1 > 0 THEN 
-            RETURN 'Отказано. Разрешено не более одного .opvpn ключ';
-        END IF;
-    ELSE 
-        -- vpn 
-        SELECT count(*) INTO c1 FROM vpn_user WHERE user_id = idd;
+    if c1 > (select t2.hosts_limit from users t1, roles t2 where t1.id = idd and t2.id = t1.role) then
+        return 'vpnUserOut';
+    end if;
 
-        -- traffic 
-        SELECT sum(count) INTO c2 FROM traffic WHERE uid = idd 
-            AND date > (SELECT now() - interval '1 month');
-        SELECT sum(amount) INTO c3 FROM billing WHERE uid = idd;
-        IF c3 <= 0 THEN 
-            RETURN 'Отказано. Не достаточно средств';
-        END IF;
+    if c4 > (select t2.traffic_limit from users t1, roles t2 where t1.id = idd and t2.id = t1.role) then 
+        return 'fullTrafficOut';
+    end if;
 
-        IF c2 > 76800 THEN 
-            RETURN 'Отказано. Превышен месячный лимит трафика в 75GB';
-        END IF;
-        IF c1 > 6 THEN 
-            RETURN 'Отказано. Разрешено не более 7 .opvpn ключа';
-        END IF;
-    END IF;
-    RETURN 'ok';
-    END 
+    if c3 < (select t2.min_balance from users t1, roles t2 where t1.id = idd and t2.id = t1.role) then 
+        return 'creditOut';
+    end if;
+    
+    return 'ok';
+    end 
 $$ LANGUAGE plpgsql;
 -- end testVpnRegi
 
@@ -288,7 +287,7 @@ begin
     create temporary table tmp as ( select r2.email, r2.cause, r2.id from (
         select  user_id as id from vpn_user where active = true
     ) r1
-    inner join ( 
+    inner join (
         (select t1.id, t2.email, 'freeTrafficOut' as cause from (
             select uid as id, sum(count) as traffic from traffic 
                 where TO_CHAR(date,'MM YYYY') = (select TO_CHAR(now(),'MM YYYY'))
@@ -380,9 +379,33 @@ begin
     select u.email from users as u where u.id = idd into semail;
     update users set email = semail || '@delete', checked = false 
         where id = idd;
-    update vpn_user set active = true where user_id = idd;
+    update vpn_user set active = false where user_id = idd;
 end
 $$ LANGUAGE plpgsql;
 -- end dropUserData
+
+drop function if exists deleteSelectedVpn(character varying, integer);
+create function deleteSelectedVpn(listVpn character varying, idd integer) returns
+void as $$
+DECLARE
+sql character varying;
+begin 
+    sql := 'create temporary table delvpntmp as (
+        select r1.name, r1.vpn_id as id from vpn_user as r1 where r1.id in (' || listVpn || ') and r1.user_id = '
+        || idd || ')';
+    execute sql;
+    insert into queue (name, host, date) 
+        select t1.name, t2.host, now() as date
+            from ( select name, id from delvpntmp) t1
+        left join (
+            select ip as host, id from vpn_hosts
+        ) t2 on t1.id = t2.id;
+    update vpn_user set active = false, date_delete = now() where name in (
+        select name from delvpntmp);
+    drop table if exists delvpntmp;
+
+end
+$$ LANGUAGE plpgsql;
+
 
 -- end postgresql

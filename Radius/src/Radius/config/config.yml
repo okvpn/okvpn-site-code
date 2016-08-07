@@ -1,0 +1,8 @@
+host: "(10\.8\.\d{1,3}\.\d{1,3})"
+file_dump: logfile.txt
+file_save: searilize.txt
+report: 7 
+report_host: 'https://okvpn.org/user/traffic'
+report_connect: 'https://okvpn.org/user/connect'
+ip_lookup: /etc/openvpn/ipp.txt
+#ip_lookup: ipp.txt

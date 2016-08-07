@@ -1,7 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 use Mailgun\Mailgun;
 
 class Controller_User extends Controller {
+
+    protected $_user;
+
+    protected $_userManager;
 
 
     /**
@@ -10,50 +14,26 @@ class Controller_User extends Controller {
      */
     public function action_verify()
     {
-        $user = Model::factory('User');
-        $session = Session::instance();
-        if ($user->emailVerify($this->request->param('token'), $session->get('email'))) {
-            $this->response->headers('Location',URL::base().'profile/create');
-            
-        } else {
-
+        if (!($user = $this->getUserManager()->userCheckEmail($this->request->param('token')))) {
             throw new HTTP_Exception_404();
         }
+        
+        $this->getUserManager()->authorizate($user);
+        $this->response->headers('Location', URL::base().'profile/create');
     }
 
     public function action_resettings()
     {
-        $user = Model::factory('User');
-        if ($user->auth()) {
-            if (!$user->check_csrf($this->request->post('csrf'), false)) {
-                throw new HTTP_Exception_500();
-            }
-            $this->response->headers('Content-type','application/json');
-            $this->response->body(
-                json_encode());
-        } else {
-            throw new HTTP_Exception_401();
-        }
-    }
 
-    /**
-     * callback для блокчейна 
-     * 
-     */
-    public function action_lister()
-    {
-        $user = Model::factory('User');
-       
     }
 
     public function action_login()
     {
-        $user = Model::factory("User");
+        $result = $this->getUserManager()->doLogin($this->request->post('email'), 
+            $this->request->post('password'));
 
-        $this->response->headers('Content-type','application/json');
-        $this->response->body(json_encode($user->login(
-            $this->request->post('password'), $this->request->post('email')
-            )));
+        $this->response->headers('Content-type','application/json')
+            ->body(json_encode($result));
     }
 
 
@@ -83,43 +63,33 @@ class Controller_User extends Controller {
 
     public function action_createvpn()
     {
-        $user = Model::factory('User');
+        $user = $this->getUser();
 
-        if ($user->auth()) {
-            if (!$user->check_csrf($this->request->post('csrf'))) {
-                $code = Kohana::message('user','csrf');
-                $error = true;
-            } else {
-                $code = Model::factory('Server')
-                    ->vpnRegi($user, $this->request->post("id"));
-                $error = ($code !== false);
-            }
-
-            $this->response->headers('Content-type','application/json');
-            $this->response->body(json_encode(
-                array(
-                    'error' =>$error,
-                    'message'=>$code,
-                )));
-
-        } else {
+        if ($user === null) {
             throw new HTTP_Exception_401();
         }
-    }
 
-    public function action_callbackvpn()
-    {
-        $token = $this->request->param('token');
-        Model::factory('Server')->setRegiVpn($token);
-    }
+        if (!$this->getUserManager()->checkCsrfToken($this->request->post('csrf'))) {
 
-    public function action_listvpn()
-    {
-        $user = Model::factory('User');
-        $user->auth();
+            $code = Kohana::message('user','csrf');
+            $error = true;
 
-        Model::factory('Server')
-            ->deleteVpnByList(array(20,18), $user);
+        } else {
+            $code = Model::factory('Server')
+                ->createClientConfig($user, new Model_Host($this->request->post("id")));
+            $error = ($code !== false);
+        }
+
+        if (!$error) {
+            $this->getUserManager()->setCsrfToken();
+        }
+
+        $this->response->headers('Content-type','application/json');
+        $this->response->body(json_encode(
+            array(
+                'error' =>$error,
+                'message'=>$code,
+            )));
     }
 
     public function action_traffic() 
@@ -132,9 +102,12 @@ class Controller_User extends Controller {
     {
         $server = Model::factory('Server');
         $ip = Request::$client_ip;
-        $server->setUserConnect($ip,  
-            $this->request->post('name'), 
+
+        $answer = $server->setUserConnect($ip, $this->request->post('name'), 
             $this->request->post('type'));
+
+        $this->response->headers('Content-type','application/json')
+            ->body(json_encode(['allow' => $answer]));
     }
 
     public function action_logout()
@@ -166,7 +139,6 @@ class Controller_User extends Controller {
         } else {
             throw new HTTP_Exception_401();
         }
-       
     }
 
     public function action_p0f()
@@ -179,6 +151,83 @@ class Controller_User extends Controller {
         } else {
             echo "false";
         }
+    }
+
+    /**
+     * bitpay notify url
+     *
+     */
+    public function action_notification_bitpay()
+    {
+        $tx = ORM::factory('Transaction')
+            ->where('notification_url', '=', $this->request->param('token'))
+            ->find();
+
+        if (!$tx->getInvoiceId()) {
+            throw new HTTP_Exception_404();
+        }
+
+        $bitpay = new Model_Bitpay;
+        $bitpay->refreshStatus($tx);
+    }
+
+    public function action_redirect_url()
+    {
+        $tx = ORM::factory('Transaction')
+            ->where('redirect_url', '=', $this->request->param('token'))
+            ->find();
+
+        if (!$tx->getInvoiceId() || !in_array($tx->getStatus(),
+            array(Model_Bitpay::STATUS_PAID, Model_Bitpay::STATUS_NEW)) ) {
+
+            throw new HTTP_Exception_404();
+        }
+
+        $bitpay = new Model_Bitpay;
+       
+        $paidSum = $bitpay->getTransactionSum($tx);
+
+        if ($paidSum) {
+
+
+        } else {
+
+        }
+    }
+
+    public function action_create_invoce()
+    {
+        $user = Model::factory('User');
+
+        if (!$user->auth()) {
+            throw new HTTP_Exception_401();
+        }
+
+        $sumPaid = $this->request->post('usd');
+
+        $bitpay = new Model_Bitpay;
+        $tx = $bitpay->createInvoice($user->getId(), $sumPaid);
+
+        $this->response
+            ->headers('Location', Model_Bitpay::BITPAY_URL_INVOICE . $tx->getInvoiceId());
+    }
+
+    protected function getUser()
+    {
+        if ($this->_user !== null) {
+            return $this->_user;
+        }
+        $this->_user = (new Model_UserManager)->secureContext()->getUser();
+        return $this->_user;
+    }
+
+    protected function getUserManager()
+    {
+        if ($this->_userManager !== null) {
+            return $this->_userManager;
+        }
+        $this->_userManager = new Model_UserManager(); 
+        return $this->_userManager;
     }
 
 }

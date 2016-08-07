@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 class Controller_Main extends Controller
 {
@@ -36,18 +36,10 @@ class Controller_Main extends Controller
         );
     }
 
-    public function action_test()
+    public function action_signup()
     {
-        $user = Model::factory('user');
-    }
-
-    public function action_sign()
-    {
-        $sign = Model::factory('User')->create();
-        if ($sign['error'] == false) {
-            $session = Session::instance();
-            $session->set('email', $this->request->post('email'));
-        }
+        $sign = (new Model_UserManager())->createUser($_POST);
+      
         $this->response->headers('Content-type', 'application/json');
         $this->response->body(json_encode($sign));
     }

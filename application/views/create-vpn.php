@@ -108,7 +108,7 @@
     $('.btn-c:not(.disabled)').click(function(){
       id = $(this).children('input').val();
       
-    $("#modal").load('<?=URL::base()?>ajax/getinfovpn/'+id);
+    $("#modal").load('<?=URL::base()?>ajax/getinfovpn/'+id+'?_=' + (new Date()).getTime());
     $("#modal").modal('show');
 
     });

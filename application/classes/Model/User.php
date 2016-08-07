@@ -130,6 +130,7 @@ class Model_User extends Model
     {
         $free = Request::current()->post('mode');
         if ($this->_config->captcha->check && !$this->recaptcha()) {
+
             return array(
                 'error'   => true,
                 'message' => array(
@@ -334,7 +335,7 @@ class Model_User extends Model
     public function recaptcha()
     {
         $session = Session::instance();
-
+        
         if ($session->get('captcha') == true &&
             $session->get('captchaCount') < 5) {
 

@@ -1,77 +1,60 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php 
 
 class Controller_Profile extends Controller
 {
+    protected $_user;
+
+    protected $_userManager;
+
+    public function __construct(Request $request, Response $response)
+    {
+        $this->_userManager = new Model_UserManager();
+
+        $user = $this->_userManager->secureContext()->getUser();
+
+        if ($user === null) {
+            throw new HTTP_Exception_401();
+        }
+
+        $this->_user = $user;
+        parent::__construct($request, $response);
+    }
 
     public function action_index()
     {
-        $user = Model::factory('User');
-        if ($user->auth()) {
-
-            $this->response->body(
-                View::factory('profile')
-                    ->set('csrf', $user->set_csrf(false)));
-        } else {
-            $this->response->headers('Location', URL::base());
-        }
-    }
-
-    public function action_wallet()
-    {
-        $user = Model::factory('User');
-
-        if ($user->auth()) {
-
-            $user->instance();
-            $wallet = $user->_wallet;
-            $rate   = round(Okvpn::get_var('btc_rate'), 1);
-            $view   = View::factory('wallet')
-                ->set('wallet', $wallet)
-                ->set('btc', $rate);
-            $this->response->body($view);
-        } else {
-
-            $this->response->headers('Location', URL::base());
-        }
+        $this->response->body(View::factory('profile')
+                ->set('csrf', $this->_userManager->setCsrfToken(false)));
     }
 
     public function action_settings()
     {
-        $user = Model::factory('User');
 
-        if ($user->auth()) {
-            $user->instance();
-            $listActiv = Model::factory('Server')
-                ->getUserVpn($user);
+        $listActiv = Model::factory('Server')->getUserVpn($this->_user);
 
-            $view = View::factory('settings')
-                ->set('email', $user->getEmail())
-                ->set('csrf', $user->set_csrf())
-                ->set('active_vpn', $listActiv);
-            $this->response->body($view);
+        $view = View::factory('settings')
+            ->set('email', $this->_user->getEmail())
+            ->set('csrf', $this->_userManager->setCsrfToken())
+            ->set('active_vpn', $listActiv);
 
-        } else {
-
-            $this->response->headers('Location', URL::base());
-        }
+        $this->response->body($view);
     }
 
     public function action_create()
     {
-        $user = Model::factory('User');
 
-        if ($user->auth()) {
-            // var_dump($user->vpn_list());
-            $view = View::factory('create-vpn')
-                ->set('vpn', Model::factory('Server')->getVpns())
-                ->set('csrf', $user->set_csrf());
+        $view = View::factory('create-vpn')
+            ->set('vpn', Model::factory('Server')->getVpns())
+            ->set('csrf', $this->_userManager->setCsrfToken(false));
 
-            $this->response->body($view);
+        $this->response->body($view);
+    }
 
-        } else {
+    public function action_wallet()
+    {
+        $view = View::factory('wallet')
+            ->set('allow', Model_Bitpay::$allowSumPaid);
 
-            $this->response->headers('Location', URL::base());
-        }
+        $this->response->body($view);
     }
 
 }
