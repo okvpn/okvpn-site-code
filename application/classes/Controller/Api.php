@@ -5,6 +5,7 @@ class Controller_Api extends Controller
 
     public function action_proxy()
     {
+        // TODO: cound not use static factory
         $data = ORM::factory('Proxy')->getProxies();
         $format = $this->request->param('format');
 
