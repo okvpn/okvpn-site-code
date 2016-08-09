@@ -1,9 +1,17 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
+namespace Model;
 
+use Bitpay\UserInterface;
 use Mailgun\Mailgun;
 use Guzzle\Http\Exception\CurlException;
+use Kohana;
+use DB;
+use Database;
+use View;
+use Request;
 
-class Model_Server extends Model
+
+class Server
 {
     const EASYRSA_CERT_EXPIRE = 10368000;
 
@@ -20,7 +28,7 @@ class Model_Server extends Model
      */
     public function getVpns()
     {
-        $vpns = DB::query(Database::SELECT,
+        $vpns = DB::query(\Database::SELECT,
             "SELECT T2.id, T2.name as title, 
                 case when T2.free_places < coalesce(T1.cnt,0) then 0 else T2.free_places - coalesce(T1.cnt,0) end as free,
                 T2.location as country, T2.icon as img, T2.speedtest
@@ -39,9 +47,9 @@ class Model_Server extends Model
     }
 
 
-    public function createClientConfig(Model_Users $user, Model_Host $host)
+    public function createClientConfig(Users $user, Host $host)
     {
-        $client   = $host->getName() . '-' . Text::random('hexdec', 8);
+        $client   = $host->getName() . '-' . \Text::random('hexdec', 8);
 
         $result = DB::query(Database::SELECT, "SELECT testVpnRegi(:id, :hostId) AS test")
             ->param(':id', $user->getId())
@@ -53,9 +61,9 @@ class Model_Server extends Model
         }
 
         try {
-            $ca = (new Model_OpenSSL)->genConfig($host, $client);
+            $ca = (new OpenSSL)->genConfig($host, $client);
             file_put_contents(APPPATH . "out/$client.ovpn", $ca);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             if (Kohana::$environment >= Kohana::TESTING) {
                 return $e->getMessage();
@@ -66,11 +74,11 @@ class Model_Server extends Model
         $message = View::factory('mail/vpnActivate');
         $subject = Kohana::message('user', 'vpnActivate');
 
-        $mailgun = new Mailgun($this->_config->mailkey);
+        $mailProvider = new Mailgun($this->_config->mailkey);
         $domain  = "okvpn.org";
         try {
-            $result = $mailgun->sendMessage($domain, array(
-                'from'    => 'OkVPN <noreply@okvpn.org>',
+             $mailProvider->sendMessage($domain, array(
+                'from'    => "OkVPN <noreply@okvpn.org>",
                 'to'      => $user->getEmail(),
                 'subject' => $subject,
                 'html'    => $message,
@@ -82,7 +90,7 @@ class Model_Server extends Model
             return $e->getMessage();
         }
 
-        (new Model_VpnUser())
+        (new VpnUser())
             ->setActive(true)
             ->setCallback('')
             ->setDateCreate(date('Y-m-d H:i:s'))
@@ -102,23 +110,28 @@ class Model_Server extends Model
      */
     public function setTrafficMeters()
     {
+        //TODO:: must be refactored in OK-09-01
         $ip  = $_SERVER['REMOTE_ADDR'];
         $cnt = DB::query(Database::SELECT,
             "SELECT id FROM vpn_hosts WHERE ip LIKE '$ip%'")->execute()->count();
+
         if ($cnt) {
             $post = Request::current()->post();
             if (array_key_exists('data', $post)) {
 
                 $data = json_decode(base64_decode($post['data']), true);
 
-                $name = DB::select(DB::Expr('user_id as id'), 'name')
+                $name = DB::select(DB::expr('user_id as id'), 'name')
                     ->from('vpn_user')
                     ->where('name', 'IN', array_keys($data))
                     ->execute()
                     ->as_array();
+
                 if (empty($name)) {
                     return false;
                 }
+
+                $map = [];
                 foreach ($name as $item) {
                     $map[$item['name']] = $item['id'];
                 }
@@ -141,17 +154,16 @@ class Model_Server extends Model
 
     public function setUserConnect($ip, $name, $type)
     {
-        
-        $host = (new Model_VpnUser())
+        /** @var VpnUser $host */
+        $host = (new VpnUser())
             ->where('name', '=', $name)
             ->find();
-        //var_dump($host);
+        
         if ($host === null ||
             $host->getHost()->getIp() != $ip || 
             !$host->getActive() ||
-            (new Model_UserManager())->allowUserConnect($host->getUser()) !== true
+            (new UserManager())->allowUserConnect($host->getUser()) !== true
             ) {
-
             return false;
         }
         
@@ -168,9 +180,10 @@ class Model_Server extends Model
 
     /**
      * возвращает список пользовательских vpn
-     *
+     * 
+     * @var $user 
      */
-    public function getUserVpn(Model_UsersIntrface $user)
+    public function getUserVpn(UsersIntrface $user)
     {
         $sql = DB::query(Database::SELECT,
             "SELECT T1.uid as id, T1.name, T2.name as host, T2.location, T2.icon
@@ -198,7 +211,7 @@ class Model_Server extends Model
      */
     public function setRegiVpn($token)
     {
-        DB::update('vpn_user')
+        \DB::update('vpn_user')
             ->set(array(
                 'date_create' => date('Y-m-d H:i:s'),
                 'date_delete' => date('Y-m-d H:i:s', time() + 3860000),
@@ -210,7 +223,7 @@ class Model_Server extends Model
 
     public function getVpnInfo($id)
     {
-        $sql = DB::select('network', 'specifications_link')
+        $sql = \DB::select('network', 'specifications_link')
             ->from('vps')->where('vpn_id','=', $id)
             ->execute()->as_array();
         return $sql;
@@ -223,7 +236,7 @@ class Model_Server extends Model
     public function deleteVpnByList($list, $user)
     {
         $list = implode(',', $list);
-        DB::query(Database::DELETE, "select deleteSelectedVpn(:list, :id)")
+        \DB::query(\Database::DELETE, "select deleteSelectedVpn(:list, :id)")
             ->param(':list', $list)
             ->param(':id', $user->getId())
             ->execute();

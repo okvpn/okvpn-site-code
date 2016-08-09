@@ -1,4 +1,6 @@
 <?php 
+use Model\UserManager;
+
 
 class Controller_Profile extends Controller
 {
@@ -8,7 +10,7 @@ class Controller_Profile extends Controller
 
     public function __construct(Request $request, Response $response)
     {
-        $this->_userManager = new Model_UserManager();
+        $this->_userManager = new UserManager();
 
         $user = $this->_userManager->secureContext()->getUser();
 

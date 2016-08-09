@@ -1,18 +1,37 @@
-<?php
+<?php 
+namespace Model;
+
 use Guzzle\Http\Exception\CurlException;
 use Mailgun\Mailgun;
+use Kohana;
+use Session;
+use Request;
+use Cookie;
+use Entity\Roles;
+use Text;
+use DB;
+use View;
+use URL;
+use Database;
+use Validation;
+use Entity\UsersIntrface;
+use Entity\Users;
 
 
-class Model_UserManager extends Model implements Model_UsersIntrface
+class UserManager extends \Model
 {
     protected $_config;
 
+    /**
+     * @var UsersIntrface
+     */
     protected $_user;
 
     protected $_session;
 
-    public function __construct()
+    public function __construct(UsersIntrface $user)
     {
+        $this->_user = $user;
         $mode = MODE;
         $this->_config = Kohana::$config
             ->load('info')->$mode;
@@ -20,22 +39,49 @@ class Model_UserManager extends Model implements Model_UsersIntrface
         $this->_session = Session::instance();
     }
 
+    /**
+     * @return Users
+     */
     public function getUser()
     {
         return $this->_user;
     }
 
-    public function setUser(Model_UsersIntrface $user)
+    public function setUser(UsersIntrface $user)
     {
         $this->_user = $user;
     }
 
-    public function doLogin($email, $pass)
+    /**
+     * @param $email string
+     *
+     * @return  Users | null
+     */
+    public static function findUserByEmail($email)
     {
-        $user = (new Model_Users())
+        /** @var Users $user */
+        $user = (new Users())
             ->where('email', '=', $email)
             ->find();
 
+        if ($user->getId() === null) {
+            return null;
+        }
+
+        return $user;
+    }
+
+    /**
+     *
+     * @param $pass string
+     * @return array|bool
+     *
+     * @deprecated
+     */
+    public function doLogin($pass)
+    {
+        /** @var Users $user*/
+        $user = $this->getUser();
         if ($user->getId() === null) {
             return array(
                 'error'   => true,
@@ -50,11 +96,15 @@ class Model_UserManager extends Model implements Model_UsersIntrface
             );
         }
 
-        $this->authorizate($user);
-        $this->setUser($user);
+        $this->authorizate();
+
         return true;
     }
 
+    /**
+     * @return $this
+     * @deprecated
+     */
     public function secureContext()
     {
         if ($this->_user) {
@@ -65,7 +115,7 @@ class Model_UserManager extends Model implements Model_UsersIntrface
             $userInfo = Cookie::get('rememberme');
 
             if ($userInfo = base64_decode($userInfo) and $userInfo = json_decode($userInfo, true)) {
-                $user = new Model_Users($userInfo['id']);
+                $user = new Users($userInfo['id']);
                 
                 if (hash('sha512', $user->getToken()) != $userInfo['t']) {
                     $user = null;
@@ -75,7 +125,7 @@ class Model_UserManager extends Model implements Model_UsersIntrface
                 $user = null;
             }
         } else {
-            $user = new Model_Users($this->_session->get('user'));
+            $user = new Users($this->_session->get('user'));
         }
 
         if ($user !== null) {
@@ -86,6 +136,11 @@ class Model_UserManager extends Model implements Model_UsersIntrface
         return $this;
     }
 
+    /**
+     * @param bool $new
+     * @return mixed|string
+     * @deprecated
+     */
     public function setCsrfToken($new = true)
     {
         $token   = Text::random('alnum', 12);
@@ -97,6 +152,12 @@ class Model_UserManager extends Model implements Model_UsersIntrface
         return $token;
     }
 
+    /**
+     * @param $token
+     * @param bool $instance
+     * @return bool
+     * @deprecated 
+     */
     public function checkCsrfToken($token, $instance = false)
     {
         if ($instance) {
@@ -106,7 +167,7 @@ class Model_UserManager extends Model implements Model_UsersIntrface
         return ($this->_session->get('csrf') == $token);
     }
 
-    public function getUserAmount(Model_UsersIntrface $user)
+    public function getUserAmount(UsersIntrface $user)
     {
         return DB::query(Database::SELECT, 
             "SELECT sum(amount) as amount from billing where uid = :uid")
@@ -115,7 +176,7 @@ class Model_UserManager extends Model implements Model_UsersIntrface
             ->get('amount');
     }
 
-    public function getUserTraffic(Model_UsersIntrface $user, $date = null)
+    public function getUserTraffic(UsersIntrface $user, $date = null)
     {
         if ($date === null) {
             $date = date('Y-m-d H:i:s', time() - 2592000);
@@ -129,8 +190,13 @@ class Model_UserManager extends Model implements Model_UsersIntrface
             ->get('count');
     }
 
-    public function allowUserConnect(Model_UsersIntrface $user)
+    /**
+     * @param UsersIntrface $user
+     * @return bool|string
+     */
+    public function allowUserConnect(UsersIntrface $user)
     {
+        /** @var Users $user */
         if ($this->getUserTraffic($user) > $user->getRole()->getTrafficLimit()) {
             return Kohana::message('user', 'fullTrafficOut');
         }
@@ -142,18 +208,14 @@ class Model_UserManager extends Model implements Model_UsersIntrface
         return true;
     }
 
-    public function isGranted($roleName, $user = null)
+    public function isGranted($roleName)
     {
-        if ($user === null) {
-            $user = $this->_user;
-        } 
-        $name = unserialize($user->getRole()->getRoleName());
+        $name = unserialize($this->getUser()->getRole()->getRoleName());
         return in_array($roleName, $name);
     }
 
     public function createUser($post)
     {
-
         if ($this->_config->captcha->check && !$this->recaptcha()) {
             return array(
                 'error'   => true,
@@ -175,7 +237,8 @@ class Model_UserManager extends Model implements Model_UsersIntrface
             );
         }
 
-        $userAlreadyExist = (new Model_Users)
+        /** @var Users $userAlreadyExist */
+        $userAlreadyExist = (new Users)
             ->where('email', '=', $post['email'])
             ->find();
 
@@ -186,9 +249,10 @@ class Model_UserManager extends Model implements Model_UsersIntrface
             );
         }
 
-        $role = ($post['role'] == 'free')? (new Model_Roles(1)) : (new Model_Roles(2));
 
-        $user = new Model_Users();
+        $role = ($post['role'] == 'free')? (new Roles(1)) : (new Roles(2));
+
+        $user = new Users();
         $user
             ->setEmail($post['email'])
             ->setPassword($post['password'])
@@ -205,7 +269,7 @@ class Model_UserManager extends Model implements Model_UsersIntrface
         $mailgun = new Mailgun($this->_config->mailkey);
     
         try {
-            $result = $mailgun->sendMessage('okvpn.org', array(
+            $mailgun->sendMessage('okvpn.org', array(
                 'from'    => 'OkVPN <noreply@okvpn.org>',
                 'to'      => $user->getEmail(),
                 'subject' => $subject,
@@ -229,7 +293,8 @@ class Model_UserManager extends Model implements Model_UsersIntrface
 
     public function userCheckEmail($token)
     {
-        $user = (new Model_Users)
+        /** @var Users $user */
+        $user = (new Users)
             ->where('token', '=', $token)
             ->find();
 
@@ -244,7 +309,7 @@ class Model_UserManager extends Model implements Model_UsersIntrface
     }
 
 
-    public function getTrafficMeters(Model_UsersIntrface $user) 
+    public function getTrafficMeters(UsersIntrface $user)
     {
         return DB::query(Database::SELECT, 
                 "SELECT CAST(row_number() OVER() as integer) as id, 
@@ -270,7 +335,7 @@ class Model_UserManager extends Model implements Model_UsersIntrface
             ->as_array();
     }
 
-    public function delete(Model_UsersIntrface $user)
+    public function delete(UsersIntrface $user)
     {
         $uid = $user->getId();
 
@@ -317,8 +382,10 @@ class Model_UserManager extends Model implements Model_UsersIntrface
         return false;
     }
 
-    public function authorizate(Model_UsersIntrface $user)
+    public function authorizate()
     {
+        $user = $this->getUser();
+
         if ($user->getToken() == null) {
             $user->setToken(Text::random('alnum', 16));
             $user->save();

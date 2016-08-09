@@ -44,8 +44,7 @@ class Kohana_Kohana_Exception extends Exception {
 	 * @param   string          $message    error message
 	 * @param   array           $variables  translation variables
 	 * @param   integer|string  $code       the exception code
-	 * @param   Exception       $previous   Previous exception
-	 * @return  void
+	 * @param   Throwable       $previous   Previous exception
 	 */
 	public function __construct($message = "", array $variables = NULL, $code = 0, Throwable $previous = NULL)
 	{
@@ -78,11 +77,15 @@ class Kohana_Kohana_Exception extends Exception {
 	 * exception, and the stack trace of the error.
 	 *
 	 * @uses    Kohana_Exception::response
-	 * @param   Exception  $e
+	 * @param   Throwable  $e
 	 * @return  void
 	 */
 	public static function handler(Throwable $e)
 	{
+		if (! ($e instanceof Exception)) {
+			exit(1);
+		}
+		
 		$response = Kohana_Exception::_handler($e);
 
 		// Send the response to the browser
@@ -98,14 +101,17 @@ class Kohana_Kohana_Exception extends Exception {
 	 * for display.
 	 *
 	 * @uses    Kohana_Exception::response
-	 * @param   Exception  $e
+	 * @param   Throwable  $e
 	 * @return  Response
 	 */
 	public static function _handler(Throwable $e)
 	{
+		if (! ($e instanceof Exception)) {
+			exit(1);
+		}
+		
 		try
 		{
-			// Log the exception
 			Kohana_Exception::log($e);
 
 			// Generate the response
@@ -159,7 +165,7 @@ class Kohana_Kohana_Exception extends Exception {
 	 *
 	 * Error [ Code ]: Message ~ File [ Line ]
 	 *
-	 * @param   Exception  $e
+	 * @param   Throwable  $e
 	 * @return  string
 	 */
 	public static function text(Throwable $e)
@@ -172,7 +178,7 @@ class Kohana_Kohana_Exception extends Exception {
 	 * Get a Response object representing the exception
 	 *
 	 * @uses    Kohana_Exception::text
-	 * @param   Exception  $e
+	 * @param   Throwable  $e
 	 * @return  Response
 	 */
 	public static function response(Throwable $e)

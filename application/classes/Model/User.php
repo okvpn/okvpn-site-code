@@ -1,6 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-
+/**
+ * Class User
+ *
+ * @deprecated The class has been marked as deprecated and will be removed in 2.0
+ */
 class Model_User extends Model
 {
 
@@ -403,7 +407,7 @@ class Model_User extends Model
      * @param  string $token
      * @return bool
      */
-    public function emailVerify($token, $email)
+    public function emailVerify($token)
     {
         $this->setId(DB::select('id')
             ->from('users')->where('token', '=', $token)
@@ -413,8 +417,8 @@ class Model_User extends Model
         if ($this->getId() === null) {
             return false;
         }
-
-        $sql = DB::update('users')
+        
+        DB::update('users')
             ->value('checked', true)
             ->where('token', '=', $token)
             ->execute();
