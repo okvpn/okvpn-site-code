@@ -89,7 +89,7 @@ if (isset($_SERVER['SERVER_PROTOCOL'])) {
  * - boolean  caching     enable or disable internal caching                 FALSE
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
-//$_SERVER['REMOTE_ADDR'] = '125:85:85:1';
+
 if (isset($_SERVER['HTTP_CLIENT_IP'])
     || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
     || !(in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', 'fe80::1', '::1']) || php_sapi_name() === 'cli-server')
@@ -98,6 +98,8 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
         'base_url' => '/',
     ));
     define('MODE', 'server');
+    Kohana::$environment = Kohana::PRODUCTION;
+
 } else {
     Kohana::init(array(
         'base_url' => '/',
@@ -105,20 +107,9 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
     Kohana::$environment = Kohana::DEVELOPMENT;
     define('MODE', 'localhost');
 }
+
 //Kohana::$environment = Kohana::DEVELOPMENT;
-/**
- * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
- *
- * Note: If you supply an invalid environment name, a PHP warning will be thrown
- * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
- */
-// if (KOHANA_PROD_MODE) {
-//     Kohana::$environment = Kohana::PRODUCTION;
-// } else {
-//     Kohana::$environment = Kohana::DEVELOPMENT;
-// }
-//     Kohana::$environment = Kohana::DEVELOPMENT;
-//Kohana::$environment = Kohana::PRODUCTION;
+
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
@@ -133,17 +124,11 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-    // 'auth'       => MODPATH.'auth',       // Basic authentication
-    // 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-    // 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
     'database'      => MODPATH .'database', // Database access
-    'okvpn'         => MODPATH .'okvpn',    // Всякая всячена
+    'okvpn'         => MODPATH .'okvpn',
     'cron'          => MODPATH.'cron',
-    // 'image'      => MODPATH.'image',      // Image manipulation
     'minion'        => MODPATH.'minion',     // CLI Tasks
     'orm'           => MODPATH.'orm',        // Object Relationship Mapping
-    // 'unittest'   => MODPATH.'unittest',   // Unit testing
-    // 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 ));
 
 /**
@@ -164,7 +149,7 @@ define('SALT', 'y1fAgLdx8WeFsQ');
  * defaults for the URI.
  */
 
-Route::set('main', '<action>(/<token>)', array('action' => 'faq|guide|test|sign|blockchain|csrf|content|proxy'))
+Route::set('main', '<action>(/<token>)', array('action' => 'faq|guide|signup|blockchain|csrf|content|proxy'))
     ->defaults(array(
         'controller' => 'main',
     ));

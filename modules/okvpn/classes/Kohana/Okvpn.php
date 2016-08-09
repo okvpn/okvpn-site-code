@@ -172,7 +172,6 @@ class Kohana_Okvpn {
         $user = Model::factory('User');
         foreach ($user->controlUser() as $usr) {
             $email = $usr['email'];
-            //echo 'mail/'.$usr['cause'];
             $message = View::factory('mail/'.$usr['cause']);
             $subject = Kohana::message('user', $usr['cause']);
 

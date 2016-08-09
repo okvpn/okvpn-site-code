@@ -1,17 +1,19 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php 
 
 class Controller_Ajax extends Controller
 {
 
+    protected $_user;
+
+    protected $_userManager;
+
     public function action_api()
     {
-        $user = Model::factory('User');
-
         $config = Kohana::$config->load('info');
         $data   = array(
-            'auth'    => $user->auth(),
-            'signup'  => URL::base() . 'sign',
-            'sitekey' => $user->getSiteKey(),
+            'auth'    => ($this->getUser() instanceof Model_UsersIntrface),
+            'signup'  => URL::base() . 'signup',
+            'sitekey' => Kohana::$config->load('info')->server->captcha->sitekey,
             'login'   => URL::base() . 'user/login',
             'profile' => URL::base() . 'profile',
         );
@@ -22,40 +24,50 @@ class Controller_Ajax extends Controller
 
     public function action_billing()
     {
-        $user = Model::factory('User');
+        $user = $this->getUser();
 
-        if ($user->auth() && $user->check_csrf($this->request->post('csrf'), false)) {
-
-            $this->response->headers('Content-Type', 'application/json');
-            $this->response->body(json_encode($user->usage()));
-        } else {
-
-            throw new HTTP_Exception_404();
+        if ($user === null) {
+            throw new HTTP_Exception_401();
         }
+
+        $this->response->headers('Content-type', 'application/json')
+            ->body(json_encode($this->getUserManager()->getTrafficMeters($user)));
     }
 
     public function action_getinfovpn()
     {
-        $user = Model::factory('User');
-        if ($user->auth()) {
+        
+        $info = Model::factory('Server')
+            ->getVpnInfo($this->request->param('token'));
 
-            $view = View::factory('ajax/vpninfo');
-            $id = $this->request->param('token');
-            $info = Model::factory('Server')
-                ->getVpnInfo($id);
-            if (empty($info)) {
-                throw new HTTP_Exception_404();
-            }
-
-            $this->response->body(View::factory('ajax/vpninfo')
-                    ->set('network', preg_replace('/\n/', "<br>", $info[0]['network']))
-                    ->set('link', $info[0]['specifications_link'])
-                    ->set('csrf', $user->set_csrf())
-                    ->set('id', $id)
-                );
-        } else {
-            throw new HTTP_Exception_403();
+        if (empty($info)) {
+            throw new HTTP_Exception_404();
         }
+
+        $this->response->body(View::factory('ajax/vpninfo')
+                ->set('network', preg_replace('/\n/', "<br>", $info[0]['network']))
+                ->set('link', $info[0]['specifications_link'])
+                ->set('csrf', $this->getUserManager()->setCsrfToken(false))
+                ->set('id', $this->request->param('token'))
+            );
+    }
+
+    protected function getUser()
+    {
+        if ($this->_user !== null) {
+            return $this->_user;
+        }
+        $this->_user = (new Model_UserManager)->secureContext()->getUser();
+        return $this->_user;
+    }
+
+    protected function getUserManager()
+    {
+        if ($this->_userManager !== null) {
+            return $this->_userManager;
+        }
+        $this->_userManager = new Model_UserManager(); 
+        return $this->_userManager;
     }
 
 }

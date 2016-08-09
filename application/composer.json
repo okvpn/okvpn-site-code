@@ -1,6 +1,7 @@
 {
     "require": {
         "mailgun/mailgun-php": "~1.7.2",
-        "bitpay/php-client": "^3.0"
+        "bitpay/php-client": "^3.0",
+        "robmorgan/phinx": "^0.5.3"
     }
 }
