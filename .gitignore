@@ -3,7 +3,6 @@ application/logs/*
 .idea
 sftp-config.json
 application/out/*
-application/openssl/*
 .svn
 *.log
 *~
@@ -11,3 +10,4 @@ application/openssl/*
 *.test
 *.mwb
 *.bak
+!.gitkeep
