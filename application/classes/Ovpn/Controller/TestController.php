@@ -1,9 +1,12 @@
 <?php 
 namespace Ovpn\Controller;
 
-use Controller;
+use URL;
+use Kohana;
+use View;
+use ORM;
 
-class TestController extends Controller
+class TestController extends \Controller
 {
     /*public function __construct(Request $request, Response $response)
     {

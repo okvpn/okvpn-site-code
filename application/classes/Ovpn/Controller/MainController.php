@@ -1,6 +1,13 @@
 <?php
 //TODO:: could be refactored in v2
-class Controller_Main extends Controller
+namespace Ovpn\Controller;
+
+use URL;
+use Kohana;
+use View;
+use ORM;
+
+class MainController extends \Controller
 {
 
     public function action_faq()

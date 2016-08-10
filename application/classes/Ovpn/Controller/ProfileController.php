@@ -1,8 +1,13 @@
 <?php 
-use Model\UserManager;
+namespace Ovpn\Controller;
 
+use Ovpn\Model\UserManager;
+use URL;
+use Kohana;
+use View;
+use ORM;
 
-class Controller_Profile extends Controller
+class ProfileController extends \Controller
 {
     protected $_user;
 

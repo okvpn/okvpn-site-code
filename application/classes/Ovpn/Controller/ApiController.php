@@ -1,6 +1,13 @@
 <?php
 
-class Controller_Api extends Controller
+namespace Ovpn\Controller;
+
+use URL;
+use Kohana;
+use View;
+use ORM;
+
+class ApiController extends \Controller
 {
 
     public function action_proxy()
