@@ -1,5 +1,5 @@
 <?php
-namespace Entity;
+namespace Ovpn\Entity;
 
 
 class Roles extends \ORM

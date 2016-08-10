@@ -4,7 +4,7 @@ class Controller_Test extends Controller
 {
     public function __construct(Request $request, Response $response)
     {
-        $user = Model::factory('User');
+        /*$user = Model::factory('User');*/
 
         if (Kohana::$environment != Kohana::DEVELOPMENT) {
             throw new HTTP_Exception_403();
@@ -56,10 +56,8 @@ class Controller_Test extends Controller
 
     public function action_openssl()
     {
-        // (new Model_UserManager())
-        //     ->authorizate(new Model_Users(41));
-        $userManager = new Model_UserManager();
-        var_dump($userManager->secureContext()->getUser());
+        $obj = new Entity\Users();
+        var_dump($obj);
     }
 
 }

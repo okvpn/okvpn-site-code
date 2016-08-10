@@ -37,10 +37,11 @@ setlocale(LC_ALL, 'en_US.utf-8');
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
 
+/** @var Composer\Autoload\ClassLoader $loader */
 $loader = require_once DOCROOT . 'vendor/autoload.php';
-$loader->add('classes', APPPATH . 'classes');
+$loader->add('Ovpn', APPPATH . 'classes');
+$loader->register();
 
-/*require_once Kohana::find_file('vendor', 'autoload');*/
 
 /**
  * Optionally, you can enable a compatibility auto-loader for use with

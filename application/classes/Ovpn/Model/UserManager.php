@@ -1,22 +1,21 @@
 <?php 
-namespace Model;
+namespace Ovpn\Model;
 
 use Guzzle\Http\Exception\CurlException;
 use Mailgun\Mailgun;
+use Ovpn\Entity\Roles;
+use Ovpn\Entity\UsersIntrface;
+use Ovpn\Entity\Users;
+use Text;
+use DB;
+use View;
 use Kohana;
 use Session;
 use Request;
 use Cookie;
-use Entity\Roles;
-use Text;
-use DB;
-use View;
 use URL;
 use Database;
 use Validation;
-use Entity\UsersIntrface;
-use Entity\Users;
-
 
 class UserManager extends \Model
 {
