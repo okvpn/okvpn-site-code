@@ -1,17 +1,20 @@
 <?php 
+namespace Ovpn\Controller;
 
-class Controller_Test extends Controller
+use Controller;
+
+class TestController extends Controller
 {
-    public function __construct(Request $request, Response $response)
+    /*public function __construct(Request $request, Response $response)
     {
-        /*$user = Model::factory('User');*/
+        
 
         if (Kohana::$environment != Kohana::DEVELOPMENT) {
             throw new HTTP_Exception_403();
         }
 
         parent::__construct($request, $response);
-    }
+    }*/
 
 
     public function action_index()
@@ -56,7 +59,7 @@ class Controller_Test extends Controller
 
     public function action_openssl()
     {
-        $obj = new Entity\Users();
+        $obj = new \Ovpn\Entity\Users();
         var_dump($obj);
     }
 
