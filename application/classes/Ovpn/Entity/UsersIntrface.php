@@ -1,5 +1,5 @@
 <?php
-namespace Entity;
+namespace Ovpn\Entity;
 
 interface UsersIntrface {
 
