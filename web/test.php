@@ -4,11 +4,11 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 $loader = require_once __DIR__ . '/../vendor/autoload.php';
-$loader->add('classes', __DIR__ . '/../application');
+$loader->add('Ovpn', __DIR__ . '/../application/classes');
 $loader->register();
 
 
-class Kernel
+/*class Kernel
 {
     public function getContainer()
     {
@@ -19,11 +19,12 @@ class Kernel
     {
         $container = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../application/classes/Resources/config'));
+        $loader = new YamlFileLoader($container,
+            new FileLocator(__DIR__ . '/../application/classes/Ovpn/Resources/config'));
         $loader->load('services.yml');
 
         return $container;
     }
-}
+}*/
 
-(new Kernel())->getContainer()->get('ok_user.entity');
+$user = (new Kernel())->getContainer()->get('ovpn_user.entity');

@@ -12,12 +12,10 @@ class MainController extends \Controller
 
     public function action_faq()
     {
-        /** @var $user Model_User*/
-        $user = Model::factory('User');
 
         $this->response->body(
             View::factory('faq')
-                ->set('auth', $user->auth()));
+                ->set('auth', false));
     }
 
     public function action_proxy()

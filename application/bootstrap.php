@@ -130,9 +130,9 @@ Kohana::$config->attach(new Config_File);
 Kohana::modules(array(
     'database'      => MODPATH .'database', // Database access
     'okvpn'         => MODPATH .'okvpn',
-    'cron'          => MODPATH.'cron',
-    'minion'        => MODPATH.'minion',     // CLI Tasks
-    'orm'           => MODPATH.'orm',        // Object Relationship Mapping
+    'cron'          => MODPATH .'cron',
+    'minion'        => MODPATH .'minion',     // CLI Tasks
+    'orm'           => MODPATH .'orm',        // Object Relationship Mapping
 ));
 
 /**
@@ -148,11 +148,15 @@ Cookie::$expiration = 3141596;
 
 define('SALT', 'y1fAgLdx8WeFsQ');
 
+Kernel\Kernel::registrationBundle([
+    new Ovpn\OvpnBundle(),
+]);
+
+
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-
 Route::set('main', '<action>(/<token>)', array('action' => 'faq|guide|signup|blockchain|csrf|content|proxy'))
     ->defaults(array(
         'controller' => 'main',

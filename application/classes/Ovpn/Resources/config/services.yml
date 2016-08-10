@@ -1,6 +1,11 @@
 parameters:
-    user.okvpn.class:                             Entity/Users
+    user.ovpn.class:           Ovpn\Entity\Users
+    user_manager.ovpn.class:   Ovpn\Model\UserManager
 
 services:
-    ok_user.entity:
-        class: %user.okvpn.class%
+    ovpn_user.entity:
+        class: %user.ovpn.class%
+
+    ovpn_user.manager:
+        class: %user_manager.ovpn.class%
+        arguments: ['@ovpn_user.entity']

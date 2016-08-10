@@ -62,8 +62,8 @@ class TestController extends \Controller
 
     public function action_openssl()
     {
-        $obj = new \Ovpn\Entity\Users();
-        var_dump($obj);
+        $obj = (new \Kernel())->getContainer()->get('ovpn_user.manager');
+        var_dump($obj->getUser());
     }
 
 }

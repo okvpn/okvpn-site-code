@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\DependencyInjection;
+namespace Ovpn\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
@@ -16,7 +16,5 @@ class Extension extends BaseExtension
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
-
-        $container->prependExtensionConfig($this->getAlias(), array_intersect_key($configs, array_flip(['settings'])));
     }
 }
