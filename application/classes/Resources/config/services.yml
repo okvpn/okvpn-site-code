@@ -1,0 +1,6 @@
+parameters:
+    user.okvpn.class:                             Entity/Users
+
+services:
+    ok_user.entity:
+        class: %user.okvpn.class%
