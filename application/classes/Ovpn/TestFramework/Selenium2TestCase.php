@@ -2,17 +2,29 @@
 
 namespace Ovpn\TestFramework;
 
-
+/**
+ * Class Selenium2TestCase
+ *
+ * Basic Usage. Run tests:
+ *
+ * java -jar selenium-server-standalone-2.44.0.jar -role hub
+ * phantomjs --webdriver=8080 --webdriver-selenium-grid-hub=http://127.0.0.1:4444
+ *
+ * @package Ovpn\TestFramework
+ */
 abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
 {
-    const URL = '/';
+    const URL = 'http://test.loc/';
 
     protected static $seleniumHost = '127.0.0.1';
     protected static $seleniumPort = '4444';
     protected static $seleniumBrowser = 'phantomjs';
-    protected static $seleniumTestUrl = 'http://loc.okvpn.org';
+    protected static $seleniumTestUrl = 'http://test.loc/';
 
 
+    /**
+     * @inheritdoc
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -28,14 +40,17 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
         );
     }
 
-    public function setUpPage()
+    /**
+     * @inheritdoc
+     */
+    public function url($url)
     {
-        $this->url(static::URL);
-        // @codingStandardsIgnoreStart
-        $this->currentWindow()->size(array('width' => 1920, 'height' => 1080));
-        // @codingStandardsIgnoreEnd
+        parent::url(static::$seleniumTestUrl . $url);
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function tearDown()
     {
         parent::tearDown();

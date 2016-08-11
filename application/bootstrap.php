@@ -37,11 +37,16 @@ setlocale(LC_ALL, 'en_US.utf-8');
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
 
+$loaderClass = DOCROOT . 'vendor/autoload.php';
+
 /** @var Composer\Autoload\ClassLoader $loader */
-$loader = require_once DOCROOT . 'vendor/autoload.php';
+$loader = require_once $loaderClass;
+
+if (! ($loader instanceof Composer\Autoload\ClassLoader)) {
+    $loader =  new Composer\Autoload\ClassLoader();
+}
 $loader->add('Ovpn', APPPATH . 'classes');
 $loader->register();
-
 
 /**
  * Optionally, you can enable a compatibility auto-loader for use with
@@ -146,11 +151,12 @@ Cookie::$salt = 'csj1QsfhAsnAafrSDQzLDa';
 
 Cookie::$expiration = 3141596;
 
+
 define('SALT', 'y1fAgLdx8WeFsQ');
 
-Kernel\Kernel::registrationBundle([
+/*Kernel\Kernel::registrationBundle([
     new Ovpn\OvpnBundle(),
-]);
+]);*/
 
 
 /**
