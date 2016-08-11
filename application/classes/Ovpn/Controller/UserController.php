@@ -1,7 +1,13 @@
 <?php
-use Mailgun\Mailgun;
+namespace Ovpn\Controller;
 
-class Controller_User extends Controller {
+use URL;
+use Kohana;
+use View;
+use ORM;
+
+
+class UserController extends \Controller {
 
     protected $_user;
 

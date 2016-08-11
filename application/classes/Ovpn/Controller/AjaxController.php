@@ -1,6 +1,13 @@
-<?php 
+<?php
 
-class Controller_Ajax extends Controller
+namespace Ovpn\Controller;
+
+use Ovpn\Entity\UsersIntrface;
+use URL;
+use Kohana;
+use View;
+
+class AjaxController extends \Controller
 {
 
     protected $_user;
@@ -9,9 +16,9 @@ class Controller_Ajax extends Controller
 
     public function action_api()
     {
-        $config = Kohana::$config->load('info');
+
         $data   = array(
-            'auth'    => ($this->getUser() instanceof Model_UsersIntrface),
+            'auth'    => ($this->getUser() instanceof UsersIntrface),
             'signup'  => URL::base() . 'signup',
             'sitekey' => Kohana::$config->load('info')->server->captcha->sitekey,
             'login'   => URL::base() . 'user/login',
@@ -27,7 +34,7 @@ class Controller_Ajax extends Controller
         $user = $this->getUser();
 
         if ($user === null) {
-            throw new HTTP_Exception_401();
+            throw new \HTTP_Exception_401();
         }
 
         $this->response->headers('Content-type', 'application/json')
@@ -41,7 +48,7 @@ class Controller_Ajax extends Controller
             ->getVpnInfo($this->request->param('token'));
 
         if (empty($info)) {
-            throw new HTTP_Exception_404();
+            throw new \HTTP_Exception_404();
         }
 
         $this->response->body(View::factory('ajax/vpninfo')
@@ -57,8 +64,9 @@ class Controller_Ajax extends Controller
         if ($this->_user !== null) {
             return $this->_user;
         }
-        $this->_user = (new Model_UserManager)->secureContext()->getUser();
-        return $this->_user;
+        return null;
+        /*$this->_user = (new Model_UserManager)->secureContext()->getUser();
+        return $this->_user;*/
     }
 
     protected function getUserManager()

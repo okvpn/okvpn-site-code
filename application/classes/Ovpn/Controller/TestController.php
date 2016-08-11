@@ -1,17 +1,23 @@
 <?php 
+namespace Ovpn\Controller;
 
-class Controller_Test extends Controller
+use URL;
+use Kohana;
+use View;
+use ORM;
+
+class TestController extends \Controller
 {
-    public function __construct(Request $request, Response $response)
+    /*public function __construct(Request $request, Response $response)
     {
-        $user = Model::factory('User');
+        
 
         if (Kohana::$environment != Kohana::DEVELOPMENT) {
             throw new HTTP_Exception_403();
         }
 
         parent::__construct($request, $response);
-    }
+    }*/
 
 
     public function action_index()
@@ -56,10 +62,8 @@ class Controller_Test extends Controller
 
     public function action_openssl()
     {
-        // (new Model_UserManager())
-        //     ->authorizate(new Model_Users(41));
-        $userManager = new Model_UserManager();
-        var_dump($userManager->secureContext()->getUser());
+        $obj = (new \Kernel())->getContainer()->get('ovpn_user.manager');
+        var_dump($obj->getUser());
     }
 
 }

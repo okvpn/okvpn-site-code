@@ -37,10 +37,16 @@ setlocale(LC_ALL, 'en_US.utf-8');
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
 
-$loader = require_once DOCROOT . 'vendor/autoload.php';
-$loader->add('classes', APPPATH . 'classes');
+$loaderClass = DOCROOT . 'vendor/autoload.php';
 
-/*require_once Kohana::find_file('vendor', 'autoload');*/
+/** @var Composer\Autoload\ClassLoader $loader */
+$loader = require_once $loaderClass;
+
+if (! ($loader instanceof Composer\Autoload\ClassLoader)) {
+    $loader =  new Composer\Autoload\ClassLoader();
+}
+$loader->add('Ovpn', APPPATH . 'classes');
+$loader->register();
 
 /**
  * Optionally, you can enable a compatibility auto-loader for use with
@@ -129,9 +135,9 @@ Kohana::$config->attach(new Config_File);
 Kohana::modules(array(
     'database'      => MODPATH .'database', // Database access
     'okvpn'         => MODPATH .'okvpn',
-    'cron'          => MODPATH.'cron',
-    'minion'        => MODPATH.'minion',     // CLI Tasks
-    'orm'           => MODPATH.'orm',        // Object Relationship Mapping
+    'cron'          => MODPATH .'cron',
+    'minion'        => MODPATH .'minion',     // CLI Tasks
+    'orm'           => MODPATH .'orm',        // Object Relationship Mapping
 ));
 
 /**
@@ -145,13 +151,18 @@ Cookie::$salt = 'csj1QsfhAsnAafrSDQzLDa';
 
 Cookie::$expiration = 3141596;
 
+
 define('SALT', 'y1fAgLdx8WeFsQ');
+
+/*Kernel\Kernel::registrationBundle([
+    new Ovpn\OvpnBundle(),
+]);*/
+
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-
 Route::set('main', '<action>(/<token>)', array('action' => 'faq|guide|signup|blockchain|csrf|content|proxy'))
     ->defaults(array(
         'controller' => 'main',
