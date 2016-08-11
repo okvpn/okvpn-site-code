@@ -45,7 +45,7 @@ $loader = require_once $loaderClass;
 if (! ($loader instanceof Composer\Autoload\ClassLoader)) {
     $loader =  new Composer\Autoload\ClassLoader();
 }
-$loader->add('Ovpn', APPPATH . 'classes');
+$loader->add('Ovpn', DOCROOT . 'src');
 $loader->register();
 
 /**
