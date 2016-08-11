@@ -82,9 +82,6 @@ class Kohana_Kohana_Exception extends Exception {
 	 */
 	public static function handler(Throwable $e)
 	{
-		if (! ($e instanceof Exception)) {
-			exit(1);
-		}
 		
 		$response = Kohana_Exception::_handler($e);
 
@@ -106,10 +103,6 @@ class Kohana_Kohana_Exception extends Exception {
 	 */
 	public static function _handler(Throwable $e)
 	{
-		if (! ($e instanceof Exception)) {
-			exit(1);
-		}
-		
 		try
 		{
 			Kohana_Exception::log($e);

@@ -154,9 +154,9 @@ Cookie::$expiration = 3141596;
 
 define('SALT', 'y1fAgLdx8WeFsQ');
 
-/*Kernel\Kernel::registrationBundle([
+Kernel\Kernel::registrationBundle([
     new Ovpn\OvpnBundle(),
-]);*/
+]);
 
 
 /**

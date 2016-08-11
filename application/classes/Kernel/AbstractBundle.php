@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Kernel;
 
 use Symfony\Component\DependencyInjection\Extension\Extension;
