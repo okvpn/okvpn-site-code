@@ -127,6 +127,17 @@ class ComposerStaticInitb2dae258bc2a470ed5d78bcef5c5ef4f
                 0 => __DIR__ . '/..' . '/guzzle/guzzle/src',
             ),
         ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Lexer\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
+            ),
+            'Doctrine\\Common\\Annotations\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/annotations/lib',
+            ),
+        ),
     );
 
     public static $classMap = array (

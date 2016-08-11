@@ -2,6 +2,8 @@
 
 use Kernel\Kernel;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Annotations\DependencyInjectionAnnotationInterface;
 
 class Request_Client_Internal extends Kohana_Request_Client_Internal
 {
@@ -58,9 +60,31 @@ class Request_Client_Internal extends Kohana_Request_Client_Internal
                     array(':uri' => $request->uri())
                 )->request($request);
             }
+            
 
             // Load the controller using reflection
             $class = new ReflectionClass($classController);
+            $controller = $class->newInstance($request, $response);
+
+            $reader = new AnnotationReader();
+
+            foreach ($class->getProperties() as $property) {
+
+                /** @var DependencyInjectionAnnotationInterface $propertyInjection */
+                $propertyInjection = $reader
+                    ->getPropertyAnnotation($property, 'Annotations\\DependencyInjectionAnnotationInterface');
+
+                if ($propertyInjection instanceof DependencyInjectionAnnotationInterface) {
+                    $setterName = 'set' . ucfirst($property->getName());
+
+                    $class
+                        ->getMethod($setterName)
+                        ->invokeArgs($controller, [$this->getContainer()->get($propertyInjection->getServiceName())]);
+                    
+                }
+            }
+            
+
 
             if ($class->isAbstract()) {
                 throw new Kohana_Exception(
@@ -69,8 +93,6 @@ class Request_Client_Internal extends Kohana_Request_Client_Internal
                 );
             }
 
-            // Create a new instance of the controller
-            $controller = $class->newInstance($request, $response);
 
             // Run the controller's execute() method
             $response = $class->getMethod('execute')->invoke($controller);
