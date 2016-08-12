@@ -1,8 +1,12 @@
 parameters:
-    user.ovpn.class:           Ovpn\Entity\Users
-    user_manager.ovpn.class:   Ovpn\Model\UserManager
+    user.ovpn.class:                Ovpn\Entity\Users
+    user_manager.ovpn.class:        Ovpn\Model\UserManager
+    proxy_container.class:          Kernel\ProxyContainer
 
 services:
+    container:
+        class: %proxy_container.class%
+
     ovpn_user.entity:
         class: %user.ovpn.class%
 
