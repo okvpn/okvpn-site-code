@@ -24,7 +24,9 @@ abstract class AbstractBundle
         }
 
         $class = new \ReflectionClass($classNameExtension);
-        return $class->newInstance();
+        /** @var Extension $extetion */
+        $extetion = $class->newInstance();
+        return $extetion;
     }
 
     /**
