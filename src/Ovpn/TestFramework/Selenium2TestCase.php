@@ -21,6 +21,11 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
     protected static $seleniumBrowser = 'phantomjs';
     protected static $seleniumTestUrl = 'http://test.loc/';
 
+    /**
+     * @var int milliseconds
+     */
+    protected static $timeout = 5000;
+
 
     /**
      * @inheritdoc
@@ -54,6 +59,49 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
     protected function tearDown()
     {
         parent::tearDown();
+    }
+
+    protected function ignorePageError()
+    {
+        $this->execute([
+            'script' => $this->getJsCodeErrorIgnore(),
+            'args' => []
+        ]);
+
+    }
+
+    public function waitToAjax()
+    {
+        $jsCode = $this->getJsCodeJQueryIsActive();
+        $this->waitUntil(
+            function () use ($jsCode) {
+                $status = $this->execute([
+                    'script' => $jsCode,
+                    'args' => [],
+                ]);
+
+                return $status ? true : null;
+            }, static::$timeout
+        );
+        sleep(1);
+    }
+
+    private function getJsCodeErrorIgnore()
+    {
+        return <<<JS
+            if (!window.onerror) {
+                window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
+                    return false;
+                }
+            }
+JS;
+    }
+
+    private function getJsCodeJQueryIsActive()
+    {
+        return <<<JS
+            return jQuery && jQuery.active == 0;
+JS;
     }
 
 }
