@@ -1,7 +1,7 @@
 <?php
 
-use Kernel\Kernel;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Kernel\CumulativeResourceManager;
+use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Annotations\DependencyInjectionAnnotationInterface;
 
@@ -131,11 +131,11 @@ class Request_Client_Internal extends Kohana_Request_Client_Internal
     }
 
     /**
-     * @return ContainerBuilder
+     * @return Container
      */
     private function getContainer()
     {
-        return Kernel::getContainer();
+        return CumulativeResourceManager::getInstance()->getContainer();
     }
 
     /**
@@ -144,7 +144,7 @@ class Request_Client_Internal extends Kohana_Request_Client_Internal
     private function getBundlesName()
     {
         $names = [];
-        foreach (Kernel::getBundles() as $bundle) {
+        foreach (CumulativeResourceManager::getInstance()->getBundles() as $bundle) {
             $names[] = $bundle->getName();
         }
 

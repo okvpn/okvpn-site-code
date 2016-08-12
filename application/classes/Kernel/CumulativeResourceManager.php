@@ -17,6 +17,11 @@ class CumulativeResourceManager
     private $container;
 
     /**
+     * @var AbstractBundle[]
+     */
+    private $bundles;
+
+    /**
      * @return CumulativeResourceManager
      */
     public static function getInstance()
@@ -39,11 +44,37 @@ class CumulativeResourceManager
     }
 
     /**
+     * @param array $bundles
+     * @return $this
+     */
+    public function setBundles(array $bundles)
+    {
+        $this->bundles = $bundles;
+        return $this;
+    }
+
+    /**
      * @return Container
+     * @throws \Exception
      */
     public function getContainer()
     {
+        if (is_null($this->container)) {
+            throw new \Exception('');
+        }
         return $this->container;
+    }
+
+    /**
+     * @return AbstractBundle[]
+     * @throws \Exception
+     */
+    public function getBundles()
+    {
+        if (is_null($this->bundles)) {
+            throw new \Exception('');
+        }
+        return $this->bundles;
     }
 
     private function __construct()
