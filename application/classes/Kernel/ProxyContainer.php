@@ -4,6 +4,7 @@ namespace Kernel;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 class ProxyContainer extends Container
@@ -14,15 +15,15 @@ class ProxyContainer extends Container
     protected $isInitialized;
 
     /**
-     * @var ContainerBuilder
+     * @var ContainerInterface
      */
     protected $container;
 
     public function __construct()
     {
-        $container = Kernel::getContainer();
+        $container = CumulativeResourceManager::getInstance()->getContainer();
 
-        if ($container instanceof ContainerBuilder) {
+        if ($container instanceof ContainerInterface) {
             $this->isInitialized = true;
             $this->container = $container;
         } else {
