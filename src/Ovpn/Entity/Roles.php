@@ -67,14 +67,36 @@ class Roles extends \ORM
         return $this;
     }
 
-    public function getRoleName()
+    /**
+     * @return array
+     */
+    public function getRolesName()
     {
-        return $this->role_name;
+        $roles = unserialize($this->role_name);
+        if (!is_array($roles)) {
+            throw new \RuntimeException('Invalid data in database. Field "role_name" must be unserializable');
+        }
+        return $roles;
     }
 
-    public function setRoleName($name)
+    /**
+     * @param array $names
+     * @return $this
+     */
+    public function setRolesName(array $names)
     {
-        $this->role_name  = $name;
+        $this->role_name  = unserialize($names);
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function addRoleName($name)
+    {
+        $rolesName = $this->getRolesName();
+        $this->setRolesName(array_merge($rolesName,[$name]));
         return $this;
     }
 

@@ -2,6 +2,7 @@ parameters:
     user.ovpn.class:                Ovpn\Entity\Users
     user_manager.ovpn.class:        Ovpn\Model\UserManager
     proxy_container.class:          Kernel\ProxyContainer
+    security_facade.class:          Ovpn\Security\SecurityFacade
 
 services:
     container:
@@ -13,3 +14,6 @@ services:
     ovpn_user.manager:
         class: %user_manager.ovpn.class%
         arguments: ['@ovpn_user.entity']
+
+    ovpn_security:
+        class: %security_facade.class%

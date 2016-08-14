@@ -90,13 +90,16 @@ class Users extends \ORM implements UsersIntrface
         }
         return false;
     }
-
+    
     public function setRole(Roles $role)
     {
         $this->roles = $role;
         return $this;
     }
 
+    /**
+     * @return Roles
+     */
     public function getRole()
     {
         return $this->roles;

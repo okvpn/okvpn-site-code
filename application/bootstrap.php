@@ -1,4 +1,10 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
+
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Kernel\{
+    Kernel,
+    CumulativeResourceManager
+};
 
 // -- Environment setup --------------------------------------------------------
 
@@ -154,15 +160,16 @@ Cookie::$expiration = 3141596;
 
 define('SALT', 'y1fAgLdx8WeFsQ');
 
-Kernel\Kernel::registrationBundle([
+Kernel::registrationBundle([
     new Ovpn\OvpnBundle(),
 ]);
 
-Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace('Annotations\DependencyInjectionAnnotation',
+AnnotationRegistry::registerAutoloadNamespace('Annotations\DependencyInjectionAnnotation',
     APPPATH . 'classes' );
 
-Kernel\CumulativeResourceManager::getInstance()
-    ->setContainer(Kernel\Kernel::getContainer());
+CumulativeResourceManager::getInstance()
+    ->setContainer(Kernel::getContainer())
+    ->setBundles(Kernel::getBundles());
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
