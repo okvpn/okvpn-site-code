@@ -3,6 +3,7 @@
 namespace Ovpn\Security;
 
 use Ovpn\Entity\Users;
+use Ovpn\Entity\UsersIntrface;
 
 class SecurityFacade implements SecurityInterface
 {
@@ -32,11 +33,15 @@ class SecurityFacade implements SecurityInterface
     public function getUser()
     {
         $this->security->setTokenStorage(new TokenSessionStorage());
-        $user = $this->getUser();
+        $user = $this->security->getUser();
 
         if (!$user) {
             $this->security->setTokenStorage(new TokenCookieStorage());
-            $user = $this->getUser();
+            $user = $this->security->getUser();
+
+            if ($user instanceof  UsersIntrface) {
+                (new TokenSessionStorage())->setToken($user->getId());
+            }
         }
         return $user;
     }

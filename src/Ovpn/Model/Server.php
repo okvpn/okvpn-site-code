@@ -1,5 +1,5 @@
 <?php
-namespace Model;
+namespace Ovpn\Model;
 
 use Bitpay\UserInterface;
 use Mailgun\Mailgun;
@@ -10,7 +10,11 @@ use Database;
 use View;
 use Request;
 
-
+/**
+ * Class Server
+ * @package Model
+ * @deprecated remove in 2.1
+ */
 class Server
 {
     const EASYRSA_CERT_EXPIRE = 10368000;

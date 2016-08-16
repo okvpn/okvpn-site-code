@@ -1,67 +1,83 @@
-<?php 
+<?php
+
 namespace Ovpn\Controller;
 
-use Ovpn\Model\UserManager;
-use URL;
-use Kohana;
-use View;
-use ORM;
 
-class ProfileController extends \Controller
+use Ovpn\Core\Controller;
+use Ovpn\Entity\UsersIntrface;
+use Ovpn\Repository\UserRepository;
+use Ovpn\Repository\VpnRepository;
+use Ovpn\Security\SecurityFacade;
+
+class ProfileController extends Controller
 {
-    protected $_user;
-
-    protected $_userManager;
-
-    public function __construct(Request $request, Response $response)
+    /**
+     * @inheritdoc
+     */
+    public function before()
     {
-        $this->_userManager = new UserManager();
-
-        $user = $this->_userManager->secureContext()->getUser();
-
-        if ($user === null) {
-            throw new HTTP_Exception_401();
+        if (! ($this->getSecurity()->getUser() instanceof UsersIntrface)) {
+            throw new \HTTP_Exception_401();
         }
-
-        $this->_user = $user;
-        parent::__construct($request, $response);
     }
 
-    public function action_index()
+    /**
+     * @Route('/profile')
+     */
+    public function indexAction()
     {
-        $this->response->body(View::factory('profile')
-                ->set('csrf', $this->_userManager->setCsrfToken(false)));
+        $this->getResponse()->body(
+            \View::factory('profile')->set('csrf', '123')
+        );
     }
 
-    public function action_settings()
+    /**
+     * @Route('/profile/create')
+     */
+    public function createAction()
     {
+        $response = \View::factory('create-vpn')
+            ->set('vpn', (new VpnRepository())->getVpnStatus())
+            ->set('csrf', '123');
 
-        $listActiv = Model::factory('Server')->getUserVpn($this->_user);
-
-        $view = View::factory('settings')
-            ->set('email', $this->_user->getEmail())
-            ->set('csrf', $this->_userManager->setCsrfToken())
-            ->set('active_vpn', $listActiv);
-
-        $this->response->body($view);
+        $this->getResponse()->body($response);
     }
 
-    public function action_create()
+    /**
+     * @Route('/profile/getinfovpn')
+     */
+    public function getInfoVpnAction()
     {
+        $token = $this->getRequest()->param('token');
+        $info = (new VpnRepository())->getVpnInformation($token);
 
-        $view = View::factory('create-vpn')
-            ->set('vpn', Model::factory('Server')->getVpns())
-            ->set('csrf', $this->_userManager->setCsrfToken(false));
+        $response = \View::factory('ajax/vpninfo')
+            ->set('id', $token)
+            ->set('network', preg_replace('/\n/', "<br>", $info[0]['network']))
+            ->set('link', $info[0]['specifications_link'])
+            ->set('csrf', '123');
 
-        $this->response->body($view);
+        $this->getResponse()->body($response);
     }
 
-    public function action_wallet()
+    /**
+     * @Route('/profile/billing')
+     */
+    public function billingAction()
     {
-        $view = View::factory('wallet')
-            ->set('allow', Model_Bitpay::$allowSumPaid);
+        $user = $this->getSecurity()->getUser();
 
-        $this->response->body($view);
+        $this->setJsonResponse(
+            (new UserRepository())->getTrafficMeters($user->getId())
+        );
+    }
+
+    /**
+     * @return SecurityFacade
+     */
+    private function getSecurity()
+    {
+        return $this->container->get('ovpn_security');
     }
 
 }
