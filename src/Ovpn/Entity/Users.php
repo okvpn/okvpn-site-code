@@ -116,4 +116,12 @@ class Users extends \ORM implements UsersIntrface
         return $this->token;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getInstance($id)
+    {
+        return new Users($id);
+    }
+
 }
