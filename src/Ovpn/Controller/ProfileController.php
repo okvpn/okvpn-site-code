@@ -2,22 +2,23 @@
 
 namespace Ovpn\Controller;
 
-
 use Ovpn\Core\Controller;
+use Ovpn\Core\HTTPFoundation\AccessDeniedException;
 use Ovpn\Entity\UsersIntrface;
 use Ovpn\Repository\UserRepository;
 use Ovpn\Repository\VpnRepository;
-use Ovpn\Security\SecurityFacade;
 
 class ProfileController extends Controller
 {
+    use GetSecurityTrait;
+    
     /**
      * @inheritdoc
      */
     public function before()
     {
-        if (! ($this->getSecurity()->getUser() instanceof UsersIntrface)) {
-            throw new \HTTP_Exception_401();
+        if (! ($this->getSecurityFacade()->getUser() instanceof UsersIntrface)) {
+            throw new AccessDeniedException;
         }
     }
 
@@ -65,7 +66,7 @@ class ProfileController extends Controller
      */
     public function billingAction()
     {
-        $user = $this->getSecurity()->getUser();
+        $user = $this->getSecurityFacade()->getUser();
 
         $this->setJsonResponse(
             (new UserRepository())->getTrafficMeters($user->getId())
@@ -73,11 +74,16 @@ class ProfileController extends Controller
     }
 
     /**
-     * @return SecurityFacade
+     * @Route('/profile/settings')
      */
-    private function getSecurity()
+    public function settingsAction()
     {
-        return $this->container->get('ovpn_security');
+        $user = $this->getSecurityFacade()->getUser();
+        $view = \View::factory('settings')
+            ->set('email', $user->getEmail())
+            ->set('csrf', '123')
+            ->set('active_vpn', (new UserRepository())->getUserVpnList($user->getId()));
+        
+        $this->getResponse()->body($view);
     }
-
 }

@@ -8,17 +8,18 @@ class UserRepository
 {
     /**
      * @param string $email
+     * @param bool $onlyAtive
      * @return null|Users
      * @throws \Kohana_Exception
      */
-    public function findUserByEmail(string $email)
+    public function findUserByEmail(string $email, $onlyAtive = false)
     {
         /** @var Users $user */
         $user = (new Users)
             ->where('email', '=', $email)
             ->find();
-        
-        return (null !== $user->getId()) ? $user : null; 
+
+        return (null === $user->getId() && ($onlyAtive && !$user->getChecked())) ? null : $user;
     }
 
     /**
@@ -49,5 +50,31 @@ class UserRepository
             ->param(':idd', $id)
             ->execute()
             ->as_array();
+    }
+
+    /**
+     * @param int $uid
+     * @return array
+     */
+    public function getUserVpnList($uid)
+    {
+        $sql = \DB::query(\Database::SELECT,
+            "SELECT T1.uid as id, T1.name, T2.name as host, T2.location, T2.icon
+            FROM (
+                SELECT id as uid, vpn_id as id, name
+                FROM vpn_user
+                WHERE user_id = :id AND active = true) T1
+            LEFT JOIN (
+                SELECT id, name, location, icon
+                FROM vpn_hosts
+                WHERE id IN (SELECT vpn_id as id
+                    FROM vpn_user
+                    WHERE user_id = :id)
+            ) T2 ON T1.id = T2.id")
+            ->param(':id', $uid);
+
+        $return = $sql->execute()->as_array();
+
+        return is_array($return) ? $return : [];
     }
 }

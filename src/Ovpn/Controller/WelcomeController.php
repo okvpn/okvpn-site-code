@@ -2,7 +2,6 @@
 namespace Ovpn\Controller;
 
 use Ovpn\Core\Controller;
-use Ovpn\Security\SecurityFacade;
 
 class WelcomeController extends Controller
 {
@@ -11,12 +10,4 @@ class WelcomeController extends Controller
 	{
         $this->getResponse()->body(\View::factory('index'));
 	}
-
-    /**
-     * @return SecurityFacade
-     */
-    protected function getSecurityFacade()
-    {
-        return $this->getContainer()->get('ovpn_security');
-    }
 }

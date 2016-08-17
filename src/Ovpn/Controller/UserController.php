@@ -18,7 +18,7 @@ class UserController extends Controller
             (string) $this->getRequest()->post('email'),
             (string) $this->getRequest()->post('password')
         );
-
+        
         $this->setJsonResponse([
             'error' => ! $result,
             'message' => [\Kohana::message('user', 'accountNotFound')]
