@@ -1,10 +1,8 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: jurasikt
- * Date: 6/13/16
- * Time: 11:19 PM
+ *
+ * @deprecated
  */
 class UsersTest extends PHPUnit_Framework_TestCase
 {

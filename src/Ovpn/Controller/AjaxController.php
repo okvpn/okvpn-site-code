@@ -12,14 +12,7 @@ use View;
 
 class AjaxController extends Controller
 {
-
-    protected $_user;
-
-    /**
-     * @DI(service="ovpn_security")
-     * @var SecurityFacade
-     */
-    protected $security;
+    use GetSecurityTrait;
 
     /**
      * @Route('/api')
@@ -28,7 +21,7 @@ class AjaxController extends Controller
     {
 
         $data = [
-            'auth'    => ($this->security->getUser() instanceof UsersIntrface),
+            'auth'    => ($this->getSecurityFacede()->getUser() instanceof UsersIntrface),
             'signup'  => URL::base() . 'signup',
             'sitekey' => Kohana::$config->load('info')->server->captcha->sitekey,
             'login'   => URL::base() . 'user/login',
@@ -85,11 +78,6 @@ class AjaxController extends Controller
         }
         $this->_userManager = new Model_UserManager(); 
         return $this->_userManager;
-    }
-
-    public function setSecurity(SecurityFacade $security)
-    {
-        $this->security = $security;
     }
 
 }
