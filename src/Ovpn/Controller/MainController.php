@@ -2,17 +2,20 @@
 //TODO:: could be refactored in v2
 namespace Ovpn\Controller;
 
-use View;
+use Ovpn\Core\Controller;
+use Ovpn\Entity\UsersIntrface;
 
-class MainController extends \Controller
+class MainController extends Controller
 {
 
-    public function action_faq()
+    use GetSecurityTrait;
+    
+    public function faqAction()
     {
-
-        $this->response->body(
-            View::factory('faq')
-                ->set('auth', false));
+        $this->getResponse()->body(
+            \View::factory('faq')
+                ->set('auth', $this->getSecurityFacede()->getUser() instanceof UsersIntrface)
+        );
     }
 
     public function action_proxy()
@@ -28,13 +31,13 @@ class MainController extends \Controller
                 ->set('auth', false)
         );
     }
-
-    public function action_signup()
+    
+    /*public function action_signup()
     {
         //TODO:: could be refactored in v2
         
         $this->response->headers('Content-type', 'application/json');
         $this->response->body(json_encode([]));
-    }
+    }*/
 
 }

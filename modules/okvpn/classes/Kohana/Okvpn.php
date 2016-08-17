@@ -5,6 +5,7 @@ use Mailgun\Mailgun;
  * Всякая всячина, необходимая для работы приложения 
  * @author nobody 
  * @version 1.0.1
+ * @deprecated since 2.0 and will be removed in 2.4
  */
 class Kohana_Okvpn {
     

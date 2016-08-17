@@ -1,37 +1,22 @@
 <?php
 namespace Ovpn\Controller;
 
-use Annotations\DependencyInjectionAnnotation as DI;
-use Controller;
-use Ovpn\Model\UserManager;
-use Symfony\Component\DependencyInjection\Container;
-
+use Ovpn\Core\Controller;
+use Ovpn\Security\SecurityFacade;
 
 class WelcomeController extends Controller
 {
-    
-    /**
-     * @var Container
-     *
-     * @DI(service="container")
-     */
-	protected $container;
 
-	public function action_index()
+	public function indexAction()
 	{
-		$this->response->body(\View::factory('index'));
+        $this->getResponse()->body(\View::factory('index'));
 	}
-    
-    public function setContainer(Container $container)
-    {
-        $this->container = $container;
-    }
 
     /**
-     * @return UserManager
+     * @return SecurityFacade
      */
-    protected function getUserManager()
+    protected function getSecurityFacade()
     {
-        return $this->container->get('ovpn_user.manager');
+        return $this->getContainer()->get('ovpn_security');
     }
 }

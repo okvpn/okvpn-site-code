@@ -38,6 +38,6 @@ class ProxyContainer extends Container
      */
     public function get($id, $invalidBehavior = self::EXCEPTION_ON_INVALID_REFERENCE)
     {
-        $this->container->get($id, $invalidBehavior);
+        return $this->container->get($id, $invalidBehavior);
     }
 }

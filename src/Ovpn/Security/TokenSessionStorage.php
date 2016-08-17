@@ -8,11 +8,21 @@ class TokenSessionStorage implements TokenStorageInterface
     protected  $name = 'user_id';
 
     /**
+     * @var \Session
+     */
+    protected $sessionDriver;
+
+    public function __construct()
+    {
+        $this->sessionDriver = \Session::instance();
+    }
+
+    /**
      * @inheritdoc
      */
     public function getToken()
     {
-        return \Session::instance()->get($this->name);
+        return $this->sessionDriver->get($this->name);
     }
 
     /**
@@ -20,6 +30,11 @@ class TokenSessionStorage implements TokenStorageInterface
      */
     public function setToken(string $token)
     {
-        \Session::instance()->set($this->name, $token);
+        $this->sessionDriver->set($this->name, $token);
+    }
+
+    public function setDriver($driver)
+    {
+        $this->sessionDriver = $driver;
     }
 }

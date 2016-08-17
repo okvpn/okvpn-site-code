@@ -6,7 +6,6 @@ use Mailgun\Mailgun;
 use Ovpn\Entity\Roles;
 use Ovpn\Entity\UsersIntrface;
 use Ovpn\Entity\Users;
-use Text;
 use DB;
 use View;
 use Kohana;
@@ -16,8 +15,11 @@ use Cookie;
 use URL;
 use Database;
 use Validation;
+use Text;
+use Model;
 
-class UserManager extends \Model
+
+class UserManager extends Model
 {
     protected $_config;
 

@@ -2,31 +2,33 @@
 
 namespace Ovpn\Controller;
 
+use Annotations\DependencyInjectionAnnotation as DI;
+use Ovpn\Core\Controller;
 use Ovpn\Entity\UsersIntrface;
+use Ovpn\Security\SecurityFacade;
 use URL;
 use Kohana;
 use View;
 
-class AjaxController extends \Controller
+class AjaxController extends Controller
 {
+    use GetSecurityTrait;
 
-    protected $_user;
-
-    protected $_userManager;
-
-    public function action_api()
+    /**
+     * @Route('/api')
+     */
+    public function apiAction()
     {
 
-        $data   = array(
-            'auth'    => ($this->getUser() instanceof UsersIntrface),
+        $data = [
+            'auth'    => ($this->getSecurityFacede()->getUser() instanceof UsersIntrface),
             'signup'  => URL::base() . 'signup',
             'sitekey' => Kohana::$config->load('info')->server->captcha->sitekey,
             'login'   => URL::base() . 'user/login',
             'profile' => URL::base() . 'profile',
-        );
+        ];
 
-        $this->response->headers('Content-type', 'application/json')
-            ->body(json_encode($data));
+        $this->setJsonResponse($data);
     }
 
     public function action_billing()
