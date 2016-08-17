@@ -3,6 +3,7 @@ namespace Ovpn\Model;
 
 use Guzzle\Http\Exception\CurlException;
 use Mailgun\Mailgun;
+use Ovpn\Core\Config;
 use Ovpn\Entity\Roles;
 use Ovpn\Entity\UsersIntrface;
 use Ovpn\Entity\Users;
@@ -24,9 +25,11 @@ class UserManager
      */
     protected $abstractUser;
 
-    public function __construct()
+    protected $config;
+
+    public function __construct(Config $config)
     {
-        
+        $this->config = $config;
     }
 
     public function setUser(UsersIntrface $user)
@@ -136,7 +139,7 @@ class UserManager
             ->set('src',  URL::base(true) . "user/verify/" . $user->getToken());
         $subject = Kohana::message('user', 'mailVerify');
 
-        $mailgun = new Mailgun($this->_config->mailkey);
+        $mailgun = new Mailgun($this->config->get('mailgun_key'));
     
         try {
             $mailgun->sendMessage('okvpn.org', array(
