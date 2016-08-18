@@ -2,7 +2,7 @@
 namespace Ovpn\Entity;
 
 
-class Users extends \ORM implements UsersIntrface
+class Users extends \ORM implements UsersInterface
 {
     protected $_table_name = 'users';
 

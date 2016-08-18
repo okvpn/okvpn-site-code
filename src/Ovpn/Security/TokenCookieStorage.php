@@ -12,12 +12,12 @@ class TokenCookieStorage implements TokenStorageInterface
     /**
      * @var UsersInterface
      */
-    protected $abstractUser;
+    public $abstractUser;
 
     /**
      * @var /Cookie
      */
-    protected $cookieDriver;
+    public $cookieDriver;
 
 
     public function __construct()

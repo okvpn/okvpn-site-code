@@ -4,7 +4,7 @@ namespace Ovpn\Controller;
 
 use Ovpn\Core\Controller;
 use Ovpn\Core\HTTPFoundation\AccessDeniedException;
-use Ovpn\Entity\UsersIntrface;
+use Ovpn\Entity\UsersInterface;
 use Ovpn\Repository\UserRepository;
 use Ovpn\Repository\VpnRepository;
 
@@ -17,7 +17,7 @@ class ProfileController extends Controller
      */
     public function before()
     {
-        if (! ($this->getSecurityFacade()->getUser() instanceof UsersIntrface)) {
+        if (! ($this->getSecurityFacade()->getUser() instanceof UsersInterface)) {
             throw new AccessDeniedException;
         }
     }

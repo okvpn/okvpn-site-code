@@ -3,7 +3,7 @@
 namespace Ovpn\Controller;
 
 use Ovpn\Core\Controller;
-use Ovpn\Security\SecurityFacade;
+
 
 class UserController extends Controller
 {
@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function loginAction()
     {
-        $result = $this->getSecurityFacede()->doLogin(
+        $result = $this->getSecurityFacade()->doLogin(
             (string) $this->getRequest()->post('email'),
             (string) $this->getRequest()->post('password')
         );
