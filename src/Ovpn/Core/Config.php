@@ -14,9 +14,29 @@ class Config
         $this->kohanaConfig = \Kohana::$config->load($this->defaultConfig);
     }
     
-    public function get($name, $default = null)
+    public function get($baseName, $default = null)
     {
-        return $this->kohanaConfig->get($name, $default);
+        $name = preg_split('/:/', $baseName);
+        $config =  $this->kohanaConfig->get(array_shift($name), $default);
+
+        if (!is_array($config)) {
+            return (null === $config) ? $default : $config;
+        }
+
+        foreach ($name as $configKeyName) {
+            if (array_key_exists($configKeyName, $config)) {
+                $config = $config[$configKeyName];
+            } else {
+                throw new \Exception(
+                    sprintf('The config key"%s" nor exsist in "%s"', $baseName, $this->defaultConfig));
+            }
+
+            if (! is_array($config)) {
+                return $config;
+            }
+        }
+
+        return $default;
     }
 
     public function getConfig()
