@@ -41,4 +41,4 @@ services:
 
     ovpn_security:
         class: %security_facade.class%
-        arguments: ['@ovpn_authorization', '@ovpn_security.abstract']
+        arguments: ['@ovpn_authorization', '@ovpn_security.abstract', '@ovpn_token.storage']

@@ -23,10 +23,15 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
      */
     protected $authorization;
     
-    public function __construct(AuthorizationInterface $authorization, SecurityInterface $security)
-    {
+    public function __construct(
+        AuthorizationInterface $authorization,
+        SecurityInterface $security,
+        TokenStorage $tokens
+    ) {
+
         $this->security = $security;
         $this->authorization = $authorization;
+        $this->tokenStrategy = $tokens;
     }
 
     /**
@@ -37,7 +42,7 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
         $user = null;
         $restoreTokens = [];
         
-        foreach ($this->tokenStrategy as $token) {
+        foreach ($this->tokenStrategy->getTokens() as $token) {
             $this->security->setTokenStorage($token);
             $user = $this->security->getAbstractUser();
 

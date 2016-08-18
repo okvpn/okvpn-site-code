@@ -11,7 +11,7 @@ class TokenStorage
 
     public function __construct(array $tokens = null)
     {
-        if (null === $tokens) {
+        if (null !== $tokens) {
             $this->tokens = $tokens;
         } else {
 
