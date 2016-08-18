@@ -14,17 +14,31 @@ class SecurityFacade implements SecurityInterface
     protected $security;
 
     /**
+     * @var TokenStorageInterface[]
+     */
+    protected $tokenStrategy;
+
+    /**
      * @var Authorization;
      */
     protected $authorization;
     
-    public function __construct()
+    public function __construct(array $tokens = null)
     {
+        //todo: must be refactoring
         $this->security = new Security();
-        $this->authorization = new Authorization([
-            new TokenCookieStorage(),
-            new TokenSessionStorage()
-        ]);
+
+        if (null === $tokens) {
+            $this->tokenStrategy = [
+                new TokenSessionStorage(),
+                new TokenCookieStorage(),
+            ];
+
+        } else {
+            $this->tokenStrategy = $tokens;
+        }
+        //todo: must be reefactoring
+        $this->authorization = new Authorization($tokens);
     }
 
     /**
@@ -32,17 +46,16 @@ class SecurityFacade implements SecurityInterface
      */
     public function getUser()
     {
-        $this->security->setTokenStorage(new TokenSessionStorage());
-        $user = $this->security->getUser();
-
-        if (!$user) {
-            $this->security->setTokenStorage(new TokenCookieStorage());
+        $user = null;
+        foreach ($this->tokenStrategy as $token) {
+            $this->security->setTokenStorage($token);
             $user = $this->security->getUser();
 
-            if ($user instanceof  UsersInterface) {
-                (new TokenSessionStorage())->setToken($user->getId());
+            if ($user instanceof UsersInterface) {
+                break;
             }
         }
+
         return $user;
     }
 
@@ -51,13 +64,16 @@ class SecurityFacade implements SecurityInterface
      */
     public function isGranted(string $nameRole): bool
     {
-        $this->security->setTokenStorage(new TokenSessionStorage());
-        $result = $this->security->isGranted($nameRole);
-        
-        if (!$result) {
-            $this->security->setTokenStorage(new TokenCookieStorage());
+        $result = false;
+        foreach ($this->tokenStrategy as $token) {
+            $this->security->setTokenStorage($token);
             $result = $this->security->isGranted($nameRole);
+
+            if ($result) {
+                break;
+            }
         }
+
         return $result;
     }
 

@@ -36,6 +36,7 @@ class Security implements SecurityInterface
      */
     public function getUser()
     {
+        //todo:: must be refactired
         $uid = $this->tokenStorage->getToken();
         return $uid ? new Users($uid) : null;
     }
