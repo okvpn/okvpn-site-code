@@ -37,7 +37,7 @@ services:
 
     ovpn_authorization:
         class: %authorization.class%
-        arguments: ['@ovpn_token.storage', '@ovpn_user']
+        arguments: ['@ovpn_token.storage', '@ovpn_user.repository']
 
     ovpn_security:
         class: %security_facade.class%

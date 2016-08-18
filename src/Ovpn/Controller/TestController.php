@@ -1,24 +1,12 @@
 <?php 
 namespace Ovpn\Controller;
 
-use Annotations\DependencyInjectionAnnotation as DI;
-use Ovpn\Security\SecurityFacade;
+use Ovpn\Core\Controller;
 
-class TestController extends \Controller
+class TestController extends Controller
 {
-    /**
-     * @var SecurityFacade
-     * @DI(service="ovpn_security")
-     */
-    protected $securityContext;
-
-    public function action_index()
+    public function indexAction()
     {
-        var_dump($this->securityContext->doLogin('tsykun314@gmail.com', 'php12346'));
-    }
-
-    public function setSecurityContext(SecurityFacade $security)
-    {
-        $this->securityContext = $security;
+        $el = $this->getContainer()->get('ovpn_security');
     }
 }
