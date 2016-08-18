@@ -22,6 +22,7 @@ class TokenCookieStorage implements TokenStorageInterface
 
     public function __construct()
     {
+        //todo: fix it
         $this->cookieDriver = new \Cookie();
         $this->abstractUser = new Users();
     }

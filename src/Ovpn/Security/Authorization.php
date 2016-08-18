@@ -4,7 +4,7 @@ namespace Ovpn\Security;
 
 use Ovpn\Model\UserProviderInterface;
 
-class Authorization
+class Authorization implements AuthorizationInterface
 {
 
     /**
@@ -23,6 +23,9 @@ class Authorization
         $this->userProvider = $userProvider;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function doLogin(string $login, string $password):bool
     {
         $user = $this->userProvider->findUserByEmail($login);

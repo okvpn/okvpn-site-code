@@ -4,6 +4,10 @@ parameters:
     user_repositiory.class:         Ovpn\Repository\UserRepository
     proxy_container.class:          Kernel\ProxyContainer
     security_facade.class:          Ovpn\Security\SecurityFacade
+    token.storage.class:            Ovpn\Security\TokenStorage
+    user.class:                     Ovpn\Entity\Users
+    security.class:                 Ovpn\Security\Security
+    authorization.class:            Ovpn\Security\Authorization
 
 
 
@@ -14,13 +18,27 @@ services:
     ovpn_config:
         class: %config.class%
 
+    ovpn_user:
+        class: %user.class%
+
     ovpn_user.repository:
         class: %user_repositiory.class%
 
+    ovpn_token.storage:
+        class: %token.storage.class%
+
+    ovpn_security.abstract:
+        class: %security.class%
+        arguments: ['@ovpn_user']
 
     ovpn_user.manager:
         class: %user_manager.ovpn.class%
         arguments: ['@ovpn_config']
 
+    ovpn_authorization:
+        class: %authorization.class%
+        arguments: ['@ovpn_token.storage', '@ovpn_user']
+
     ovpn_security:
         class: %security_facade.class%
+        arguments: ['@ovpn_authorization', '@ovpn_security.abstract']

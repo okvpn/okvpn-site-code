@@ -2,7 +2,7 @@
 
 namespace Ovpn\Security;
 
-use Ovpn\Entity\Users;
+use Ovpn\Entity\UsersInterface;
 
 class Security implements SecurityInterface
 {
@@ -10,6 +10,16 @@ class Security implements SecurityInterface
      * @var TokenStorageInterface
      */
     protected $tokenStorage;
+
+    /**
+     * @var UsersInterface
+     */
+    protected $abstractUser;
+    
+    public function __construct(UsersInterface $abstractUser)
+    {
+        $this->abstractUser = $abstractUser;
+    }
 
     /**
      * @param TokenStorageInterface $tokenStorage
@@ -34,11 +44,10 @@ class Security implements SecurityInterface
     /**
      * @inheritdoc
      */
-    public function getUser()
+    public function getAbstractUser()
     {
-        //todo:: must be refactired
-        $uid = $this->tokenStorage->getToken();
-        return $uid ? new Users($uid) : null;
+        $abstractUser = $this->tokenStorage->getToken();
+        return $abstractUser ? $this->abstractUser->getInstance($abstractUser) : null;
     }
 
     /**
@@ -46,7 +55,7 @@ class Security implements SecurityInterface
      */
     public function isGranted(string $roleName): bool
     {
-        return in_array($this->getUser()->getRole()->getRolesName(), $roleName);
+        return in_array($this->getAbstractUser()->getRole()->getRolesName(), $roleName);
     }
     
 }

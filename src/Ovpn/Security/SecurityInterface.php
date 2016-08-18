@@ -13,7 +13,7 @@ interface SecurityInterface
     /**
      * @return Users | null
      */
-    public function getUser();
+    public function getAbstractUser();
 
     /**
      * @param string $nameRole

@@ -5,7 +5,7 @@ namespace Ovpn\Security;
 use Ovpn\Entity\Users;
 use Ovpn\Entity\UsersInterface;
 
-class SecurityFacade implements SecurityInterface
+class SecurityFacade implements SecurityInterface, AuthorizationInterface
 {
 
     /**
@@ -23,40 +23,47 @@ class SecurityFacade implements SecurityInterface
      */
     protected $authorization;
     
-    public function __construct(array $tokens = null)
+    public function __construct(AuthorizationInterface $authorization, SecurityInterface $security)
     {
-        //todo: must be refactoring
-        $this->security = new Security();
-
-        if (null === $tokens) {
-            $this->tokenStrategy = [
-                new TokenSessionStorage(),
-                new TokenCookieStorage(),
-            ];
-
-        } else {
-            $this->tokenStrategy = $tokens;
-        }
-        //todo: must be reefactoring
-        $this->authorization = new Authorization($tokens);
+        $this->security = $security;
+        $this->authorization = $authorization;
     }
 
     /**
      * @return Users | null
      */
-    public function getUser()
+    public function getAbstractUser()
     {
         $user = null;
+        $restoreTokens = [];
+        
         foreach ($this->tokenStrategy as $token) {
             $this->security->setTokenStorage($token);
-            $user = $this->security->getUser();
+            $user = $this->security->getAbstractUser();
 
             if ($user instanceof UsersInterface) {
                 break;
+            } else {
+                $restoreTokens[] = $token;
             }
         }
-
+        
+        if ($user instanceof  UsersInterface) {
+            /** @var TokenStorageInterface $token */
+            foreach ($restoreTokens as $token) {
+                $token->setToken($user->getId());
+            }            
+        }
+        
         return $user;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getUser()
+    {
+        return $this->getAbstractUser();
     }
 
     /**

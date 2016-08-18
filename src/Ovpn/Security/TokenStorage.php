@@ -2,7 +2,7 @@
 
 namespace Ovpn\Security;
 
-final class TokenStorage
+class TokenStorage
 {
     /**
      * @var TokenStorage[]
