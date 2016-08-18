@@ -2,33 +2,39 @@
 
 namespace Ovpn\Security;
 
-use Ovpn\Repository\UserRepository;
+use Ovpn\Model\UserProviderInterface;
 
 class Authorization
 {
 
     /**
-     * @var TokenStorageInterface[]
+     * @var TokenStorage
      */
-    protected $tokenStorages;
+    protected $tokenStorage;
 
-    public function __construct(array $storage)
+    /**
+     * @var UserProviderInterface
+     */
+    protected $userProvider;
+
+    public function __construct(TokenStorage $storage, UserProviderInterface $userProvider)
     {
-        $this->tokenStorages = $storage;
+        $this->tokenStorage = $storage;
+        $this->userProvider = $userProvider;
     }
 
     public function doLogin(string $login, string $password):bool
     {
-        $user = (new UserRepository())->findUserByEmail($login);
+        $user = $this->userProvider->findUserByEmail($login);
         if (!$user) {
             return false;
         }
 
         $login = password_verify($password, $user->getPassword());
 
-        foreach ($this->tokenStorages as $tokenStorage) {
-            if ($login && $tokenStorage instanceof TokenStorageInterface) {
-                $tokenStorage->setToken((string) $user->getId());
+        foreach ($this->tokenStorage->getTokens() as $token) {
+            if ($login && $token instanceof TokenStorageInterface) {
+                $token->setToken((string) $user->getId());
             }
         }
         return $login;

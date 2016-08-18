@@ -20,5 +20,10 @@ interface UsersInterface {
      * @return UsersInterface
      */
     public function getInstance($id);
+
+    /**
+     * @return string
+     */
+    public function getPassword();
     
 }

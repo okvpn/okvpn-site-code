@@ -1,8 +1,11 @@
 parameters:
     config.class:                   Ovpn\Core\Config
     user_manager.ovpn.class:        Ovpn\Model\UserManager
+    user_repositiory.class:         Ovpn\Repository\UserRepository
     proxy_container.class:          Kernel\ProxyContainer
     security_facade.class:          Ovpn\Security\SecurityFacade
+
+
 
 services:
     container:
@@ -10,6 +13,10 @@ services:
 
     ovpn_config:
         class: %config.class%
+
+    ovpn_user.repository:
+        class: %user_repositiory.class%
+
 
     ovpn_user.manager:
         class: %user_manager.ovpn.class%

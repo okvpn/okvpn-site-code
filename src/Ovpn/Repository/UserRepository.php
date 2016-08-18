@@ -3,8 +3,9 @@
 namespace Ovpn\Repository;
 
 use Ovpn\Entity\Users;
+use Ovpn\Model\UserProviderInterface;
 
-class UserRepository
+class UserRepository implements UserProviderInterface
 {
     /**
      * @param string $email
@@ -12,7 +13,7 @@ class UserRepository
      * @return null|Users
      * @throws \Kohana_Exception
      */
-    public function findUserByEmail(string $email, $onlyAtive = false)
+    public function findUserByEmail($email, $onlyAtive = false)
     {
         /** @var Users $user */
         $user = (new Users)
