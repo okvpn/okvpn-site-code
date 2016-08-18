@@ -2,15 +2,34 @@
 
 namespace Ovpn\Controller;
 
+use Annotations\DependencyInjectionAnnotation as DI;
 use Ovpn\Security\SecurityFacade;
 
 trait GetSecurityTrait
 {
+
+    /**
+     * @var SecurityFacade
+     * @DI(service="ovpn_security")
+     */
+    protected $securityFacade;
+
     /**
      * @return SecurityFacade
+     * @throws \RuntimeException
      */
-    protected function getSecurityFacede()
+    public function getSecurityFacade()
     {
-        return $this->getContainer()->get('ovpn_security');
+        if (! $this->securityFacade instanceof SecurityFacade) {
+            throw new \RuntimeException('"securityFacade" must be instance of SecurityFacade and 
+                must be inject from DI');
+        }
+
+        return $this->securityFacade;
+    }
+
+    public function setSecurityFacade(SecurityFacade $facade)
+    {
+        $this->securityFacade = $facade;
     }
 }

@@ -3,6 +3,7 @@
 namespace Ovpn\Core;
 
 use Annotations\DependencyInjectionAnnotation as DI;
+use Ovpn\Core\HTTPFoundation\NotFoundException;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -89,19 +90,16 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
     public function execute()
     {
         $this->before();
-        
         $action = $this->getRequest()->action() . 'Action';
-        
-        if ( ! method_exists($this, $action)) {
-            
-            throw \HTTP_Exception::factory(404, 
-                'The requested URL :uri was not found on this server.',
-                [':uri' => $this->getRequest()->uri()]
-            )->request($this->getRequest());
-            
+
+        $reflect = new \ReflectionClass($this);
+
+        if (! $reflect->hasMethod($action)) {
+            throw new NotFoundException();
         }
-        // todo:: must be refactored in 2.1
-        $this->{$action}();
+
+        $reflect->getMethod($action)
+            ->invoke($this);
 
         // Execute the "after action" method
         $this->after();
@@ -126,6 +124,6 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
      * @inheritdoc
      */
     public function after() {}
-
+    
 
 }
