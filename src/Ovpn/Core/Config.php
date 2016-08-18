@@ -19,7 +19,7 @@ class Config
         $name = preg_split('/:/', $baseName);
         $config =  $this->kohanaConfig->get(array_shift($name), $default);
 
-        if (!is_array($config)) {
+        if (! is_array($config)) {
             return (null === $config) ? $default : $config;
         }
 
