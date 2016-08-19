@@ -2,7 +2,6 @@
 
 namespace Ovpn\Security;
 
-use Ovpn\Model\UserProviderInterface;
 
 class Authorization implements AuthorizationInterface
 {

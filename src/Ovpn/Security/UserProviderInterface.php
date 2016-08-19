@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Model;
+namespace Ovpn\Security;
 
 use Ovpn\Entity\UsersInterface;
 

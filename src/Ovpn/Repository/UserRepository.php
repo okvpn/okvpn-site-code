@@ -3,7 +3,7 @@
 namespace Ovpn\Repository;
 
 use Ovpn\Entity\Users;
-use Ovpn\Model\UserProviderInterface;
+use Ovpn\Security\UserProviderInterface;
 
 class UserRepository implements UserProviderInterface
 {
