@@ -142,7 +142,7 @@ $('.btn-green').click(function(e){
 
 
 
-  $.post(system.signup,form,function(json){
+  $.post(system.signup, form, function(json){
       setTimeout(function(){
         $('.m-warning').html(''); 
         if (json.error) {

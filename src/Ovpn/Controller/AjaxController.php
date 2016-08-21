@@ -18,7 +18,7 @@ class AjaxController extends Controller
     {
         $data = [
             'auth'    => ($this->getSecurityFacade()->getUser() instanceof UsersInterface),
-            'signup'  => URL::base() . 'signup',
+            'signup'  => URL::base() . 'user/create',
             'sitekey' => $this->getConfig()->get('captcha:sitekey'),
             'login'   => URL::base() . 'user/login',
             'profile' => URL::base() . 'profile',

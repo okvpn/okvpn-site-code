@@ -99,7 +99,7 @@ class UserManager
         }
         
         if ($this->config->get('captcha:check') &&
-            Recaptcha::check($post['g-recaptcha-response'])) {
+            ! Recaptcha::check($post['g-recaptcha-response'])) {
             return [
                 'error'   => true,
                 'message' => [Kohana::message('user', 'captchaErr')],
@@ -156,7 +156,12 @@ class UserManager
         ];
     }
 
-    public function userCheckEmail($token)
+    /**
+     * @param $token
+     * @return bool|Users
+     * @throws \Kohana_Exception
+     */
+    public function confirmEmail($token)
     {
         /** @var Users $user */
         $user = (new Users)

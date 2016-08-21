@@ -3,6 +3,10 @@
 namespace Ovpn\Controller;
 
 use Ovpn\Core\Controller;
+use Ovpn\Core\HTTPFoundation\NotFoundException;
+use Ovpn\Entity\UsersInterface;
+use Ovpn\Model\UserManager;
+use Ovpn\Security\TokenSessionStorage;
 
 
 class UserController extends Controller
@@ -27,10 +31,37 @@ class UserController extends Controller
 
     /**
      * Email verification
-     * @Route('/user/verification')
+     * @Route('/user/verify')
      */
-    public function verificationAction()
+    public function verifyAction()
     {
+        $result = $this->getUserManager()->confirmEmail(
+            $this->getRequest()->param('token'));
         
+        if ($result instanceof  UsersInterface) {
+            (new TokenSessionStorage())->setToken($result->getId());
+            $this->redirect( \URL::base(true) . 'profile');
+        } else {
+            throw new NotFoundException();
+        }
+    }
+
+    /**
+     * @Route('/user/create')
+     */
+    public function createAction()
+    {
+        $um = $this->getUserManager();
+        $result = $um->createUser($_POST);
+        
+        $this->setJsonResponse($result);
+    }
+
+    /**
+     * @return UserManager
+     */
+    protected function getUserManager()
+    {
+        return $this->container->get('ovpn_user.manager');
     }
 }

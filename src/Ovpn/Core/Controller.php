@@ -8,6 +8,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class Controller decorate Kohana_Controller
+ */
 abstract class Controller implements ContainerAwareInterface, ControllerInterface
 {
     
