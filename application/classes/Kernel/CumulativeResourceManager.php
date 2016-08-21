@@ -24,13 +24,13 @@ class CumulativeResourceManager
     /**
      * @return CumulativeResourceManager
      */
-    public static function getInstance()
+    final public static function getInstance()
     {
-        if (! self::$instance) {
-            self::$instance = new self();
+        if (! static::$instance) {
+            static::$instance = new static();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -81,17 +81,17 @@ class CumulativeResourceManager
     {
     }
 
-    public function __clone()
+    private function __clone()
     {
         throw new \Exception('CumulativeResourceManager can not be cloned');
     }
 
-    public function __sleep()
+    final public function __sleep()
     {
         throw new \Exception('CumulativeResourceManager can not be serialize');
     }
 
-    public function __wakeup()
+    final public function __wakeup()
     {
         throw new \Exception('CumulativeResourceManager can not be unserialize');
     }

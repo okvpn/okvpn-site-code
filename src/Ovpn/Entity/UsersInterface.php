@@ -25,5 +25,10 @@ interface UsersInterface {
      * @return string
      */
     public function getPassword();
+
+    /**
+     * @return Roles
+     */
+    public function getRole();
     
 }

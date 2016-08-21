@@ -8,6 +8,7 @@ parameters:
     user.class:                     Ovpn\Entity\Users
     security.class:                 Ovpn\Security\Security
     authorization.class:            Ovpn\Security\Authorization
+    mail.mailgun.class:             Ovpn\Tools\MailgunMailer
 
 
 
@@ -33,7 +34,7 @@ services:
 
     ovpn_user.manager:
         class: %user_manager.ovpn.class%
-        arguments: ['@ovpn_config']
+        arguments: ['@ovpn_config', '@ovpn_mailer']
 
     ovpn_authorization:
         class: %authorization.class%
@@ -42,3 +43,7 @@ services:
     ovpn_security:
         class: %security_facade.class%
         arguments: ['@ovpn_authorization', '@ovpn_security.abstract', '@ovpn_token.storage']
+
+    ovpn_mailer:
+        class: %mail.mailgun.class%
+        arguments: ['@ovpn_config']
