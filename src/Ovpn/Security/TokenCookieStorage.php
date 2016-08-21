@@ -35,7 +35,10 @@ class TokenCookieStorage implements TokenStorageInterface
         $token = $this->cookieDriver->get($this->name);
 
         //TODO:: shoud be fixed in 2.1
-        if ($userInfo = base64_decode($token) and $userInfo = json_decode($userInfo, true)) {
+        if ($userInfo = base64_decode($token) and
+            $userInfo = json_decode($userInfo, true) and
+            isset($userInfo['hash'])) {
+
             $user = $this->abstractUser->getInstance($userInfo['id']);
             return (hash('sha512', $user->getToken()) == $userInfo['hash']) ? $user : null;
         }
