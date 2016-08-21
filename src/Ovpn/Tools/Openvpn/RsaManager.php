@@ -1,12 +1,14 @@
 <?php
-define('DOCROOT', realpath(dirname(__FILE__).'/..').DIRECTORY_SEPARATOR);
+
+namespace Ovpn\Tools\Openvpn;
+
 
 class RsaManager
 {
     protected $resource;
 
     protected $init = false;
-
+    
     protected $opensslDir;
 
     public function __construct($client, $hostname)
@@ -40,13 +42,13 @@ class RsaManager
         if ($this->init) {
             return;
         }
-
+        
         $payload = $this->getCommandForGenerateCert($client);
-
+       
         if (! function_exists('shell_exec')) {
             throw new \Exception('shell_exec');
         }
-
+        
         shell_exec($payload);
 
         if (file_exists($this->pathToClientCert($client)) &&
@@ -56,7 +58,7 @@ class RsaManager
             $this->resource['cert'] = file_get_contents($this->pathToClientCert($client));
             $this->init = true;
         } else {
-            throw new \RuntimeException('easyrsa error');
+            throw new \RuntimeException('');
         }
         return;
     }
@@ -82,9 +84,7 @@ class RsaManager
 cd $this->opensslDir
 bash easyrsa.sh build-client-full $name nopass
 BASH;
-
+        
     }
 
 }
-
-(new RsaManager('test-rsa', 'de2'))->init('test-rsa');
