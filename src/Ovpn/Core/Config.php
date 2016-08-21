@@ -8,10 +8,13 @@ class Config
     protected $kohanaConfig;
     
     protected $defaultConfig = 'info';
+    
+    protected $defaultParam;
 
     public function __construct()
     {
         $this->kohanaConfig = \Kohana::$config->load($this->defaultConfig);
+        $this->defaultParam = \Kohana::$config->load('parameters');
     }
     
     public function get($baseName, $default = null)
@@ -32,11 +35,24 @@ class Config
             }
 
             if (! is_array($config)) {
-                return $config;
+                if (! preg_match('/^%(.+)%$/', $config, $match)) {
+                    return $config;
+                }
+                
+                return $this->getParameters($match[1]);
             }
         }
 
         return $default;
+    }
+    
+    protected function getParameters($name)
+    {
+        $value = $this->defaultParam->get($name, null);
+        if  (null === $value) {
+            throw new \Exception(sprintf('Config parameters "%s" not found in parameters.php'));
+        }
+        return $value;
     }
 
     public function getConfig()
