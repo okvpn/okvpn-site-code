@@ -24,4 +24,13 @@ class UserController extends Controller
             'message' => [\Kohana::message('user', 'accountNotFound')]
         ]);
     }
+
+    /**
+     * Email verification
+     * @Route('/user/verification')
+     */
+    public function verificationAction()
+    {
+        
+    }
 }
