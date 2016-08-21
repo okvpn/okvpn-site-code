@@ -155,10 +155,10 @@
       <div class="zero-20"></div>
       <div style="border-width: 2px;border-bottom-style: groove;"> </div>
       <div class="zero-20"></div>
-      <p style="font-size: 0.8em">
+<!--       <p style="font-size: 0.8em">
         <i> Ребята! Нам нужно продвигаться, а бюджета нет! Скинте ссылку друзьям или сделайте <a href="https://www.coinbase.com/jurasikt">пожертвование</a></i>
       </p>
-    </div>    
+ -->    </div>    
   </div>
 <div class ="zero-120"></div>
 </div>
