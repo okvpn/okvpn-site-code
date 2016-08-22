@@ -24,8 +24,7 @@ class SecurityFacadeTest extends TestCase
         $this->authorization = $this->createMock('Ovpn\Security\Authorization');
         $this->security = $this->createMock('Ovpn\Security\Security');
         $this->tokenStorage = new TokenStorage();
-        $this->tokenStorage->addToken($this->token, 2);
-        $this->tokenStorage->compile();
+        $this->tokenStorage->addToken($this->token);
     }
 
     public function testGetUser()
