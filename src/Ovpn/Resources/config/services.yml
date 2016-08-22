@@ -50,10 +50,12 @@ services:
 
     ovpn_token.session:
         class: Ovpn\Security\TokenSession
+        public: false
         tags:
-            - { name: secure.token }
+            - { name: secure.token, priority: 1 }
 
     ovpn_token.cookie:
         class: Ovpn\Security\TokenCookie
+        public: false
         tags:
-            - { name: secure.token }
+            - { name: secure.token, priority: 2 }
