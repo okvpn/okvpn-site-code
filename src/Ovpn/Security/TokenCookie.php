@@ -5,7 +5,7 @@ namespace Ovpn\Security;
 use Ovpn\Entity\Users;
 use Ovpn\Entity\UsersInterface;
 
-class TokenCookieStorage implements TokenStorageInterface
+class TokenCookie implements TokenInterface
 {
     protected $name = 'rememberme';
 

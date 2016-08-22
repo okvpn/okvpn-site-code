@@ -7,9 +7,9 @@ use Ovpn\Entity\UsersInterface;
 class Security implements SecurityInterface
 {
     /**
-     * @var TokenStorageInterface
+     * @var TokenInterface
      */
-    protected $tokenStorage;
+    protected $tokenStrategy;
 
     /**
      * @var UsersInterface
@@ -22,23 +22,23 @@ class Security implements SecurityInterface
     }
 
     /**
-     * @param TokenStorageInterface $tokenStorage
+     * @param TokenInterface $tokenStrategy
      */
-    public function setTokenStorage(TokenStorageInterface $tokenStorage)
+    public function setTokenStrategy(TokenInterface $tokenStrategy)
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->tokenStrategy = $tokenStrategy;
     }
 
     /**
-     * @return TokenStorageInterface
+     * @return TokenInterface
      * @throws \Exception
      */
     public function getTokenStorage()
     {
-        if (! $this->tokenStorage) {
+        if (! $this->tokenStrategy) {
             throw new \Exception('The token storage must be initialized');
         }
-        return $this->tokenStorage;
+        return $this->tokenStrategy;
     }
     
     /**
@@ -46,7 +46,7 @@ class Security implements SecurityInterface
      */
     public function getAbstractUser()
     {
-        $abstractUser = $this->tokenStorage->getToken();
+        $abstractUser = $this->tokenStrategy->getToken();
         return $abstractUser ? $this->abstractUser->getInstance($abstractUser) : null;
     }
 

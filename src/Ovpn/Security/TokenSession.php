@@ -3,7 +3,7 @@
 namespace Ovpn\Security;
 
 
-class TokenSessionStorage implements TokenStorageInterface
+class TokenSession implements TokenInterface
 {
     protected  $name = 'user_id';
 

@@ -3,7 +3,7 @@
 namespace Ovpn\Security;
 
 
-interface TokenStorageInterface
+interface TokenInterface
 {
     /**
      * Return Auth token

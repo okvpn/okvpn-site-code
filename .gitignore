@@ -3,7 +3,7 @@ application/logs/*
 .idea
 sftp-config.json
 application/out/*
-application/config/phinx.yml
+application/config/database.php
 .svn
 *.log
 *~

@@ -47,3 +47,13 @@ services:
     ovpn_mailer:
         class: %mail.mailgun.class%
         arguments: ['@ovpn_config']
+
+    ovpn_token.session:
+        class: Ovpn\Security\TokenSession
+        tags:
+            - { name: secure.token }
+
+    ovpn_token.cookie:
+        class: Ovpn\Security\TokenCookie
+        tags:
+            - { name: secure.token }
