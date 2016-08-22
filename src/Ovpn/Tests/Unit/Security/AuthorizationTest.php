@@ -1,6 +1,7 @@
 <?php
 
 use Ovpn\Security\Authorization;
+use Ovpn\Security\TokenStorage;
 
 class AuthorizationTest extends PHPUnit_Framework_TestCase
 {
@@ -9,7 +10,7 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->token = $this->createMock('Ovpn\Security\TokenStorageInterface');
+        $this->token = $this->createMock('Ovpn\Security\TokenInterface');
     }
 
     /**
@@ -18,8 +19,8 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
     public function testDoLogin($hashPassword, $realPassword, $result)
     {
         $abstractUser = $this->createMock('Ovpn\Entity\UsersInterface');
-        $tokenStorage = $this->createMock('Ovpn\Security\TokenStorage');
         $userProvider = $this->createMock('Ovpn\Security\UserProviderInterface');
+        $tokenStorage = $this->createMock('Ovpn\Security\TokenStorage');
 
         $abstractUser->expects($this->once())
             ->method('getPassword')
@@ -27,9 +28,6 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
         $userProvider->expects($this->once())
             ->method('findUserByEmail')
             ->willReturn($abstractUser);
-        $tokenStorage->expects($this->any())
-            ->method('getTokens')
-            ->willReturn([$this->token]);
 
         $auth = new Authorization($tokenStorage, $userProvider);
 

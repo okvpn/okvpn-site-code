@@ -5,8 +5,12 @@ namespace Ovpn\Security;
 class TokenStorage extends \SplObjectStorage
 {
 
-    protected $tokens;
+    protected $tokens = [];
 
+    /**
+     * @param TokenInterface $token
+     * @param int $priority
+     */
     public function addToken(TokenInterface $token, $priority)
     {
         if (array_key_exists($priority, $this->tokens)) {
@@ -17,10 +21,8 @@ class TokenStorage extends \SplObjectStorage
     }
 
     /**
-     * todo: use spl iterator
+     * Sort tokens by priority key
      */
-    public function getToken(){}
-
     public function compile()
     {
         ksort($this->tokens);

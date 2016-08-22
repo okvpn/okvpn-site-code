@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Ovpn\Security\TokenCookieStorage;
+use Ovpn\Security\TokenCookie;
 use Ovpn\Entity\UsersInterface;
 
 class SecurityTokenTest extends TestCase
@@ -18,8 +18,8 @@ class SecurityTokenTest extends TestCase
         $session->expects($this->once())
             ->method('set');
 
-        /** @var  Ovpn\Security\TokenSessionStorage $token */
-        $token = (new \ReflectionClass('Ovpn\Security\TokenSessionStorage'))
+        /** @var  Ovpn\Security\TokenSession $token */
+        $token = (new \ReflectionClass('Ovpn\Security\TokenSession'))
             ->newInstanceWithoutConstructor();
 
         $token->setDriver($session);
@@ -31,8 +31,8 @@ class SecurityTokenTest extends TestCase
     {
         $user = $this->getUserProvider();
 
-        $reflect = new \ReflectionClass('Ovpn\Security\TokenCookieStorage');
-        /** @var TokenCookieStorage $storage */
+        $reflect = new \ReflectionClass('Ovpn\Security\TokenCookie');
+        /** @var TokenCookie $storage */
         $storage = $reflect->newInstanceWithoutConstructor();
 
         $reflect->getProperty('abstractUser')
@@ -40,7 +40,7 @@ class SecurityTokenTest extends TestCase
 
         $reflect->getProperty('cookieDriver')
             ->setValue($storage, new class {
-                public function set(){}
+                public function set() {}
             });
 
         $storage->setToken('10');
@@ -51,8 +51,8 @@ class SecurityTokenTest extends TestCase
      */
     public function testGetCookieToken($user, $token, $result)
     {
-        $reflect = new \ReflectionClass('Ovpn\Security\TokenCookieStorage');
-        /** @var TokenCookieStorage $storage */
+        $reflect = new \ReflectionClass('Ovpn\Security\TokenCookie');
+        /** @var TokenCookie $storage */
         $storage = $reflect->newInstanceWithoutConstructor();
 
         $reflect->getProperty('abstractUser')

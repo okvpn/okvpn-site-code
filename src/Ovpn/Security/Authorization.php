@@ -35,7 +35,7 @@ class Authorization implements AuthorizationInterface
         $login = password_verify($password, $user->getPassword());
 
         foreach ($this->tokenStorage as $token) {
-            if ($login && $token instanceof TokenStorageInterface) {
+            if ($login && $token instanceof TokenInterface) {
                 $token->setToken((string) $user->getId());
             }
         }

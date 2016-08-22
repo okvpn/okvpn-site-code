@@ -33,7 +33,7 @@ class Security implements SecurityInterface
      * @return TokenInterface
      * @throws \Exception
      */
-    public function getTokenStorage()
+    public function getTokenStrategy()
     {
         if (! $this->tokenStrategy) {
             throw new \Exception('The token storage must be initialized');
