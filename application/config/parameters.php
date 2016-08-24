@@ -1,6 +1,7 @@
 <?php
 return [
     'database' => 'okvpn',
-    'username' => '',
-    'password' => '',
+    'username' => 'postgres',
+    'password' => 'ppkt731415926',
+    'host'     => '127.0.0.1',
 ];

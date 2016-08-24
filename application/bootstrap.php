@@ -1,6 +1,5 @@
 <?php
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Kernel\{
     Kernel,
     CumulativeResourceManager
@@ -163,9 +162,6 @@ define('SALT', 'y1fAgLdx8WeFsQ');
 Kernel::registrationBundle([
     new Ovpn\OvpnBundle(),
 ]);
-
-AnnotationRegistry::registerAutoloadNamespace('Annotations\DependencyInjectionAnnotation',
-    APPPATH . 'classes' );
 
 CumulativeResourceManager::getInstance()
     ->setContainer(Kernel::getContainer())
