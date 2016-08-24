@@ -23,21 +23,27 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
     protected $seleniumBrowser = 'phantomjs';
     protected $seleniumTestUrl = 'http://test.loc/';
 
+    protected static $hostHub = 'http://127.0.0.1:8080';
+
     /**
      * @var RemoteWebDriver
      */
-    protected $driver;
+    protected static $driver;
 
     /**
      * @var int milliseconds
      */
     protected static $timeout = 5000;
 
-    /*public function __construct($name, array $data, $dataName)
+
+    static public function setUpBeforeClass()
     {
-        $a =
-        parent::__construct($name, $data, $dataName);
-    }*/
+        $host = static::$hostHub;
+
+        if ($host) {
+            static::$driver = RemoteWebDriver::create($host, DesiredCapabilities::phantomjs());
+        }
+    }
 
     /**
      * @inheritdoc
@@ -45,15 +51,12 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
     protected function setUp()
     {
         parent::setUp();
-        $host = 'http://localhost:4444/wd/hub';
 
         $this->setHost($this->seleniumHost);
-        $this->setPort($this->seleniumPort);
+        $this->setPort(intval($this->seleniumPort));
         $this->setBrowser($this->seleniumBrowser);
         $this->setBrowserUrl($this->seleniumTestUrl);
-        $this->driver =  RemoteWebDriver::create($host, DesiredCapabilities::phantomjs());
 
-        //added for xhprof tracing and works only with phantomjs
         $this->setDesiredCapabilities(
             ['phantomjs.page.customHeaders.PHPUNIT-SELENIUM-TEST-ID' => $this->getTestId()]
         );
@@ -62,9 +65,10 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
     /**
      * @inheritdoc
      */
-    public function url($url)
+    public function url($url = null)
     {
-        parent::url($this->seleniumTestUrl . $url);
+        $payload = ($url !== null) ? $this->seleniumTestUrl . $url : null;
+        return parent::url($payload);
     }
 
     /**
@@ -72,7 +76,7 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
      */
     public function getDriver()
     {
-        return $this->driver;
+        return static::$driver;
     }
 
     /**
@@ -80,6 +84,7 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
      */
     protected function tearDown()
     {
+        $this->cookie()->clear();
         parent::tearDown();
     }
 
@@ -108,16 +113,24 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
         );
     }
 
+    public function waitToRedirect($page)
+    {
+        $this->waitUntil(
+            function () use ($page) {
+                return $this->seleniumTestUrl . $page == $this->url();
+            }
+        );
+    }
+
     /**
      * @param \PHPUnit_Extensions_Selenium2TestCase_Element $element
      */
     public function waitToElementEnable($element)
     {
-
         $this->waitUntil(
             function () use ($element) {
 
-                return $element->enabled() ? true : null;
+                return $element->displayed() ? true : null;
             }, static::$timeout
         );
     }
