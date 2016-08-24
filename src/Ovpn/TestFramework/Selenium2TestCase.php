@@ -2,6 +2,9 @@
 
 namespace Ovpn\TestFramework;
 
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+
 /**
  * Class Selenium2TestCase
  *
@@ -14,18 +17,27 @@ namespace Ovpn\TestFramework;
  */
 abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
 {
-    const URL = 'http://test.loc/';
 
-    protected static $seleniumHost = '127.0.0.1';
-    protected static $seleniumPort = '4444';
-    protected static $seleniumBrowser = 'phantomjs';
-    protected static $seleniumTestUrl = 'http://test.loc/';
+    protected $seleniumHost = '127.0.0.1';
+    protected $seleniumPort = '4444';
+    protected $seleniumBrowser = 'phantomjs';
+    protected $seleniumTestUrl = 'http://test.loc/';
+
+    /**
+     * @var RemoteWebDriver
+     */
+    protected $driver;
 
     /**
      * @var int milliseconds
      */
     protected static $timeout = 5000;
 
+    /*public function __construct($name, array $data, $dataName)
+    {
+        $a =
+        parent::__construct($name, $data, $dataName);
+    }*/
 
     /**
      * @inheritdoc
@@ -33,15 +45,17 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
     protected function setUp()
     {
         parent::setUp();
+        $host = 'http://localhost:4444/wd/hub';
 
-        $this->setHost(static::$seleniumHost);
-        $this->setPort(intval(static::$seleniumPort));
-        $this->setBrowser(static::$seleniumBrowser);
-        $this->setBrowserUrl(static::$seleniumTestUrl);
+        $this->setHost($this->seleniumHost);
+        $this->setPort($this->seleniumPort);
+        $this->setBrowser($this->seleniumBrowser);
+        $this->setBrowserUrl($this->seleniumTestUrl);
+        $this->driver =  RemoteWebDriver::create($host, DesiredCapabilities::phantomjs());
 
         //added for xhprof tracing and works only with phantomjs
         $this->setDesiredCapabilities(
-            array('phantomjs.page.customHeaders.PHPUNIT-SELENIUM-TEST-ID' => $this->getTestId())
+            ['phantomjs.page.customHeaders.PHPUNIT-SELENIUM-TEST-ID' => $this->getTestId()]
         );
     }
 
@@ -50,7 +64,15 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
      */
     public function url($url)
     {
-        parent::url(static::$seleniumTestUrl . $url);
+        parent::url($this->seleniumTestUrl . $url);
+    }
+
+    /**
+     * @return RemoteWebDriver
+     */
+    public function getDriver()
+    {
+        return $this->driver;
     }
 
     /**
@@ -61,7 +83,7 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
         parent::tearDown();
     }
 
-    protected function ignorePageError()
+    public function ignorePageError()
     {
         $this->execute([
             'script' => $this->getJsCodeErrorIgnore(),
@@ -73,6 +95,7 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
     public function waitToAjax()
     {
         $jsCode = $this->getJsCodeJQueryIsActive();
+
         $this->waitUntil(
             function () use ($jsCode) {
                 $status = $this->execute([
@@ -83,7 +106,20 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
                 return $status ? true : null;
             }, static::$timeout
         );
-        sleep(1);
+    }
+
+    /**
+     * @param \PHPUnit_Extensions_Selenium2TestCase_Element $element
+     */
+    public function waitToElementEnable($element)
+    {
+
+        $this->waitUntil(
+            function () use ($element) {
+
+                return $element->enabled() ? true : null;
+            }, static::$timeout
+        );
     }
 
     private function getJsCodeErrorIgnore()

@@ -11,8 +11,11 @@ class Config
     
     protected $defaultParam;
 
-    public function __construct()
+    public function __construct($defaultConfig = null)
     {
+        if ($defaultConfig) {
+            $this->defaultConfig = $defaultConfig;
+        }
         $this->kohanaConfig = \Kohana::$config->load($this->defaultConfig);
         $this->defaultParam = \Kohana::$config->load('parameters');
     }
