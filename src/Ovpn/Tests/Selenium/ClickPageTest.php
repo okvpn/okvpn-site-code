@@ -3,19 +3,36 @@
 namespace Ovpn\Tests\Selenium;
 
 use Ovpn\TestFramework\Selenium2TestCase;
-use Ovpn\Tests\Selenium\Page\Login;
+use Ovpn\Tests\Selenium\Page\HostInfoJson;
+use Ovpn\Tests\Selenium\Page\ProfileViewList;
+use Ovpn\Tests\Selenium\Page\Settings;
 
 class ClickPageTest extends Selenium2TestCase
 {
 
-    public function testLoginClick()
+    public function testLogin()
     {
-        $login = new Login($this);
-        $login->login()
-            ->setUsername('tsykun314@gmail.com')
-            ->setPassword('php123456')
-            ->submit();
+        $this->login();
+    }
 
-        var_dump($this->url());
+    /**
+     * @depends testLogin
+     */
+    public function testSettings()
+    {
+        $login = $this->login();
+        /** @var Settings $login */
+        $page = $login->openSettings();
+        $this->assertTrue($page->checkCurrentUrl());
+    }
+
+    /**
+     * @depends testLogin
+     */
+    public function testCreate()
+    {
+        $this->login();
+        $page = new ProfileViewList($this);
+        $this->assertTrue($page->checkCurrentUrl());
     }
 }

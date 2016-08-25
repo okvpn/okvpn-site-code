@@ -36,7 +36,7 @@ class Config implements ConfigInterface
                 $config = $config[$configKeyName];
             } else {
                 throw new \InvalidArgumentException(
-                    sprintf('The config key"%s" nor exsist in "%s"', $baseName, $this->defaultConfig));
+                    sprintf('The config key"%s" nor exist in "%s"', [$baseName, $this->defaultConfig]));
             }
         }
         
@@ -73,7 +73,7 @@ class Config implements ConfigInterface
     {
         $value = $this->defaultParam->get($name, null);
         if  (null === $value) {
-            throw new \Exception(sprintf('Config parameters "%s" not found in parameters.php'));
+            throw new \Exception(sprintf('Config parameters "%s" not found in parameters.php', $name));
         }
         return $value;
     }

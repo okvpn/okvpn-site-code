@@ -13,7 +13,6 @@ class Login extends AbstractPage
         $this->test->byId('signin')->click();
 
         $form = $this->test->byClassName('btn-green');
-        //sleep(3);
         $this->test->waitToElementEnable($form);
         return $this;
     }
