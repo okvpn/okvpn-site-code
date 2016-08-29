@@ -3,7 +3,7 @@
 namespace Ovpn\Tools\Openvpn;
 
 
-class RsaManager
+class RsaManager implements RsaManagerInterface
 {
     /**
      * Cumulative resource manager
@@ -74,6 +74,26 @@ class RsaManager
             throw new \RuntimeException('Openssl not installed. Check needs regiments');
         }
         return;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function has($name)
+    {
+        return array_key_exists($name, $this->resource);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function get($name)
+    {
+        if (! $this->has($name)) {
+            throw new \InvalidArgumentException(sprintf('Parametrs "%s" do not exsist'));
+        }
+        
+        return $this->resource[$name];
     }
 
     protected function pathToClientKey($client)
