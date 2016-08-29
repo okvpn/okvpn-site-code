@@ -6,8 +6,6 @@ namespace Ovpn\Core;
 class KohanaConfig implements ConfigInterface
 {
 
-
-
     /**
      * @inheritdoc
      */

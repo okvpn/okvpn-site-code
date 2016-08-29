@@ -2,6 +2,8 @@
 
 namespace Ovpn\Core;
 
+use Config as BaseConfig;
+
 
 class Config implements ConfigInterface
 {
@@ -11,14 +13,21 @@ class Config implements ConfigInterface
     
     protected $defaultParam;
 
-    public function __construct($defaultConfig = null)
+    public function __construct(BaseConfig $config = null, BaseConfig $parameters = null, $defaultConfig = null)
     {
         if ($defaultConfig) {
             $this->defaultConfig = $defaultConfig;
         }
+
+        if ($config === null) {
+            $config = \Kohana::$config->load($this->defaultConfig);
+        }
+        if ($parameters === null) {
+            $parameters = \Kohana::$config->load('parameters');
+        }
         
-        $this->kohanaConfig = \Kohana::$config->load($this->defaultConfig);
-        $this->defaultParam = \Kohana::$config->load('parameters');
+        $this->kohanaConfig = $config;
+        $this->defaultParam = $parameters;
     }
 
     /**

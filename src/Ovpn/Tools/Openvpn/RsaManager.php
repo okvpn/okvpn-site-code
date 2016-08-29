@@ -5,7 +5,21 @@ namespace Ovpn\Tools\Openvpn;
 
 class RsaManager
 {
+    /**
+     * Cumulative resource manager
+     * @var array
+     */
     protected $resource;
+
+    /**
+     * @var string
+     */
+    protected $client;
+
+    /**
+     * @var string
+     */
+    protected $hostname;
 
     protected $init = false;
     
@@ -34,16 +48,15 @@ class RsaManager
     }
 
     /**
-     * @param $client
      * @throws \Exception
      */
-    public function init($client)
+    public function init()
     {
         if ($this->init) {
             return;
         }
         
-        $payload = $this->getCommandForGenerateCert($client);
+        $payload = $this->getCommandForGenerateCert($this->client);
        
         if (! function_exists('shell_exec')) {
             throw new \Exception('shell_exec');
@@ -51,14 +64,14 @@ class RsaManager
         
         shell_exec($payload);
 
-        if (file_exists($this->pathToClientCert($client)) &&
-            file_exists($this->pathToClientKey($client))) {
+        if (file_exists($this->pathToClientCert($this->client)) &&
+            file_exists($this->pathToClientKey($this->client))) {
 
-            $this->resource['key'] = file_get_contents($this->pathToClientKey($client));
-            $this->resource['cert'] = file_get_contents($this->pathToClientCert($client));
+            $this->resource['key'] = file_get_contents($this->pathToClientKey($this->client));
+            $this->resource['cert'] = file_get_contents($this->pathToClientCert($this->client));
             $this->init = true;
         } else {
-            throw new \RuntimeException('');
+            throw new \RuntimeException('Openssl not installed. Check needs regiments');
         }
         return;
     }
@@ -84,7 +97,6 @@ class RsaManager
 cd $this->opensslDir
 bash easyrsa.sh build-client-full $name nopass
 BASH;
-        
     }
 
 }

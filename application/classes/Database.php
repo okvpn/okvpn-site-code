@@ -20,7 +20,7 @@ abstract class Database extends Kohana_Database
         if ( ! isset(Database::$instances[$name])) {
             if ($config === null) {
 
-                $config = (new Config('info'))
+                $config = (new Config())
                     ->get("database:$name");
             }
 
