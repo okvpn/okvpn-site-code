@@ -1,2 +1,2 @@
 <?php
-var_dump(preg_replace('/\\w/','','sadsad\\sd\sd'));
+var_dump(array_reverse(preg_split('//', '123456')));
