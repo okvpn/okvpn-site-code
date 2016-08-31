@@ -54,7 +54,7 @@ abstract class AbstractPage implements PageInterface
                 unset($arguments[0]);
                 $arguments = array_values($arguments);
             } else {
-                $namespace = preg_replace('/\\w+$/i', '', get_class($this->test));
+                $namespace = preg_replace('/\\w+$/', '', get_class($this->test));
             }
 
             $class = $namespace . '\\Page\\' . $result[1];

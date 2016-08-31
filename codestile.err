@@ -1,0 +1,1189 @@
+EEEEEEEEEEEEEEEEEEEEEEE.EEEE.EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 60 / 68 (88%)
+EEEEEEEE
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/TransactionInerface.php
+----------------------------------------------------------------------
+FOUND 5 ERRORS AFFECTING 3 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [ ] Each interface must be in a namespace of at least
+    |       |     one level (a top-level vendor name)
+  3 | ERROR | [ ] Interface name "Model_TransactionInerface" is not
+    |       |     in camel caps format
+  3 | ERROR | [x] Whitespace found at end of line
+  4 | ERROR | [x] Expected 0 spaces before opening brace; 1 found
+ 69 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/User.php
+----------------------------------------------------------------------
+FOUND 23 ERRORS AND 9 WARNINGS AFFECTING 28 LINES
+----------------------------------------------------------------------
+   1 | WARNING | [ ] A file should declare new symbols (classes,
+     |         |     functions, constants, etc.) and cause no other
+     |         |     side effects, or it should execute logic with
+     |         |     side effects, but should not do both. The first
+     |         |     symbol is defined on line 8 and the first side
+     |         |     effect is on line 1.
+   8 | ERROR   | [ ] Each class must be in a namespace of at least
+     |         |     one level (a top-level vendor name)
+   8 | ERROR   | [ ] Class name "Model_User" is not in camel caps
+     |         |     format
+  11 | WARNING | [ ] Property name "$_config" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  17 | WARNING | [ ] Property name "$_uid" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  20 | WARNING | [ ] Property name "$_email" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  23 | WARNING | [ ] Property name "$_password" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+  26 | WARNING | [ ] Property name "$_last_login" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+  28 | ERROR   | [x] Whitespace found at end of line
+  29 | WARNING | [ ] Property name "$_date" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  32 | WARNING | [ ] Property name "$_token" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  35 | WARNING | [ ] Property name "$_role" should not be prefixed
+     |         |     with an underscore to indicate visibility
+ 136 | ERROR   | [x] Blank line found at start of control structure
+ 147 | ERROR   | [x] Blank line found at start of control structure
+ 173 | ERROR   | [x] Expected 0 spaces after opening bracket; newline
+     |         |     found
+ 194 | ERROR   | [x] Blank line found at start of control structure
+ 217 | ERROR   | [x] Opening parenthesis of a multi-line function
+     |         |     call must be the last content on the line
+ 218 | ERROR   | [x] Multi-line function call not indented correctly;
+     |         |     expected 8 spaces but found 12
+ 218 | ERROR   | [x] Closing parenthesis of a multi-line function
+     |         |     call must be on a line by itself
+ 234 | ERROR   | [x] Opening parenthesis of a multi-line function
+     |         |     call must be the last content on the line
+ 235 | ERROR   | [x] Multi-line function call not indented correctly;
+     |         |     expected 8 spaces but found 12
+ 235 | ERROR   | [x] Closing parenthesis of a multi-line function
+     |         |     call must be on a line by itself
+ 313 | ERROR   | [x] Whitespace found at end of line
+ 344 | ERROR   | [x] Blank line found at start of control structure
+ 381 | ERROR   | [ ] Method name "Model_User::mail_cheked" is not in
+     |         |     camel caps format
+ 396 | ERROR   | [x] Blank line found at end of control structure
+ 430 | ERROR   | [ ] Method name "Model_User::set_csrf" is not in
+     |         |     camel caps format
+ 442 | ERROR   | [ ] Method name "Model_User::check_csrf" is not in
+     |         |     camel caps format
+ 454 | ERROR   | [x] Opening parenthesis of a multi-line function
+     |         |     call must be the last content on the line
+ 455 | ERROR   | [x] Multi-line function call not indented correctly;
+     |         |     expected 8 spaces but found 12
+ 455 | ERROR   | [x] Closing parenthesis of a multi-line function
+     |         |     call must be on a line by itself
+ 459 | ERROR   | [x] The closing brace for the class must go on the
+     |         |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 18 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/Server.php
+----------------------------------------------------------------------
+FOUND 20 ERRORS AND 2 WARNINGS AFFECTING 20 LINES
+----------------------------------------------------------------------
+  22 | WARNING | [ ] Property name "$_config" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  35 | ERROR   | [x] Opening parenthesis of a multi-line function
+     |         |     call must be the last content on the line
+  37 | WARNING | [ ] Line exceeds 120 characters; contains 122
+     |         |     characters
+  48 | ERROR   | [x] Closing parenthesis of a multi-line function
+     |         |     call must be on a line by itself
+  70 | ERROR   | [x] Blank line found at start of control structure
+  89 | ERROR   | [x] Line indented incorrectly; expected at least 13
+     |         |     spaces, found 12
+  91 | ERROR   | [x] Line indented incorrectly; expected at least 13
+     |         |     spaces, found 12
+  92 | ERROR   | [x] Blank line found at end of control structure
+ 119 | ERROR   | [x] Opening parenthesis of a multi-line function
+     |         |     call must be the last content on the line
+ 120 | ERROR   | [x] Multi-line function call not indented correctly;
+     |         |     expected 8 spaces but found 12
+ 120 | ERROR   | [x] Closing parenthesis of a multi-line function
+     |         |     call must be on a line by itself
+ 124 | ERROR   | [x] Blank line found at start of control structure
+ 167 | ERROR   | [x] Whitespace found at end of line
+ 174 | ERROR   | [x] Opening parenthesis of a multi-line function
+     |         |     call must be the last content on the line
+ 174 | ERROR   | [x] Whitespace found at end of line
+ 177 | ERROR   | [x] Closing parenthesis of a multi-line function
+     |         |     call must be on a line by itself
+ 187 | ERROR   | [x] Whitespace found at end of line
+ 188 | ERROR   | [x] Whitespace found at end of line
+ 192 | ERROR   | [x] Opening parenthesis of a multi-line function
+     |         |     call must be the last content on the line
+ 204 | ERROR   | [x] Closing parenthesis of a multi-line function
+     |         |     call must be on a line by itself
+ 231 | ERROR   | [x] No space found after comma in function call
+ 249 | ERROR   | [x] The closing brace for the class must go on the
+     |         |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 20 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/BitpayInerface.php
+----------------------------------------------------------------------
+FOUND 5 ERRORS AFFECTING 3 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [ ] Each interface must be in a namespace of at least
+    |       |     one level (a top-level vendor name)
+  3 | ERROR | [ ] Interface name "Model_BitpayInerface" is not in
+    |       |     camel caps format
+  3 | ERROR | [x] Whitespace found at end of line
+  4 | ERROR | [x] Expected 0 spaces before opening brace; 1 found
+ 20 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/BillingInerface.php
+----------------------------------------------------------------------
+FOUND 6 ERRORS AFFECTING 4 LINES
+----------------------------------------------------------------------
+ 3 | ERROR | [ ] Each interface must be in a namespace of at least
+   |       |     one level (a top-level vendor name)
+ 3 | ERROR | [ ] Interface name "Model_BillingInerface" is not in
+   |       |     camel caps format
+ 3 | ERROR | [x] Whitespace found at end of line
+ 4 | ERROR | [x] Expected 0 spaces before opening brace; 1 found
+ 5 | ERROR | [x] Spaces must be used to indent lines; tabs are not
+   |       |     allowed
+ 6 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/Transaction.php
+----------------------------------------------------------------------
+FOUND 7 ERRORS AND 2 WARNINGS AFFECTING 8 LINES
+----------------------------------------------------------------------
+   1 | ERROR   | [x] Whitespace found at end of line
+   3 | ERROR   | [ ] Each class must be in a namespace of at least
+     |         |     one level (a top-level vendor name)
+   3 | ERROR   | [ ] Class name "Model_Transaction" is not in camel
+     |         |     caps format
+   5 | WARNING | [ ] Property name "$_table_name" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+   8 | WARNING | [ ] Property name "$_belongs_to" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+ 176 | ERROR   | [x] Blank line found at start of control structure
+ 187 | ERROR   | [x] Blank line found at start of control structure
+ 193 | ERROR   | [x] Function closing brace must go on the next line
+     |         |     following the body; found 1 blank lines before
+     |         |     brace
+ 194 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 5 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/Bitpay.php
+----------------------------------------------------------------------
+FOUND 21 ERRORS AND 7 WARNINGS AFFECTING 25 LINES
+----------------------------------------------------------------------
+  12 | ERROR   | [ ] Each class must be in a namespace of at least
+     |         |     one level (a top-level vendor name)
+  12 | ERROR   | [ ] Class name "Model_Bitpay" is not in camel caps
+     |         |     format
+  12 | ERROR   | [x] Opening brace of a class must be on the line
+     |         |     after the definition
+  14 | WARNING | [ ] Property name "$_config" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  16 | WARNING | [ ] Property name "$_token" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  18 | WARNING | [ ] Property name "$_publicKey" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+  20 | WARNING | [ ] Property name "$_privateKey" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+  22 | WARNING | [ ] Property name "$_isInstance" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+  24 | WARNING | [ ] Property name "$_bitpayUrl" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+  38 | ERROR   | [x] Whitespace found at end of line
+  39 | ERROR   | [x] Blank line found at start of control structure
+  57 | WARNING | [ ] Method name "_isInstance" should not be prefixed
+     |         |     with an underscore to indicate visibility
+  80 | ERROR   | [x] Whitespace found at end of line
+  81 | ERROR   | [x] Whitespace found at end of line
+ 120 | ERROR   | [x] Whitespace found at end of line
+ 166 | ERROR   | [x] Blank line found at start of control structure
+ 169 | ERROR   | [x] Blank line found at start of control structure
+ 184 | ERROR   | [x] Whitespace found at end of line
+ 185 | ERROR   | [x] Whitespace found at end of line
+ 186 | ERROR   | [x] Whitespace found at end of line
+ 187 | ERROR   | [x] Whitespace found at end of line
+ 196 | ERROR   | [x] Blank line found at start of control structure
+ 218 | ERROR   | [x] Whitespace found at end of line
+ 224 | ERROR   | [x] Whitespace found at end of line
+ 225 | ERROR   | [x] Blank line found at start of control structure
+ 229 | ERROR   | [x] Expected 0 spaces before closing bracket; 1
+     |         |     found
+ 254 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+ 254 | ERROR   | [x] The closing brace for the class must go on the
+     |         |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 19 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/OpenSSL.php
+----------------------------------------------------------------------
+FOUND 7 ERRORS AND 1 WARNING AFFECTING 6 LINES
+----------------------------------------------------------------------
+  1 | ERROR   | [x] Whitespace found at end of line
+  4 | ERROR   | [x] Whitespace found at end of line
+  6 | ERROR   | [ ] Each class must be in a namespace of at least one
+    |         |     level (a top-level vendor name)
+  6 | ERROR   | [ ] Class name "Model_OpenSSL" is not in camel caps
+    |         |     format
+  9 | WARNING | [ ] Property name "$_openssl_dir" should not be
+    |         |     prefixed with an underscore to indicate
+    |         |     visibility
+ 39 | ERROR   | [x] Whitespace found at end of line
+ 55 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+ 55 | ERROR   | [x] The closing brace for the class must go on the
+    |         |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 5 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/UserManager.php
+----------------------------------------------------------------------
+FOUND 16 ERRORS AFFECTING 10 LINES
+----------------------------------------------------------------------
+   1 | ERROR | [x] Whitespace found at end of line
+  40 | ERROR | [x] Opening parenthesis of a multi-line function call
+     |       |     must be the last content on the line
+  40 | ERROR | [x] Whitespace found at end of line
+  41 | ERROR | [x] Multi-line function call not indented correctly;
+     |       |     expected 8 spaces but found 12
+  41 | ERROR | [x] Closing parenthesis of a multi-line function call
+     |       |     must be on a line by itself
+  53 | ERROR | [x] Opening parenthesis of a multi-line function call
+     |       |     must be the last content on the line
+  53 | ERROR | [x] Whitespace found at end of line
+  54 | ERROR | [x] Multi-line function call not indented correctly;
+     |       |     expected 8 spaces but found 12
+  54 | ERROR | [x] Closing parenthesis of a multi-line function call
+     |       |     must be on a line by itself
+ 134 | ERROR | [x] Expected 1 space after comma in function call; 2
+     |       |     found
+ 143 | ERROR | [x] Blank line found at end of control structure
+ 187 | ERROR | [x] Opening parenthesis of a multi-line function call
+     |       |     must be the last content on the line
+ 188 | ERROR | [x] Multi-line function call not indented correctly;
+     |       |     expected 8 spaces but found 12
+ 188 | ERROR | [x] Closing parenthesis of a multi-line function call
+     |       |     must be on a line by itself
+ 195 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 195 | ERROR | [x] The closing brace for the class must go on the
+     |       |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 16 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Model/Proxy.php
+----------------------------------------------------------------------
+FOUND 20 ERRORS AND 2 WARNINGS AFFECTING 17 LINES
+----------------------------------------------------------------------
+   1 | WARNING | [ ] A file should declare new symbols (classes,
+     |         |     functions, constants, etc.) and cause no other
+     |         |     side effects, or it should execute logic with
+     |         |     side effects, but should not do both. The first
+     |         |     symbol is defined on line 3 and the first side
+     |         |     effect is on line 1.
+   3 | ERROR   | [ ] Each class must be in a namespace of at least
+     |         |     one level (a top-level vendor name)
+   3 | ERROR   | [ ] Class name "Model_Proxy" is not in camel caps
+     |         |     format
+   3 | ERROR   | [x] Opening brace of a class must be on the line
+     |         |     after the definition
+   5 | WARNING | [ ] Property name "$_table_name" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+  11 | ERROR   | [x] Blank line found at start of control structure
+  29 | ERROR   | [x] Whitespace found at end of line
+  33 | ERROR   | [x] Blank line found at end of control structure
+  36 | ERROR   | [x] Whitespace found at end of line
+  37 | ERROR   | [x] Whitespace found at end of line
+  53 | ERROR   | [x] Space found before comma in function call
+  53 | ERROR   | [x] No space found after comma in function call
+  71 | ERROR   | [x] No space found after comma in function call
+  73 | ERROR   | [x] No space found after comma in function call
+  79 | ERROR   | [x] No space found after comma in function call
+  79 | ERROR   | [x] No space found after comma in function call
+  83 | ERROR   | [x] No space found after comma in function call
+  83 | ERROR   | [x] No space found after comma in function call
+  92 | ERROR   | [x] No space found after comma in function call
+  93 | ERROR   | [x] No space found after comma in function call
+  99 | ERROR   | [x] Function closing brace must go on the next line
+     |         |     following the body; found 1 blank lines before
+     |         |     brace
+ 106 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 18 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/UserProviderInterface.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 15 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/Security.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 61 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 61 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/TokenSession.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 3 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+  8 | ERROR | [x] Scope keyword "protected" must be followed by a
+    |       |     single space
+ 40 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/AuthorizationInterface.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 14 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/TokenCookie.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 40 | ERROR | [x] Blank line found at start of control structure
+ 70 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/Authorization.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 45 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 45 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/SecurityInterface.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 23 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/SecurityFacade.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  60 | ERROR | [x] Whitespace found at end of line
+ 102 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/TokenInterface.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 20 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Security/TokenStorage.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 15 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/DependencyInjection/Extension.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 20 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: .../test/src/Ovpn/DependencyInjection/CompilerPass/SecurityPass.php
+----------------------------------------------------------------------
+FOUND 4 ERRORS AND 1 WARNING AFFECTING 3 LINES
+----------------------------------------------------------------------
+ 43 | ERROR   | [x] Multi-line function call not indented correctly;
+    |         |     expected 20 spaces but found 24
+ 43 | ERROR   | [x] Closing parenthesis of a multi-line function call
+    |         |     must be on a line by itself
+ 43 | WARNING | [ ] Line exceeds 120 characters; contains 121
+    |         |     characters
+ 59 | ERROR   | [x] Function closing brace must go on the next line
+    |         |     following the body; found 1 blank lines before
+    |         |     brace
+ 60 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tests/bootstrap.php
+----------------------------------------------------------------------
+FOUND 16 ERRORS AND 1 WARNING AFFECTING 8 LINES
+----------------------------------------------------------------------
+   1 | WARNING | [ ] A file should declare new symbols (classes,
+     |         |     functions, constants, etc.) and cause no other
+     |         |     side effects, or it should execute logic with
+     |         |     side effects, but should not do both. The first
+     |         |     symbol is defined on line 31 and the first side
+     |         |     effect is on line 8.
+   1 | ERROR   | [x] Whitespace found at end of line
+  60 | ERROR   | [x] Inline control structures are not allowed
+  60 | ERROR   | [x] Expected 0 spaces after opening bracket; 1 found
+  60 | ERROR   | [x] PHP keywords must be lowercase; expected "and"
+     |         |     but found "AND"
+  64 | ERROR   | [x] Inline control structures are not allowed
+  64 | ERROR   | [x] Expected 0 spaces after opening bracket; 1 found
+  64 | ERROR   | [x] PHP keywords must be lowercase; expected "and"
+     |         |     but found "AND"
+  68 | ERROR   | [x] Inline control structures are not allowed
+  68 | ERROR   | [x] Expected 0 spaces after opening bracket; 1 found
+  68 | ERROR   | [x] PHP keywords must be lowercase; expected "and"
+     |         |     but found "AND"
+  82 | ERROR   | [x] Expected 0 spaces after opening bracket; 1 found
+  82 | ERROR   | [x] Expected 1 space after closing parenthesis;
+     |         |     found 1
+  84 | ERROR   | [x] TRUE, FALSE and NULL must be lowercase; expected
+     |         |     "true" but found "TRUE"
+  90 | ERROR   | [x] Expected 0 spaces after opening bracket; 1 found
+  90 | ERROR   | [x] Expected 1 space after closing parenthesis;
+     |         |     found 1
+ 100 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 16 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tests/Selenium/Page/Settings.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 14 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tests/Selenium/Page/HostInfoJson.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 10 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: ...r/www/html/test/src/Ovpn/Tests/Selenium/Page/ProfileViewList.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 11 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tests/Selenium/Page/Login.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 44 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tests/Unit/BitpayFullTest.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  7 | ERROR | [ ] Each class must be in a namespace of at least one
+    |       |     level (a top-level vendor name)
+ 27 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: ...www/html/test/src/Ovpn/Tests/Unit/Security/AuthorizationTest.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  6 | ERROR | [ ] Each class must be in a namespace of at least one
+    |       |     level (a top-level vendor name)
+ 73 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: ...www/html/test/src/Ovpn/Tests/Unit/Security/SecurityTokenTest.php
+----------------------------------------------------------------------
+FOUND 13 ERRORS AFFECTING 10 LINES
+----------------------------------------------------------------------
+   7 | ERROR | [ ] Each class must be in a namespace of at least one
+     |       |     level (a top-level vendor name)
+  43 | ERROR | [x] Line indented incorrectly; expected 12 spaces,
+     |       |     found 16
+  43 | ERROR | [x] Opening brace should be on a new line
+  43 | ERROR | [x] Closing brace must be on a line by itself
+  46 | ERROR | [x] Line indented incorrectly; expected at least 12
+     |       |     spaces, found 8
+  62 | ERROR | [x] Line indented incorrectly; expected 12 spaces,
+     |       |     found 16
+  64 | ERROR | [x] Line indented incorrectly; expected 12 spaces,
+     |       |     found 16
+  67 | ERROR | [x] Line indented incorrectly; expected 12 spaces,
+     |       |     found 16
+  69 | ERROR | [x] Line indented incorrectly; expected 12 spaces,
+     |       |     found 16
+  72 | ERROR | [x] Line indented incorrectly; expected 12 spaces,
+     |       |     found 16
+  75 | ERROR | [x] Line indented incorrectly; expected at least 12
+     |       |     spaces, found 8
+ 122 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 122 | ERROR | [x] The closing brace for the class must go on the
+     |       |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 12 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: ...ww/html/test/src/Ovpn/Tests/Unit/Security/SecurityFacadeTest.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  7 | ERROR | [ ] Each class must be in a namespace of at least one
+    |       |     level (a top-level vendor name)
+ 47 | ERROR | [x] No space found after comma in function call
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tests/Unit/BitpaySimpleTest.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  7 | ERROR | [ ] Each class must be in a namespace of at least one
+    |       |     level (a top-level vendor name)
+ 36 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Repository/VpnRepository.php
+----------------------------------------------------------------------
+FOUND 6 ERRORS AND 1 WARNING AFFECTING 6 LINES
+----------------------------------------------------------------------
+  3 | ERROR   | [x] There must be one blank line after the namespace
+    |         |     declaration
+ 15 | ERROR   | [x] Opening parenthesis of a multi-line function call
+    |         |     must be the last content on the line
+ 17 | WARNING | [ ] Line exceeds 120 characters; contains 122
+    |         |     characters
+ 28 | ERROR   | [x] Closing parenthesis of a multi-line function call
+    |         |     must be on a line by itself
+ 41 | ERROR   | [x] No space found after comma in function call
+ 46 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+ 46 | ERROR   | [x] The closing brace for the class must go on the
+    |         |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 6 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Repository/UserRepository.php
+----------------------------------------------------------------------
+FOUND 5 ERRORS AFFECTING 5 LINES
+----------------------------------------------------------------------
+ 32 | ERROR | [x] Opening parenthesis of a multi-line function call
+    |       |     must be the last content on the line
+ 50 | ERROR | [x] Closing parenthesis of a multi-line function call
+    |       |     must be on a line by itself
+ 62 | ERROR | [x] Opening parenthesis of a multi-line function call
+    |       |     must be the last content on the line
+ 74 | ERROR | [x] Closing parenthesis of a multi-line function call
+    |       |     must be on a line by itself
+ 81 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 5 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Entity/Roles.php
+----------------------------------------------------------------------
+FOUND 4 ERRORS AND 1 WARNING AFFECTING 4 LINES
+----------------------------------------------------------------------
+   2 | ERROR   | [x] There must be one blank line after the namespace
+     |         |     declaration
+   8 | WARNING | [ ] Property name "$_table_name" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+  99 | ERROR   | [x] No space found after comma in function call
+ 103 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+ 103 | ERROR   | [x] The closing brace for the class must go on the
+     |         |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Entity/Users.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AND 3 WARNINGS AFFECTING 5 LINES
+----------------------------------------------------------------------
+   2 | ERROR   | [x] There must be one blank line after the namespace
+     |         |     declaration
+   7 | WARNING | [ ] Property name "$_table_name" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+   9 | WARNING | [ ] Property name "$_foreign_key_suffix" should not
+     |         |     be prefixed with an underscore to indicate
+     |         |     visibility
+  11 | WARNING | [ ] Property name "$_belongs_to" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+ 127 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+ 127 | ERROR   | [x] The closing brace for the class must go on the
+     |         |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Entity/Host.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AND 1 WARNING AFFECTING 2 LINES
+----------------------------------------------------------------------
+   6 | WARNING | [ ] Property name "$_table_name" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+ 101 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Entity/VpnUser.php
+----------------------------------------------------------------------
+FOUND 4 ERRORS AND 3 WARNINGS AFFECTING 7 LINES
+----------------------------------------------------------------------
+   2 | ERROR   | [x] There must be one blank line after the namespace
+     |         |     declaration
+   5 | ERROR   | [x] Whitespace found at end of line
+   6 | ERROR   | [x] Expected 0 spaces before opening brace; 1 found
+   7 | WARNING | [ ] Property name "$_table_name" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+   9 | WARNING | [ ] Property name "$_foreign_key_suffix" should not
+     |         |     be prefixed with an underscore to indicate
+     |         |     visibility
+  11 | WARNING | [ ] Property name "$_belongs_to" should not be
+     |         |     prefixed with an underscore to indicate
+     |         |     visibility
+ 104 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Entity/Billing.php
+----------------------------------------------------------------------
+FOUND 6 ERRORS AND 1 WARNING AFFECTING 5 LINES
+----------------------------------------------------------------------
+ 1 | ERROR   | [x] Whitespace found at end of line
+ 3 | ERROR   | [ ] Each class must be in a namespace of at least one
+   |         |     level (a top-level vendor name)
+ 3 | ERROR   | [ ] Class name "Model_Billing" is not in camel caps
+   |         |     format
+ 3 | ERROR   | [x] Whitespace found at end of line
+ 4 | ERROR   | [x] Expected 0 spaces before opening brace; 1 found
+ 5 | WARNING | [ ] Property name "$_table_name" should not be
+   |         |     prefixed with an underscore to indicate visibility
+ 6 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Entity/UsersInterface.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  4 | ERROR | [x] Opening brace of a interface must be on the line
+    |       |     after the definition
+ 34 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 34 | ERROR | [x] The closing brace for the interface must go on the
+    |       |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tools/MailerInterface.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 13 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tools/Recaptcha.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 23 | ERROR | [x] Blank line found at start of control structure
+ 52 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tools/Openvpn/ConfigBuilder.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+   3 | ERROR | [x] There must be one blank line after the namespace
+     |       |     declaration
+ 183 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tools/Openvpn/RsaManager.php
+----------------------------------------------------------------------
+FOUND 6 ERRORS AFFECTING 5 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 28 | ERROR | [x] Blank line found at start of control structure
+ 55 | ERROR | [x] Blank line found at start of control structure
+ 88 | ERROR | [x] Function closing brace must go on the next line
+    |       |     following the body; found 1 blank lines before
+    |       |     brace
+ 90 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 90 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 6 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: .../www/html/test/src/Ovpn/Tools/Openvpn/ConfigBuilderInterface.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  87 | ERROR | [x] Whitespace found at end of line
+ 149 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Tools/MailgunMailer.php
+----------------------------------------------------------------------
+FOUND 6 ERRORS AFFECTING 3 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 48 | ERROR | [x] Multi-line function call not indented correctly;
+    |       |     expected 8 spaces but found 12
+ 48 | ERROR | [x] Only one argument is allowed per line in a
+    |       |     multi-line function call
+ 48 | ERROR | [x] Closing parenthesis of a multi-line function call
+    |       |     must be on a line by itself
+ 57 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 57 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 6 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/TestFramework/AbstractPage.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 49 | ERROR | [x] Blank line found at start of control structure
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/TestFramework/PageInterface.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 8 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/TestFramework/Selenium2TestCase.php
+----------------------------------------------------------------------
+FOUND 7 ERRORS AFFECTING 6 LINES
+----------------------------------------------------------------------
+  40 | ERROR | [x] The static declaration must come after the
+     |       |     visibility declaration
+  99 | ERROR | [x] Function closing brace must go on the next line
+     |       |     following the body; found 1 blank lines before
+     |       |     brace
+ 113 | ERROR | [x] Only one argument is allowed per line in a
+     |       |     multi-line function call
+ 130 | ERROR | [x] Only one argument is allowed per line in a
+     |       |     multi-line function call
+ 163 | ERROR | [x] Only one argument is allowed per line in a
+     |       |     multi-line function call
+ 185 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 185 | ERROR | [x] The closing brace for the class must go on the
+     |       |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 7 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Controller/UserController.php
+----------------------------------------------------------------------
+FOUND 5 ERRORS AFFECTING 4 LINES
+----------------------------------------------------------------------
+  9 | ERROR | [x] There must be one blank line after the last USE
+    |       |     statement; 2 found;
+ 39 | ERROR | [x] Multi-line function call not indented correctly;
+    |       |     expected 8 spaces but found 12
+ 39 | ERROR | [x] Closing parenthesis of a multi-line function call
+    |       |     must be on a line by itself
+ 43 | ERROR | [x] Space after opening parenthesis of function call
+    |       |     prohibited
+ 67 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 5 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Controller/WelcomeController.php
+----------------------------------------------------------------------
+FOUND 4 ERRORS AFFECTING 4 LINES
+----------------------------------------------------------------------
+  9 | ERROR | [x] Spaces must be used to indent lines; tabs are not
+    |       |     allowed
+ 10 | ERROR | [x] Spaces must be used to indent lines; tabs are not
+    |       |     allowed
+ 12 | ERROR | [x] Spaces must be used to indent lines; tabs are not
+    |       |     allowed
+ 13 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Controller/ProfileController.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 89 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Controller/AjaxController.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 38 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Controller/GetSecurityTrait.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 35 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Controller/MainController.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 3 LINES
+----------------------------------------------------------------------
+ 29 | ERROR | [x] Expected 0 spaces before closing bracket; newline
+    |       |     found
+ 39 | ERROR | [x] Expected 0 spaces before closing bracket; newline
+    |       |     found
+ 44 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Controller/TestController.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  1 | ERROR | [x] Whitespace found at end of line
+ 15 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Controller/ApiController.php
+----------------------------------------------------------------------
+FOUND 15 ERRORS AFFECTING 14 LINES
+----------------------------------------------------------------------
+ 13 | ERROR | [ ] Method name "ApiController::action_proxy" is not in
+    |       |     camel caps format
+ 21 | ERROR | [x] No space found after comma in function call
+ 23 | ERROR | [x] Blank line found at end of control structure
+ 26 | ERROR | [x] Expected 1 space after FOREACH keyword; 0 found
+ 34 | ERROR | [x] No space found after comma in function call
+ 36 | ERROR | [x] Blank line found at end of control structure
+ 38 | ERROR | [x] No space found after comma in function call
+ 39 | ERROR | [x] Whitespace found at end of line
+ 43 | ERROR | [ ] Method name "ApiController::Response" is not in
+    |       |     camel caps format
+ 43 | ERROR | [x] Whitespace found at end of line
+ 47 | ERROR | [x] No space found after comma in function call
+ 50 | ERROR | [x] The CASE body must start on the line following the
+    |       |     statement
+ 52 | ERROR | [x] No space found after comma in function call
+ 56 | ERROR | [x] No space found after comma in function call
+ 62 | ERROR | [x] The closing brace for the class must go on the next
+    |       |     line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 13 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Core/KohanaConfig.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 3 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 17 | ERROR | [x] Function closing brace must go on the next line
+    |       |     following the body; found 1 blank lines before
+    |       |     brace
+ 18 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Core/KohanaController.php
+----------------------------------------------------------------------
+FOUND 4 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 3 | ERROR | [x] There must be one blank line after the namespace
+   |       |     declaration
+ 6 | ERROR | [x] Opening brace of a class must be on the line after
+   |       |     the definition
+ 6 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 6 | ERROR | [x] Closing brace must be on a line by itself
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Core/Config.php
+----------------------------------------------------------------------
+FOUND 8 ERRORS AFFECTING 7 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 39 | ERROR | [x] Multi-line function call not indented correctly;
+    |       |     expected 16 spaces but found 20
+ 39 | ERROR | [x] Closing parenthesis of a multi-line function call
+    |       |     must be on a line by itself
+ 50 | ERROR | [x] Blank line found at end of control structure
+ 53 | ERROR | [x] Blank line found at end of control structure
+ 62 | ERROR | [x] Blank line found at end of control structure
+ 75 | ERROR | [x] Expected 1 space after IF keyword; 2 found
+ 85 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 8 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Core/Controller.php
+----------------------------------------------------------------------
+FOUND 9 ERRORS AFFECTING 6 LINES
+----------------------------------------------------------------------
+  59 | ERROR | [x] Whitespace found at end of line
+  68 | ERROR | [x] Whitespace found at end of line
+  84 | ERROR | [ ] Method name "Controller::check_cache" is not in
+     |       |     camel caps format
+ 124 | ERROR | [x] Opening brace should be on a new line
+ 124 | ERROR | [x] Closing brace must be on a line by itself
+ 129 | ERROR | [x] Opening brace should be on a new line
+ 129 | ERROR | [x] Closing brace must be on a line by itself
+ 132 | ERROR | [x] Expected 1 newline at end of file; 0 found
+ 132 | ERROR | [x] The closing brace for the class must go on the
+     |       |     next line after the body
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 8 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: ...www/html/test/src/Ovpn/Core/HTTPFoundation/NotFoundException.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 3 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 13 | ERROR | [ ] Method name "NotFoundException::get_response" is
+    |       |     not in camel caps format
+ 20 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: ...html/test/src/Ovpn/Core/HTTPFoundation/AccessDeniedException.php
+----------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 3 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+  8 | ERROR | [ ] Method name "AccessDeniedException::get_response"
+    |       |     is not in camel caps format
+ 12 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Core/ControllerInterface.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 39 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/Core/ConfigInterface.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] There must be one blank line after the namespace
+    |       |     declaration
+ 13 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/html/test/src/Ovpn/OvpnBundle.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AND 1 WARNING AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 16 | ERROR   | [x] Expected 0 spaces before closing bracket; 1 found
+ 16 | WARNING | [ ] Line exceeds 120 characters; contains 121
+    |         |     characters
+ 20 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+Time: 1.18 secs; Memory: 10Mb
+
