@@ -25,7 +25,7 @@ class VpnHost extends AbstractMigration
             ->addColumn('icon', 'string', ['limit' => 64])
             ->addColumn('ordernum', 'integer', ['null' => true])
             ->addColumn('enable', 'boolean')
-            ->addColumn('speedtest', 'string', ['limit' => 64])
+            ->addColumn('speedtest', 'string', ['limit' => 64, 'null' => true])
             ->save();
     }
 
