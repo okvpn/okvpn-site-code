@@ -45,6 +45,9 @@ class RsaManager implements RsaManagerInterface
             $this->resource['cert'] = file_get_contents($this->pathToClientCert($client));
             $this->init = true;
         }
+
+        $this->client = $client;
+        $this->hostname = $hostname;
     }
 
     /**

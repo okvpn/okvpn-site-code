@@ -8,7 +8,7 @@ environments:
     production:
         adapter: pgsql
         host: localhost
-        name: okvpn
+        name: tvpn
         user: postgres
         pass: 'ppkt731415926'
         port: 5432
@@ -17,7 +17,7 @@ environments:
     development:
         adapter: pgsql
         host: localhost
-        name: okvpn
+        name: tvpn
         user: postgres
         pass: 'ppkt731415926'
         port: 5432
@@ -26,7 +26,7 @@ environments:
     testing:
         adapter: pgsql
         host: localhost
-        name: okvpn
+        name: tvpn
         user: postgres
         pass: 'ppkt731415926'
         port: 5432

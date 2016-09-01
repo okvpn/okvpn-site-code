@@ -47,12 +47,6 @@ $loaderClass = DOCROOT . 'vendor/autoload.php';
 /** @var Composer\Autoload\ClassLoader $loader */
 $loader = require_once $loaderClass;
 
-if (! ($loader instanceof Composer\Autoload\ClassLoader)) {
-    $loader =  new Composer\Autoload\ClassLoader();
-}
-$loader->add('Ovpn', DOCROOT . 'src');
-$loader->register();
-
 /**
  * Optionally, you can enable a compatibility auto-loader for use with
  * older modules that have not been updated for PSR-0.
