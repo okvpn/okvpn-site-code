@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class RolesSeed extends AbstractSeed
+class A099RolesSeed extends AbstractSeed
 {
     /**
      * @inheritdoc

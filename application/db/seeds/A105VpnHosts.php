@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class VpnHosts extends AbstractSeed
+class A105VpnHosts extends AbstractSeed
 {
     /**
      * @inheritdoc
@@ -18,6 +18,7 @@ class VpnHosts extends AbstractSeed
                 'icon' => 'public/img/country/pa.png',
                 'ordernum' => 10,
                 'enable' => 't',
+                'free_places' => 99,
                 'speedtest' => 's',
             ],
             [
@@ -27,6 +28,7 @@ class VpnHosts extends AbstractSeed
                 'location' => 'UK',
                 'icon' => 'public/img/country/uk.png',
                 'ordernum' => 5,
+                'free_places' => 1,
                 'enable' => 't',
             ]
         ];

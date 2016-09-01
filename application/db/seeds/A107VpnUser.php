@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class VpnUser extends AbstractSeed
+class A107VpnUser extends AbstractSeed
 {
     /**
      * @inheritdoc

@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class UsersSeed extends AbstractSeed
+class A100UsersSeed extends AbstractSeed
 {
     /**
      * @inheritdoc
