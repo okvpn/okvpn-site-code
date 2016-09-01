@@ -6,12 +6,7 @@ namespace Ovpn\Tools\Openvpn;
 class ConfigBuilder implements ConfigBuilderInterface
 {
 
-    protected $cumulativeConfig;
-
-    public function __construct()
-    {
-        $this->cumulativeConfig = '';
-    }
+    protected $cumulativeConfig = '';
 
     /**
      * @inheritdoc

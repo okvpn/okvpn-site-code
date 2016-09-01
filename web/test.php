@@ -1,2 +1,2 @@
 <?php
-var_dump(array_reverse(preg_split('//', '123456')));
+echo password_hash('123456', PASSWORD_BCRYPT);

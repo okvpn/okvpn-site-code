@@ -3,9 +3,23 @@
 namespace Ovpn\Tools\Openvpn;
 
 
-class RsaManager
+class RsaManager implements RsaManagerInterface
 {
+    /**
+     * Cumulative resource manager
+     * @var array
+     */
     protected $resource;
+
+    /**
+     * @var string
+     */
+    protected $client;
+
+    /**
+     * @var string
+     */
+    protected $hostname;
 
     protected $init = false;
     
@@ -31,19 +45,21 @@ class RsaManager
             $this->resource['cert'] = file_get_contents($this->pathToClientCert($client));
             $this->init = true;
         }
+
+        $this->client = $client;
+        $this->hostname = $hostname;
     }
 
     /**
-     * @param $client
      * @throws \Exception
      */
-    public function init($client)
+    public function init()
     {
         if ($this->init) {
             return;
         }
         
-        $payload = $this->getCommandForGenerateCert($client);
+        $payload = $this->getCommandForGenerateCert($this->client);
        
         if (! function_exists('shell_exec')) {
             throw new \Exception('shell_exec');
@@ -51,16 +67,36 @@ class RsaManager
         
         shell_exec($payload);
 
-        if (file_exists($this->pathToClientCert($client)) &&
-            file_exists($this->pathToClientKey($client))) {
+        if (file_exists($this->pathToClientCert($this->client)) &&
+            file_exists($this->pathToClientKey($this->client))) {
 
-            $this->resource['key'] = file_get_contents($this->pathToClientKey($client));
-            $this->resource['cert'] = file_get_contents($this->pathToClientCert($client));
+            $this->resource['key'] = file_get_contents($this->pathToClientKey($this->client));
+            $this->resource['cert'] = file_get_contents($this->pathToClientCert($this->client));
             $this->init = true;
         } else {
-            throw new \RuntimeException('');
+            throw new \RuntimeException('Openssl not installed. Check needs regiments');
         }
         return;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function has($name)
+    {
+        return array_key_exists($name, $this->resource);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function get($name)
+    {
+        if (! $this->has($name)) {
+            throw new \InvalidArgumentException(sprintf('Parametrs "%s" do not exsist'));
+        }
+        
+        return $this->resource[$name];
     }
 
     protected function pathToClientKey($client)
@@ -84,7 +120,6 @@ class RsaManager
 cd $this->opensslDir
 bash easyrsa.sh build-client-full $name nopass
 BASH;
-        
     }
 
 }

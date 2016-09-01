@@ -7,6 +7,8 @@ use Ovpn\Entity\Users;
 use Ovpn\Entity\UsersInterface;
 use DB;
 use Ovpn\Tools\MailerInterface;
+use Ovpn\Tools\Openvpn\OpenvpnFacade;
+use Ovpn\Tools\Openvpn\RsaManagerInterface;
 use Ovpn\Tools\Recaptcha;
 use View;
 use Kohana;
@@ -28,10 +30,16 @@ class UserManager
      */
     protected $mailer;
 
-    public function __construct(Config $config, MailerInterface $mailer)
+    /**
+     * @var OpenvpnFacade
+     */
+    protected $openvpnRsa;
+
+    public function __construct(Config $config, MailerInterface $mailer, RsaManagerInterface $rsa)
     {
-        $this->config = $config;
-        $this->mailer = $mailer;
+        $this->config     = $config;
+        $this->mailer     = $mailer;
+        $this->openvpnRsa = $rsa;
     }
     
 
