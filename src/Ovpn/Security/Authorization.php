@@ -2,7 +2,6 @@
 
 namespace Ovpn\Security;
 
-
 class Authorization implements AuthorizationInterface
 {
 
@@ -41,5 +40,4 @@ class Authorization implements AuthorizationInterface
         }
         return $login;
     }
-    
 }
