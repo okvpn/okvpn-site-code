@@ -6,7 +6,7 @@ use Ovpn\Core\Controller;
 use Ovpn\Core\HTTPFoundation\NotFoundException;
 use Ovpn\Entity\UsersInterface;
 use Ovpn\Model\UserManager;
-use Ovpn\Security\TokenSessionStorage;
+use Ovpn\Security\TokenSession;
 
 
 class UserController extends Controller
@@ -39,7 +39,7 @@ class UserController extends Controller
             $this->getRequest()->param('token'));
         
         if ($result instanceof  UsersInterface) {
-            (new TokenSessionStorage())->setToken($result->getId());
+            (new TokenSession())->setToken($result->getId());
             $this->redirect( \URL::base(true) . 'profile');
         } else {
             throw new NotFoundException();
