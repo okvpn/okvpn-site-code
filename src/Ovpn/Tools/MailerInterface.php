@@ -10,4 +10,9 @@ interface MailerInterface
      * @return mixed
      */
     public function sendMessage(array $payload);
+
+    /**
+     * @return Object
+     */
+    public function getMailProvider();
 }

@@ -25,11 +25,11 @@ return array
              *
              * @link http://www.postgresql.org/docs/current/static/libpq-connect.html
              */
-            'hostname'   => 'localhost',
-            'username'   => 'postgres',
-            'password'   => 'ppkt731415926',
+            'hostname'   => '%db_host%',
+            'username'   => '%%',
+            'password'   => '%%',
             'persistent' =>  false,
-            'database'   => 'okvpn',
+            'database'   => '%%',
         ),
         'primary_key'  => '',   // Column to return from INSERT queries, see #2188 and #2273
         'schema'       => '',

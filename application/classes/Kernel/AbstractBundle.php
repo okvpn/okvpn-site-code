@@ -2,6 +2,7 @@
 
 namespace Kernel;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 
 abstract class AbstractBundle
@@ -36,4 +37,6 @@ abstract class AbstractBundle
     {
         return $this->name;
     }
+
+    abstract public function build(ContainerBuilder $container);
 }

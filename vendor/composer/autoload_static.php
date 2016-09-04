@@ -33,6 +33,10 @@ class ComposerStaticInitb2dae258bc2a470ed5d78bcef5c5ef4f
         array (
             'Phinx\\' => 6,
         ),
+        'F' => 
+        array (
+            'Facebook\\WebDriver\\' => 19,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -83,6 +87,10 @@ class ComposerStaticInitb2dae258bc2a470ed5d78bcef5c5ef4f
         array (
             0 => __DIR__ . '/..' . '/robmorgan/phinx/src/Phinx',
         ),
+        'Facebook\\WebDriver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/webdriver/lib',
+        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -94,7 +102,8 @@ class ComposerStaticInitb2dae258bc2a470ed5d78bcef5c5ef4f
     );
 
     public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/bitpay/php-client/src',
+        0 => __DIR__ . '/../..' . '/src',
+        1 => __DIR__ . '/..' . '/bitpay/php-client/src',
     );
 
     public static $prefixesPsr0 = array (

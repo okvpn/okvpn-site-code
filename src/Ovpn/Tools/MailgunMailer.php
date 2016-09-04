@@ -48,6 +48,18 @@ class MailgunMailer implements MailerInterface
             $this->config->get('mailgun:site'), $payload);
     }
 
+    /**
+     * @return Mailgun
+     */
+    public function getMailProvider()
+    {
+        if (! $this->mailProvider) {
+            $this->initMailProvider();
+        }
+        
+        return $this->mailProvider;
+    }
+
     private function buildFromHeader()
     {
         $from = $this->config->get('mailgun:from_email');
