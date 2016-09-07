@@ -24,4 +24,5 @@ return array(
     'vpnActivate'       => 'Активация VPN доступа',
     'vpnPlacesOut'      => 'На выбраном Вами сервере нет свободных мест',
     'vpnUserOut'        => 'У Вас уже есть активные ovpn подключения.',
+    'resetPassword'     => 'Сброс пароля'
     );
