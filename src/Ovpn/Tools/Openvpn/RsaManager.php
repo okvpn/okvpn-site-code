@@ -93,7 +93,7 @@ class RsaManager implements RsaManagerInterface
     public function get($name)
     {
         if (! $this->has($name)) {
-            throw new \InvalidArgumentException(sprintf('Parametrs "%s" do not exsist'));
+            throw new \InvalidArgumentException(sprintf('Parameters "%s" do not exist'));
         }
         
         return $this->resource[$name];

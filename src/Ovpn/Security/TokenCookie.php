@@ -34,11 +34,11 @@ class TokenCookie implements TokenInterface
     {
         $token = $this->cookieDriver->get($this->name);
 
-        //TODO:: shoud be fixed in 2.1
+        //TODO should be fixed in 2.1
         if ($userInfo = base64_decode($token) and
             $userInfo = json_decode($userInfo, true) and
-            isset($userInfo['hash'])) {
-
+            isset($userInfo['hash'])
+        ) {
             $user = $this->abstractUser->getInstance($userInfo['id']);
             return (hash('sha512', $user->getToken()) == $userInfo['hash']) ? $user : null;
         }
@@ -50,7 +50,7 @@ class TokenCookie implements TokenInterface
      */
     public function setToken(string $token)
     {
-        //TODO:: shoud be fixed in 2.1
+        //TODO should be fixed in 2.1
         $user = $this->abstractUser->getInstance($token);
         $token = hash('sha512', $user->getToken());
 

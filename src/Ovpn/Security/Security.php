@@ -57,5 +57,4 @@ class Security implements SecurityInterface
     {
         return in_array($this->getAbstractUser()->getRole()->getRolesName(), $roleName);
     }
-    
 }

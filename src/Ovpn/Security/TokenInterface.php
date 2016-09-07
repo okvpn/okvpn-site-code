@@ -2,7 +2,6 @@
 
 namespace Ovpn\Security;
 
-
 interface TokenInterface
 {
     /**
