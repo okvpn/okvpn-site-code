@@ -90,6 +90,7 @@ class UserManager
                 'subject' => $subject,
                 'html'    => $message,
             ]);
+            $user->save();
 
         } catch (\Exception $e) {
             return false;
@@ -112,9 +113,14 @@ class UserManager
         if (! $user instanceof UsersInterface) {
             return false;
         }
+        try {
+            $user->setPassword($newPassword);
+            $user->setToken(null);
+            $user->save();
+        } catch (\Exception $e) {
+            return false;
+        }
 
-        $user->setPassword($newPassword);
-        $user->setToken(null);
         return true;
     }
 

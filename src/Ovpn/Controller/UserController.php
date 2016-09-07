@@ -52,9 +52,71 @@ class UserController extends Controller
     public function createAction()
     {
         $um = $this->getUserManager();
-        $result = $um->createUser($_POST);
+        $result = $um->createUser($this->getRequest()->post());
         
         $this->setJsonResponse($result);
+    }
+
+    /**
+     * @Route('/user/newpasswordrequest')
+     */
+    public function newPasswordRequestAction()
+    {
+        $response = ! $this->getUserManager()
+            ->setUserToken($this->getRequest()->post('email'));
+
+
+        $this->setJsonResponse(
+            [
+                'error' => $response,
+                'message' => $response ? \Kohana::message('user', 'loginErr') : ''
+            ]
+        );
+    }
+
+    /**
+     * @Route('/user/setnewpassword')
+     */
+    public function setNewPasswordAction()
+    {
+        $response = $this->prepareRequestForResetPassword();
+
+        if (true === $response) {
+            $post = $this->getRequest()->post();
+            $error = $this->getUserManager()->resetPassword($post['token'], $post['password']);
+            $response = [
+                'error' => ! $error,
+                'message' => ''
+            ];
+        }
+
+        $this->setJsonResponse($response);
+    }
+
+    protected function prepareRequestForResetPassword()
+    {
+        $post = $this->getRequest()->post();
+
+        $postValid = \Validation::factory($post);
+        $postValid->rule('token', 'not_empty')
+            ->rule('password', 'min_length', array(':value', 6))
+            ->rule('confirm', 'not_empty');
+
+        if (!$postValid->check()) {
+            return [
+                'error'   => true,
+                'message' => array_values($postValid->errors('')),
+            ];
+        }
+
+        if ($post['confirm'] !== $post['password']) {
+            return [
+                'error'   => true,
+                'message' => \Kohana::message('user', 'passwordNotMatch'),
+            ];
+        }
+
+        return true;
     }
 
     /**
