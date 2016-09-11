@@ -10,7 +10,7 @@ class Users extends \ORM implements UsersInterface
 
     protected $_belongs_to = array(
         'roles' => array(
-            'model'       => 'Roles',
+            'model'       => 'Ovpn:Entity:Roles',
             'foreign_key' => 'role',
         ),
     );

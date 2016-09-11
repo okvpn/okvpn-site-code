@@ -45,7 +45,7 @@ class Config implements ConfigInterface
                 $config = $config[$configKeyName];
             } else {
                 throw new \InvalidArgumentException(
-                    sprintf('The config key"%s" nor exist in "%s"', [$baseName, $this->defaultConfig]));
+                    sprintf('The config key"%s" nor exist in "%s"', $baseName, $this->defaultConfig));
             }
         }
         

@@ -3,6 +3,7 @@
 namespace Ovpn\Repository;
 
 use Ovpn\Entity\Users;
+use Ovpn\Entity\VpnUser;
 use Ovpn\Security\UserProviderInterface;
 
 class UserRepository implements UserProviderInterface
@@ -18,6 +19,30 @@ class UserRepository implements UserProviderInterface
             ->find();
 
         return (null === $user->getId() && ($onlyActive && !$user->getChecked())) ? null : $user;
+    }
+
+    public function findUserByCertName($cert)
+    {
+        /** @var VpnUser $vu */
+        $vu = (new VpnUser())
+            ->where('name', '=', $cert)
+            ->find();
+
+        return $vu->getUser();
+    }
+    
+    
+    public function findUserByToken($token)
+    {
+        if (null === $token) {
+            return null;
+        }
+        /** @var Users $user */
+        $user = (new Users)
+            ->where('token', '=', $token)
+            ->find();
+
+        return null === $user->getId() ? null : $user;
     }
 
     /**

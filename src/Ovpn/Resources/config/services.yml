@@ -34,7 +34,7 @@ services:
 
     ovpn_user.manager:
         class: %user_manager.ovpn.class%
-        arguments: ['@ovpn_config', '@ovpn_mailer', '@ovpn_openvpn.facade']
+        arguments: ['@ovpn_config', '@ovpn_mailer', '@ovpn_openvpn.facade', '@ovpn_user.repository']
 
     ovpn_authorization:
         class: %authorization.class%

@@ -1,5 +1,5 @@
 <?php
-namespace Model;
+namespace Ovpn\Entity;
 
 
 class VpnUser extends \ORM 
@@ -10,11 +10,11 @@ class VpnUser extends \ORM
 
     protected $_belongs_to = array(
         'host' => array(
-            'model'       => 'Host',
+            'model'       => 'Ovpn:Entity:Host',
             'foreign_key' => 'vpn_id',
         ),
         'user' => array(
-            'model'       => 'Users',
+            'model'       => 'Ovpn:Entity:Users',
             'foreign_key' => 'user_id',
         ),
     );
