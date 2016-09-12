@@ -8,7 +8,7 @@ use Ovpn\Core\Config;
 abstract class Database extends Kohana_Database
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function instance($name = null, array $config = null)
     {

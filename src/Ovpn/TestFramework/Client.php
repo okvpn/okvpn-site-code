@@ -68,6 +68,8 @@ class Client
      */
     protected function buildRequest($url)
     {
+        Request::$initial = null;
+
         return new Request($url);
     }
     
