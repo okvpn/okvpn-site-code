@@ -10,10 +10,6 @@ class WelcomeController extends Controller
 
 	public function indexAction()
 	{
-		$tr = new Users(1);
-		$tr->setEmail('test1');
-		$tr->save();
-
         $this->getResponse()->body(\View::factory('index'));
 	}
 }

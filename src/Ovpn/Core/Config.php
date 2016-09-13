@@ -4,7 +4,6 @@ namespace Ovpn\Core;
 
 use Config as BaseConfig;
 
-
 class Config implements ConfigInterface
 {
     protected $kohanaConfig;
@@ -45,7 +44,8 @@ class Config implements ConfigInterface
                 $config = $config[$configKeyName];
             } else {
                 throw new \InvalidArgumentException(
-                    sprintf('The config key"%s" nor exist in "%s"', $baseName, $this->defaultConfig));
+                    sprintf('The config key"%s" nor exist in "%s"', $baseName, $this->defaultConfig)
+                );
             }
         }
         
@@ -56,10 +56,8 @@ class Config implements ConfigInterface
                 foreach ($conf as $key => $val) {
                     if (is_array($val)) {
                         $mapping[$key] = $closing($val);
-
                     } elseif (! preg_match('/^%(.+)%$/', $val, $match)) {
                         $mapping[$key] = $val;
-
                     } else {
                         $mapping[$key] = $this->getParameters($match[1]);
                     }
@@ -68,7 +66,6 @@ class Config implements ConfigInterface
             };
             
             return $closing($config);
-            
         } else {
             if (! preg_match('/^%(.+)%$/', $config, $match)) {
                 return $config;
@@ -81,7 +78,7 @@ class Config implements ConfigInterface
     protected function getParameters($name)
     {
         $value = $this->defaultParam->get($name, null);
-        if  (null === $value) {
+        if (null === $value) {
             throw new \Exception(sprintf('Config parameters "%s" not found in parameters.php', $name));
         }
         return $value;
