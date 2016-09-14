@@ -132,10 +132,7 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-    'database'      => MODPATH .'database', // Database access
-    'okvpn'         => MODPATH .'okvpn',
-    'cron'          => MODPATH .'cron',
-    'minion'        => MODPATH .'minion',     // CLI Tasks
+    'database'      => MODPATH .'database',   // Database access
     'orm'           => MODPATH .'orm',        // Object Relationship Mapping
 ));
 

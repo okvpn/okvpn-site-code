@@ -64,8 +64,11 @@ if ( ! is_dir($modules) AND is_dir(DOCROOT.$modules))
     $modules = DOCROOT.$modules;
 
 // Make the system relative to the docroot, for symlink'd index.php
-if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
+if ( ! is_dir($system) AND is_dir(DOCROOT.$system)) {
     $system = DOCROOT.$system;
+} elseif (is_dir(DOCROOT . 'vendor/kohana/core')) {
+    $system = DOCROOT . 'vendor/kohana/core/';
+}
 
 // Define the absolute paths for configured directories
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
