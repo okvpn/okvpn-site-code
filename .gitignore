@@ -4,6 +4,9 @@ application/logs/*
 sftp-config.json
 application/out/*
 application/config/parameters.php
+vendor
+system
+modules
 .svn
 *.log
 *~
