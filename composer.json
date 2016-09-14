@@ -1,6 +1,6 @@
 {
-    "name": "okvpn",
-    "license": "MIT",
+    "name": "ovpn/okvpn-project",
+    "license": "GPL 2",
     "type": "project",
     "description": "The \"OkVPN Standard Edition\" distribution",
     "authors": [
@@ -14,6 +14,8 @@
     },
     "require": {
         "php": ">=7.0.0",
+        "kohana/core": ">=3.3",
+        "kohana/orm": ">=3.3",
         "mailgun/mailgun-php": "~1.7.2",
         "bitpay/php-client": "^3.0",
         "robmorgan/phinx": "^0.5.3",
