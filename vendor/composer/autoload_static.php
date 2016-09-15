@@ -102,7 +102,8 @@ class ComposerStaticInitb2dae258bc2a470ed5d78bcef5c5ef4f
     );
 
     public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/bitpay/php-client/src',
+        0 => __DIR__ . '/../..' . '/src',
+        1 => __DIR__ . '/..' . '/bitpay/php-client/src',
     );
 
     public static $prefixesPsr0 = array (

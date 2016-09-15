@@ -8,26 +8,26 @@ environments:
     production:
         adapter: pgsql
         host: localhost
-        name: okvpn
+        name: database
         user: postgres
-        pass: 'ppkt731415926'
+        pass: 'pass'
         port: 5432
         charset: utf8
 
     development:
         adapter: pgsql
         host: localhost
-        name: okvpn
+        name: database
         user: postgres
-        pass: 'ppkt731415926'
+        pass: 'pass'
         port: 5432
         charset: utf8
 
     testing:
         adapter: pgsql
         host: localhost
-        name: okvpn
+        name: database
         user: postgres
-        pass: 'ppkt731415926'
+        pass: 'pass'
         port: 5432
         charset: utf8

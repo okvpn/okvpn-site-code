@@ -1,2 +1,2 @@
 <?php
-var_dump(preg_replace('/\\w/','','sadsad\\sd\sd'));
+echo password_hash('123456', PASSWORD_BCRYPT);

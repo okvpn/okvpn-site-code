@@ -57,7 +57,7 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
             /** @var TokenInterface $token */
             foreach ($restoreTokens as $token) {
                 $token->setToken($user->getId());
-            }            
+            }
         }
         
         return $user;

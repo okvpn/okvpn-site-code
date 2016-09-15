@@ -24,6 +24,7 @@ return [
         'secret'      => 'key-8cX7ieq4Zdl',
         'from_email'  => 'noreply@okvpn.org',
         'from_alias'  => 'OkVPN',
+        'site'        => 'okvpn.org',
     ],
 
     'database' => [

@@ -19,5 +19,5 @@ return array(
     'Facebook\\WebDriver\\' => array($vendorDir . '/facebook/webdriver/lib'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
-    '' => array($vendorDir . '/bitpay/php-client/src'),
+    '' => array($baseDir . '/src', $vendorDir . '/bitpay/php-client/src'),
 );

@@ -8,14 +8,14 @@ use Kernel\{
 // -- Environment setup --------------------------------------------------------
 
 // Load the core Kohana class
-require SYSPATH . 'classes/Kohana/Core' . EXT;
+require_once SYSPATH . 'classes/Kohana/Core' . EXT;
 
 if (is_file(APPPATH . 'classes/Kohana' . EXT)) {
     // Application extends the core
-    require APPPATH . 'classes/Kohana' . EXT;
+    require_once APPPATH . 'classes/Kohana' . EXT;
 } else {
     // Load empty core extension
-    require SYSPATH . 'classes/Kohana' . EXT;
+    require_once SYSPATH . 'classes/Kohana' . EXT;
 }
 
 /**
@@ -46,12 +46,6 @@ $loaderClass = DOCROOT . 'vendor/autoload.php';
 
 /** @var Composer\Autoload\ClassLoader $loader */
 $loader = require_once $loaderClass;
-
-if (! ($loader instanceof Composer\Autoload\ClassLoader)) {
-    $loader =  new Composer\Autoload\ClassLoader();
-}
-$loader->add('Ovpn', DOCROOT . 'src');
-$loader->register();
 
 /**
  * Optionally, you can enable a compatibility auto-loader for use with

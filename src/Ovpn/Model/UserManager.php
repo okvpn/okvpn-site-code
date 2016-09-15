@@ -6,7 +6,10 @@ use Ovpn\Entity\Roles;
 use Ovpn\Entity\Users;
 use Ovpn\Entity\UsersInterface;
 use DB;
+use Ovpn\Repository\UserRepository;
 use Ovpn\Tools\MailerInterface;
+use Ovpn\Tools\Openvpn\OpenvpnFacade;
+use Ovpn\Tools\Openvpn\RsaManagerInterface;
 use Ovpn\Tools\Recaptcha;
 use View;
 use Kohana;
@@ -28,10 +31,26 @@ class UserManager
      */
     protected $mailer;
 
-    public function __construct(Config $config, MailerInterface $mailer)
-    {
-        $this->config = $config;
-        $this->mailer = $mailer;
+    /**
+     * @var OpenvpnFacade
+     */
+    protected $openvpnRsa;
+
+    /**
+     * @var UserRepository
+     */
+    protected $userRepository;
+
+    public function __construct(
+        Config $config, 
+        MailerInterface $mailer, 
+        RsaManagerInterface $rsa,
+        UserRepository $userRepository
+    ) {
+        $this->config     = $config;
+        $this->mailer     = $mailer;
+        $this->openvpnRsa = $rsa;
+        $this->userRepository = $userRepository;
     }
     
 
@@ -42,6 +61,67 @@ class UserManager
             ->param(':uid', $user->getId())
             ->execute()
             ->get('amount');
+    }
+
+    /**
+     * Set user token and send notify on email
+     * 
+     * @param $email
+     * @return bool
+     */
+    public function setUserToken($email)
+    {
+        $user = $this->userRepository->findUserByEmail($email, true);
+        
+        if (! $user instanceof UsersInterface) {
+            return false;
+        }
+        
+        $token = Text::random('alnum', 16);
+        $user->setToken($token);
+
+        $message = View::factory('mail/resetPassword')
+            ->set('src',  URL::base(true) . "user/resetpassword/" . $user->getToken());
+        $subject = Kohana::message('user', 'resetPassword');
+
+        try {
+            $this->mailer->sendMessage([
+                'to'      => $email,
+                'subject' => $subject,
+                'html'    => $message,
+            ]);
+            $user->save();
+
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Reset user password
+     *
+     * @param string $conformToken
+     * @param string $newPassword
+     * @return bool
+     */
+    public function resetPassword($conformToken, $newPassword)
+    {
+        $user = $this->userRepository->findUserByToken($conformToken);
+
+        if (! $user instanceof UsersInterface) {
+            return false;
+        }
+        try {
+            $user->setPassword($newPassword);
+            $user->setToken(null);
+            $user->save();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     public function getUserTraffic(UsersInterface $user, $date = null)

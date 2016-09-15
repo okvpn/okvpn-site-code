@@ -2,10 +2,10 @@
 
 namespace Ovpn\Security;
 
-
 class TokenSession implements TokenInterface
 {
-    protected  $name = 'user_id';
+
+    protected $name = 'user_id';
 
     /**
      * @var \Session
