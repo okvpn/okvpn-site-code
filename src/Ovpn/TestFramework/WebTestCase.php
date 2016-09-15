@@ -2,6 +2,8 @@
 
 namespace Ovpn\TestFramework;
 
+use Database;
+
 abstract class WebTestCase extends \PHPUnit_Framework_TestCase
 {
 
@@ -27,7 +29,7 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
         static::$client = new Client();
 
         if (static::isDbIsolation()) {
-            \Database::instance()->begin();
+            Database::instance()->begin();
         }
     }
 
@@ -37,7 +39,7 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
     public static function tearDownAfterClass()
     {
         if (static::isDbIsolation()) {
-            \Database::instance()->rollback();
+            Database::instance()->rollback();
         }
     }
 
@@ -56,6 +58,8 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
      * @param array $applicationData
      * @param array $cookie
      * @throws \Request_Exception
+     * 
+     * @return \Response
      */
     public function request(
         $method,
@@ -64,12 +68,32 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
         array $applicationData = [],
         array $cookie = []
     ) {
-        $this->response = $this->getClient()
+        return $this->response = $this->getClient()
             ->prepareClient($method, $url, $parameters, $applicationData, $cookie)
             ->getRequest()
             ->execute();
     }
 
+    /**
+     * todo: add throw PHPUnit_Framework_ExpectationFailedException in 2.2
+     * @param \Response $response
+     * @param $code
+     */
+    public function assertStatusCode(\Response $response, $code)
+    {
+        $this->assertSame($response->status(), $code);
+    }
+
+    /**
+     * todo: add throw PHPUnit_Framework_ExpectationFailedException in 2.2
+     * @param \Response $response
+     * @param $url
+     */
+    public function assertRedirectResponse(\Response $response, $url)
+    {
+        $this->assertSame($response->headers('location'), $url);
+    }
+    
     /**
      * @return bool
      */

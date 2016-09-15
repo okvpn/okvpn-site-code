@@ -102,6 +102,19 @@ class UserRepository implements UserProviderInterface
     }
 
     /**
+     * @param integer $uid
+     */
+    public function deleteAllUserVpn($uid)
+    {
+        $sql = \DB::query(\Database::UPDATE,
+            "UPDATE vpn_user set active = false
+                where user_id = :uid"
+            )
+            ->param(':uid', $uid);
+        $sql->execute();
+    }
+
+    /**
      * Check status user and return true if that user allow connected to server
      *
      * @param integer $uid

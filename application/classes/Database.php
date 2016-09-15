@@ -41,4 +41,11 @@ abstract class Database extends Kohana_Database
 
         return Database::$instances[$name];
     }
+
+    /**
+     * Get transaction nesting count
+     * 
+     * @return integer
+     */
+    public function getTransactionNestingLevel(){}
 }

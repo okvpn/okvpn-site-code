@@ -27,8 +27,10 @@ class Database_PostgreSQL extends Kohana_Database_PostgreSQL
      */
     public function rollback($savepoint = null)
     {
-        $this->_transactionNestingLevel = 0;
-        return parent::rollback($savepoint);
+        if ($this->_transactionNestingLevel != 0) {
+            $this->_transactionNestingLevel = 0;
+            return parent::rollback($savepoint);            
+        }
     }
 
     /**
@@ -42,5 +44,13 @@ class Database_PostgreSQL extends Kohana_Database_PostgreSQL
             return parent::commit();
         }
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTransactionNestingLevel()
+    {
+        return $this->_transactionNestingLevel;
     }
 }

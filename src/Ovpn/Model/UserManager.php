@@ -52,7 +52,6 @@ class UserManager
         $this->openvpnRsa = $rsa;
         $this->userRepository = $userRepository;
     }
-    
 
     public function getUserAmount(UsersInterface $user)
     {
@@ -258,18 +257,36 @@ class UserManager
         $user->save();
         return $user;
     }
-    
 
-    public function delete(UsersInterface $user)
+    /**
+     * @param Users $user
+     * @return bool
+     */
+    public function delete(Users $user)
     {
-        $uid = $user->getId();
-
-        DB::query(Database::DELETE,
-            DB::expr("SELECT dropUserData('$uid')"))
-            ->execute();
-        //todo: must be refactoring in 2.1 SOLID
-        setcookie('rememberme', '', 0, '/');
+        $this->getDatabaseManager()->begin();
+        
+        try {
+            $user->setEmail($user->getEmail() . '@delete');
+            $user->setChecked(false);
+            $user->save();
+            $this->userRepository->deleteAllUserVpn($user->getId());
+            $this->getDatabaseManager()->commit();
+        } catch (\Exception $e) {
+            $this->getDatabaseManager()->rollback();
+            return false;
+        }
         return true;
     }
 
+    /**
+     * Get database instance class
+     *
+     * @return Database
+     * @throws \Kohana_Exception
+     */
+    private function getDatabaseManager()
+    {
+        return \Database::instance();
+    }
 }
