@@ -3,7 +3,6 @@
 namespace Ovpn\Tests\Selenium;
 
 use Ovpn\TestFramework\Selenium2TestCase;
-use Ovpn\Tests\Selenium\Page\HostInfoJson;
 use Ovpn\Tests\Selenium\Page\ProfileViewList;
 use Ovpn\Tests\Selenium\Page\Settings;
 
