@@ -12,6 +12,7 @@
         stopOnFailure               = "false"
         syntaxCheck                 = "false"
         bootstrap                   = "tests/bootstrap.php"
+        stderr                      = ""
 >
     <testsuites>
         <testsuite name="unit">
