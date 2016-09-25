@@ -5,6 +5,9 @@ cache:
 before_script:
     - composer install
 
-test:okvpn:
+test:
     script:
         - phpunit --verbose --testsuite=unit
+    only:
+        - master
+        - develop

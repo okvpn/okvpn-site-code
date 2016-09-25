@@ -6,9 +6,9 @@
 
 
 ```bash
-    git clone https://github.com/okvpn/okvpn-site-code.git
-    cd okvpn-site-code
-    composer install
+git clone https://github.com/okvpn/okvpn-site-code.git
+cd okvpn-site-code
+composer install
 ```
 ## license
 
