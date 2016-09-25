@@ -2,7 +2,6 @@
 
 namespace Ovpn\Security;
 
-
 class Authorization implements AuthorizationInterface
 {
 
@@ -34,12 +33,11 @@ class Authorization implements AuthorizationInterface
 
         $login = password_verify($password, $user->getPassword());
 
-        foreach ($this->tokenStorage->getTokens() as $token) {
-            if ($login && $token instanceof TokenStorageInterface) {
+        foreach ($this->tokenStorage as $token) {
+            if ($login && $token instanceof TokenInterface) {
                 $token->setToken((string) $user->getId());
             }
         }
         return $login;
     }
-    
 }

@@ -34,7 +34,7 @@ services:
 
     ovpn_user.manager:
         class: %user_manager.ovpn.class%
-        arguments: ['@ovpn_config', '@ovpn_mailer']
+        arguments: ['@ovpn_config', '@ovpn_mailer', '@ovpn_openvpn.facade', '@ovpn_user.repository']
 
     ovpn_authorization:
         class: %authorization.class%
@@ -47,3 +47,18 @@ services:
     ovpn_mailer:
         class: %mail.mailgun.class%
         arguments: ['@ovpn_config']
+
+    ovpn_token.session:
+        class: Ovpn\Security\TokenSession
+        public: false
+        tags:
+            - { name: secure.token, priority: 1 }
+
+    ovpn_token.cookie:
+        class: Ovpn\Security\TokenCookie
+        public: false
+        tags:
+            - { name: secure.token, priority: 2 }
+
+    ovpn_openvpn.facade:
+        class: Ovpn\Tools\Openvpn\OpenvpnFacade

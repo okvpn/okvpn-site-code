@@ -1,6 +1,5 @@
 <?php
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Kernel\{
     Kernel,
     CumulativeResourceManager
@@ -9,14 +8,14 @@ use Kernel\{
 // -- Environment setup --------------------------------------------------------
 
 // Load the core Kohana class
-require SYSPATH . 'classes/Kohana/Core' . EXT;
+require_once SYSPATH . 'classes/Kohana/Core' . EXT;
 
 if (is_file(APPPATH . 'classes/Kohana' . EXT)) {
     // Application extends the core
-    require APPPATH . 'classes/Kohana' . EXT;
+    require_once APPPATH . 'classes/Kohana' . EXT;
 } else {
     // Load empty core extension
-    require SYSPATH . 'classes/Kohana' . EXT;
+    require_once SYSPATH . 'classes/Kohana' . EXT;
 }
 
 /**
@@ -47,12 +46,6 @@ $loaderClass = DOCROOT . 'vendor/autoload.php';
 
 /** @var Composer\Autoload\ClassLoader $loader */
 $loader = require_once $loaderClass;
-
-if (! ($loader instanceof Composer\Autoload\ClassLoader)) {
-    $loader =  new Composer\Autoload\ClassLoader();
-}
-$loader->add('Ovpn', DOCROOT . 'src');
-$loader->register();
 
 /**
  * Optionally, you can enable a compatibility auto-loader for use with
@@ -139,10 +132,7 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-    'database'      => MODPATH .'database', // Database access
-    'okvpn'         => MODPATH .'okvpn',
-    'cron'          => MODPATH .'cron',
-    'minion'        => MODPATH .'minion',     // CLI Tasks
+    'database'      => MODPATH .'database',   // Database access
     'orm'           => MODPATH .'orm',        // Object Relationship Mapping
 ));
 
@@ -163,9 +153,6 @@ define('SALT', 'y1fAgLdx8WeFsQ');
 Kernel::registrationBundle([
     new Ovpn\OvpnBundle(),
 ]);
-
-AnnotationRegistry::registerAutoloadNamespace('Annotations\DependencyInjectionAnnotation',
-    APPPATH . 'classes' );
 
 CumulativeResourceManager::getInstance()
     ->setContainer(Kernel::getContainer())

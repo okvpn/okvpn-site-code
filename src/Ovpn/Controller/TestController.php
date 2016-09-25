@@ -2,12 +2,13 @@
 namespace Ovpn\Controller;
 
 use Ovpn\Core\Controller;
+use Ovpn\Repository\UserRepository;
 
 class TestController extends Controller
 {
     public function indexAction()
     {
-        $el = $this->getContainer()->get('ovpn_security');
-        var_dump($el);
+        $ur = new UserRepository();
+        var_dump($ur->isAllowConnection('41','nl2-3368cf13'));
     }
 }

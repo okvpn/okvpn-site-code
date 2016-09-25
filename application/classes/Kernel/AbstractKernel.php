@@ -53,5 +53,19 @@ abstract class AbstractKernel
     /**
      * @return ContainerBuilder
      */
-    abstract public function getContainerBuilder();
+    public function getContainerBuilder()
+    {
+        $container = new ContainerBuilder();
+        $this->prepareContainer($container);
+
+        $container->compile();
+
+        return $container;
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @throws \Exception
+     */
+    abstract public function prepareContainer(ContainerBuilder $container);
 }

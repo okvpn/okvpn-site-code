@@ -40,6 +40,16 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
     {
         return $this->kohanaController->request;
     }
+    
+    
+    public function getPostData(array $fields = null, $default = null)
+    {
+        if (null === $fields) {
+            return $this->getRequest()->post();
+        }
+        
+        //foreach ()
+    }
 
     /**
      * @return \Response
@@ -127,6 +137,6 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
      * @inheritdoc
      */
     public function after() {}
-    
+
 
 }

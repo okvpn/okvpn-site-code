@@ -14,9 +14,9 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
     protected $security;
 
     /**
-     * @var TokenStorageInterface[]
+     * @var TokenStorage
      */
-    protected $tokenStrategy;
+    protected $tokenStorage;
 
     /**
      * @var Authorization;
@@ -31,7 +31,7 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
 
         $this->security = $security;
         $this->authorization = $authorization;
-        $this->tokenStrategy = $tokens;
+        $this->tokenStorage = $tokens;
     }
 
     /**
@@ -41,9 +41,9 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
     {
         $user = null;
         $restoreTokens = [];
-        
-        foreach ($this->tokenStrategy->getTokens() as $token) {
-            $this->security->setTokenStorage($token);
+        /** @var TokenInterface $token */
+        foreach ($this->tokenStorage as $token) {
+            $this->security->setTokenStrategy($token);
             $user = $this->security->getAbstractUser();
 
             if ($user instanceof UsersInterface) {
@@ -54,10 +54,10 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
         }
         
         if ($user instanceof  UsersInterface) {
-            /** @var TokenStorageInterface $token */
+            /** @var TokenInterface $token */
             foreach ($restoreTokens as $token) {
                 $token->setToken($user->getId());
-            }            
+            }
         }
         
         return $user;
@@ -77,8 +77,9 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
     public function isGranted(string $nameRole): bool
     {
         $result = false;
-        foreach ($this->tokenStrategy as $token) {
-            $this->security->setTokenStorage($token);
+        /** @var TokenInterface $token */
+        foreach ($this->tokenStorage as $token) {
+            $this->security->setTokenStrategy($token);
             $result = $this->security->isGranted($nameRole);
 
             if ($result) {

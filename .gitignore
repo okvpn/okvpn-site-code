@@ -3,7 +3,11 @@ application/logs/*
 .idea
 sftp-config.json
 application/out/*
-application/config/phinx.yml
+application/config/parameters.php
+composer.lock
+vendor
+system
+modules
 .svn
 *.log
 *~

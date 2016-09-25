@@ -1,0 +1,21 @@
+sudo: false
+
+language: php
+
+branches:
+    only:
+        - develop
+
+services:
+  - postgresql
+
+php:
+    - 7.0
+
+before_script:
+    - psql -c 'create database okvpn;' -U postgres
+    - composer self-update
+    - composer install
+
+script:
+    - ./vendor/bin/phpunit --verbose --testsuite=unit

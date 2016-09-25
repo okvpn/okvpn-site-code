@@ -1,3 +1,2 @@
 <?php
-var_dump(preg_match('/^%(.+)%$/', '%dadasd%', $match));
-var_dump($match);
+echo password_hash('123456', PASSWORD_BCRYPT);

@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Ovpn\Security\SecurityFacade;
+use Ovpn\Security\TokenStorage;
 
 class SecurityFacadeTest extends TestCase
 {
@@ -18,20 +19,18 @@ class SecurityFacadeTest extends TestCase
 
     public function setUp()
     {
-        $this->token = $this->createMock('Ovpn\Security\TokenStorageInterface');
+        $this->token = $this->createMock('Ovpn\Security\TokenInterface');
         $this->abstractUser = $this->createMock('Ovpn\Entity\UsersInterface');
         $this->authorization = $this->createMock('Ovpn\Security\Authorization');
         $this->security = $this->createMock('Ovpn\Security\Security');
-        $this->tokenStorage = $this->createMock('Ovpn\Security\TokenStorage');
+        $this->tokenStorage = new TokenStorage();
+        $this->tokenStorage->addToken($this->token);
     }
 
     public function testGetUser()
     {
-        $this->tokenStorage->expects($this->once())
-            ->method('getTokens')
-            ->willReturn(array_fill(0, 3, $this->token));
         $this->security->expects($this->once())
-            ->method('setTokenStorage');
+            ->method('setTokenStrategy');
         $this->security->expects($this->once())
             ->method('getAbstractUser')
             ->willReturn($this->abstractUser);
