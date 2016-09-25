@@ -4,6 +4,10 @@ application/logs/*
 sftp-config.json
 application/out/*
 application/config/parameters.php
+composer.lock
+vendor
+system
+modules
 .svn
 *.log
 *~

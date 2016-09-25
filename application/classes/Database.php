@@ -8,7 +8,7 @@ use Ovpn\Core\Config;
 abstract class Database extends Kohana_Database
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function instance($name = null, array $config = null)
     {
@@ -41,4 +41,11 @@ abstract class Database extends Kohana_Database
 
         return Database::$instances[$name];
     }
+
+    /**
+     * Get transaction nesting count
+     * 
+     * @return integer
+     */
+    public function getTransactionNestingLevel(){}
 }
