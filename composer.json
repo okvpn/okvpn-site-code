@@ -1,0 +1,30 @@
+{
+    "name": "ovpn/okvpn-project",
+    "license": "GPL 2",
+    "type": "project",
+    "description": "The \"OkVPN Standard Edition\" distribution",
+    "authors": [
+        {
+            "name": "Jurasikt",
+            "email": "team@okvpn.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "": "src/" }
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "kohana/core": ">=3.3",
+        "kohana/orm": ">=3.3",
+        "mailgun/mailgun-php": "~1.7.2",
+        "bitpay/php-client": "^3.0",
+        "robmorgan/phinx": "^0.5.3",
+        "doctrine/annotations": "^1.2",
+        "symfony/dependency-injection": "^2.3 || ^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.5",
+        "phpunit/phpunit-selenium": "^3.0",
+        "facebook/webdriver": "^1.1"
+    }
+}

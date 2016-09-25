@@ -32,7 +32,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="<?=URL::base()?>faq">FAQ</a></li>
-            <li><a href="<?=URL::base()?>guide">Подключение</a></li>
+            <li><a href="<?=URL::base()?>guides">Подключение</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown active">

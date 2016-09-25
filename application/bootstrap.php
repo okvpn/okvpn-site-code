@@ -1,16 +1,21 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
+
+use Kernel\{
+    Kernel,
+    CumulativeResourceManager
+};
 
 // -- Environment setup --------------------------------------------------------
 
 // Load the core Kohana class
-require SYSPATH . 'classes/Kohana/Core' . EXT;
+require_once SYSPATH . 'classes/Kohana/Core' . EXT;
 
 if (is_file(APPPATH . 'classes/Kohana' . EXT)) {
     // Application extends the core
-    require APPPATH . 'classes/Kohana' . EXT;
+    require_once APPPATH . 'classes/Kohana' . EXT;
 } else {
     // Load empty core extension
-    require SYSPATH . 'classes/Kohana' . EXT;
+    require_once SYSPATH . 'classes/Kohana' . EXT;
 }
 
 /**
@@ -37,7 +42,10 @@ setlocale(LC_ALL, 'en_US.utf-8');
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
 
-require_once Kohana::find_file('vendor', 'autoload');
+$loaderClass = DOCROOT . 'vendor/autoload.php';
+
+/** @var Composer\Autoload\ClassLoader $loader */
+$loader = require_once $loaderClass;
 
 /**
  * Optionally, you can enable a compatibility auto-loader for use with
@@ -89,7 +97,7 @@ if (isset($_SERVER['SERVER_PROTOCOL'])) {
  * - boolean  caching     enable or disable internal caching                 FALSE
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
-//$_SERVER['REMOTE_ADDR'] = '125:85:85:1';
+
 if (isset($_SERVER['HTTP_CLIENT_IP'])
     || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
     || !(in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', 'fe80::1', '::1']) || php_sapi_name() === 'cli-server')
@@ -98,6 +106,8 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
         'base_url' => '/',
     ));
     define('MODE', 'server');
+    Kohana::$environment = Kohana::PRODUCTION;
+
 } else {
     Kohana::init(array(
         'base_url' => '/',
@@ -105,20 +115,9 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
     Kohana::$environment = Kohana::DEVELOPMENT;
     define('MODE', 'localhost');
 }
+
 //Kohana::$environment = Kohana::DEVELOPMENT;
-/**
- * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
- *
- * Note: If you supply an invalid environment name, a PHP warning will be thrown
- * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
- */
-// if (KOHANA_PROD_MODE) {
-//     Kohana::$environment = Kohana::PRODUCTION;
-// } else {
-//     Kohana::$environment = Kohana::DEVELOPMENT;
-// }
-//     Kohana::$environment = Kohana::DEVELOPMENT;
-//Kohana::$environment = Kohana::PRODUCTION;
+
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
@@ -133,17 +132,8 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-    // 'auth'       => MODPATH.'auth',       // Basic authentication
-    // 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-    // 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-    'database'      => MODPATH .'database', // Database access
-    'okvpn'         => MODPATH .'okvpn',    // Всякая всячена
-    'cron'          => MODPATH.'cron',
-    // 'image'      => MODPATH.'image',      // Image manipulation
-    'minion'        => MODPATH.'minion',     // CLI Tasks
-    'orm'           => MODPATH.'orm',        // Object Relationship Mapping
-    // 'unittest'   => MODPATH.'unittest',   // Unit testing
-    // 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+    'database'      => MODPATH .'database',   // Database access
+    'orm'           => MODPATH .'orm',        // Object Relationship Mapping
 ));
 
 /**
@@ -157,14 +147,21 @@ Cookie::$salt = 'csj1QsfhAsnAafrSDQzLDa';
 
 Cookie::$expiration = 3141596;
 
+
 define('SALT', 'y1fAgLdx8WeFsQ');
 
+Kernel::registrationBundle([
+    new Ovpn\OvpnBundle(),
+]);
+
+CumulativeResourceManager::getInstance()
+    ->setContainer(Kernel::getContainer())
+    ->setBundles(Kernel::getBundles());
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-
-Route::set('main', '<action>(/<token>)', array('action' => 'faq|guide|test|sign|blockchain|csrf|content|proxy'))
+Route::set('main', '<action>(/<token>)', array('action' => 'faq|guide|signup|blockchain|csrf|content|proxy'))
     ->defaults(array(
         'controller' => 'main',
     ));

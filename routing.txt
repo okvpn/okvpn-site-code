@@ -1,0 +1,15 @@
+url                  name(description)           methods          response   test   controller
+/                    main page                   POST             200        no     Welcome
+/faq                 faq                         GET              200        no     Main
+/guide               -                           GET              404        no     Main
+/proxy               proxy api                   GET              500        no     Main
+/profile             profile                     GET              500        no     Profile
+/profile/settings    settings                    GET              500        no     Profile
+/profile/create      create vpn                  GET              200        no     Profile
+/profile/billing     billing info                GET              200        no     Profile
+/profile/getinfovpn  -                           GET              200        no     Profile
+/user/vpndelete                                  POST             500        no
+/user/login          login                       POST             200        no     User
+/user/delete                                     POST             500        no 
+/about                                           GET              404        no 
+/signup                                          POST             500        no     Main

@@ -17,7 +17,7 @@
     <!-- amCharts javascript code -->
     <script type="text/javascript">  
     $.post(
-        "<?php echo URL::base()?>ajax/billing",
+        "<?php echo URL::base()?>profile/billing",
         {"csrf":'<?php echo $csrf ?>'},
         function(jsn){
           //$('#st-table').append('<table id="table"></table>');
