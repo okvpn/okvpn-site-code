@@ -8,6 +8,7 @@ before_script:
 test:
     script:
         - phpunit --verbose --testsuite=unit
+        - phpunit --verbose --testsuite=functional
     only:
         - master
         - develop
