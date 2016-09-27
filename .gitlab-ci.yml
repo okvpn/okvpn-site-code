@@ -3,12 +3,12 @@ cache:
     - vendor/
 
 before_script:
-    - composer install
+    - bash .ci/gitlab.sh install
 
 test:
     script:
-        - phpunit --verbose --testsuite=unit
-        - phpunit --verbose --testsuite=functional
+        - bash .ci/gitlab.sh script
+        
     only:
         - master
         - develop
