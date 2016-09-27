@@ -1,7 +1,3 @@
-cache:
-    paths:
-    - vendor/
-
 before_script:
     - bash .ci/gitlab-ci.sh install
 
