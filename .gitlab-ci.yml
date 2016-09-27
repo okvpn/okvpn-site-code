@@ -3,11 +3,12 @@ cache:
     - vendor/
 
 before_script:
-    - bash ci/gitlab-ci.sh install
+    - echo $PWD
+    - bash .ci/gitlab-ci.sh install
 
 test:
     script:
-        - bash ci/gitlab-ci.sh script
+        - bash .ci/gitlab-ci.sh script
 
     only:
         - master
