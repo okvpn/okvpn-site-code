@@ -3,7 +3,6 @@ cache:
     - vendor/
 
 before_script:
-    - echo $PWD
     - bash .ci/gitlab-ci.sh install
 
 test:
