@@ -3,12 +3,13 @@ cache:
     - vendor/
 
 before_script:
-    - bash .ci/gitlab.sh install
+    - ls -l
+    - bash .ci/gitlab-ci.sh install
 
 test:
     script:
-        - bash .ci/gitlab.sh script
-        
+        - bash .ci/gitlab-ci.sh script
+
     only:
         - master
         - develop
