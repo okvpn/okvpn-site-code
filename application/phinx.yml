@@ -9,8 +9,8 @@ environments:
         adapter: pgsql
         host: localhost
         name: okvpn
-        user: postgres
-        pass: 'ppkt731415926'
+        user: okvpn
+        pass: 123456
         port: 5432
         charset: utf8
 
@@ -18,8 +18,8 @@ environments:
         adapter: pgsql
         host: localhost
         name: okvpn
-        user: postgres
-        pass: 'ppkt731415926'
+        user: okvpn
+        pass: 123456
         port: 5432
         charset: utf8
 
@@ -27,7 +27,7 @@ environments:
         adapter: pgsql
         host: localhost
         name: okvpn
-        user: postgres
-        pass: 'ppkt731415926'
+        user: okvpn
+        pass: 123456
         port: 5432
         charset: utf8
