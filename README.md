@@ -10,6 +10,12 @@ git clone https://github.com/okvpn/okvpn-site-code.git
 cd okvpn-site-code
 composer install
 ```
+
+And run migrations
+```bash
+cd applivation
+phinx migrate
+```
 ## license
 
 GPL 2

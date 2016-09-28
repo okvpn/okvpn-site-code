@@ -1,13 +1,10 @@
-cache:
-    paths:
-    - vendor/
-
 before_script:
-    - composer install
+    - bash .ci/gitlab-ci.sh install
 
 test:
     script:
-        - phpunit --verbose --testsuite=unit
+        - bash .ci/gitlab-ci.sh script
+
     only:
         - master
         - develop
