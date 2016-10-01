@@ -1,6 +1,6 @@
 # The okvpn.org site code
 
-[![Travis CI build status](https://api.travis-ci.com/Jurasikt/dev_okvpn.svg?token=JAwKtvyvJKxrU4zYifzs&branch=develop)](https://travis-ci.org/orocrm/platform)
+[![Travis CI build status](https://api.travis-ci.com/Jurasikt/dev_okvpn.svg?token=JAwKtvyvJKxrU4zYifzs&branch=develop)](https://travis-ci.org)
 
 ## Installation
 
@@ -16,6 +16,12 @@ And run migrations
 cd applivation
 phinx migrate
 ```
+
+## Conventions and Code Version Control
+
+* See [Code Version Control](./doc/cvs.md) for details
+* See [Code style](./doc/code_style.md) for details
+
 ## license
 
 GPL 2
