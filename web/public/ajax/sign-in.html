@@ -29,29 +29,34 @@
     <div class="zero-20"></div>
       <div class = "row">
         <div class="col-sm-4 col-sm-offset-1">
-          <div class="btn-green">Войти</div>
+          <div class="btn-green" id="login">Войти</div>
         </div>
         <div class="col-sm-4 col-sm-offset-1">
           <div class="btn-red" data-dismiss="modal">Отмена</div>
         </div>
       </div>
+      <div style="margin-top: 10px;float: left;">
+        <a href="#" id="forgot-form">Забыли пароль</a>
+      </div>
+      <div class="zero-20"></div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
   
-$('.btn-green').click(function(){
-  $.post(system.login,{password:$('#password').val(),email:$('#email').val()},function(json){
-    if (json.error){
-      $('.m-warning').html('');
-      for (var i = json.message.length - 1; i >= 0; i--) {
-
-        $('.m-warning').append('<li>'+json.message[i]+'</li>');
-      }; 
-    } else {
-      window.location.replace(system.profile);
-    }
+  $('#login').click(function(){
+    $.post(system.login,{password:$('#password').val(),email:$('#email').val()},function(json){
+      if (json.error){
+        $('.m-warning').html('');
+        for (var i = json.message.length - 1; i >= 0; i--) {
+          $('.m-warning').append('<li>'+json.message[i]+'</li>');
+        }
+      } else {
+        window.location.replace(system.profile);
+      }
+    });
   });
-});
-
+  $('#forgot-form').click(function(){
+    $('.modal-content').load('/public/ajax/forgot-pass.html');
+  });
 </script>

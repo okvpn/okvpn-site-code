@@ -56,20 +56,23 @@
 <div class="row">
   <div class="settings-warming"></div>
   <div class ="col-md-6 col-md-offset-3">
-    <div class="input-group">
-      <input type="text" class="form-control" value ="<?=$email?>">
-      <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbspНовый Email </span>
-    </div>
-    <div class ="zero-20"></div>
-    <div class ="input-group">
-      <input type="password" class="form-control">
-      <span class="input-group-addon" id="sizing-addon2">Новый пароль</span>
-    </div>
-    <div class ="zero-20"></div>
-    <div class ="input-group">
-      <input type="password" class="form-control"> 
-      <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp Re пароль</span>
-    </div>
+    <form id="change-settings">
+      <div class="input-group">
+        <input type="text" class="form-control" value ="<?=$email?>">
+        <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbspНовый Email </span>
+      </div>
+      <div class ="zero-20"></div>
+      <div class ="input-group">
+        <input type="password" class="form-control">
+        <span class="input-group-addon" id="sizing-addon2">Новый пароль</span>
+      </div>
+      <div class ="zero-20"></div>
+      <div class ="input-group">
+        <input type="password" class="form-control">
+        <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp Re пароль</span>
+      </div>
+    </form>
+
     <div class="zero-20"></div>
     <div class="row" style="display: none">
       <div class="col-sm-6">
@@ -142,7 +145,7 @@
     <div class="zero-50"></div>
     <div class="row">
       <div class="col-sm-6">
-        <button type="button" class="btn btn-success"style="margin:10px">Приметить</button>
+        <button id="set" type="button" class="btn btn-success"style="margin:10px">Приметить</button>
         <button type="button" class="btn btn-primary"style="margin:10px">Отмена </button>
       </div>
     </div>
@@ -151,16 +154,33 @@
 
 </div>
 <script type="text/javascript">
-var csrftoken = "<?php echo $csrf ?>";
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
+});
+
+$('#set').click(function(){
+  scroll(0,0);
+  var form = $('#change-settings').serialize();
+  $.post("<?php echo URL::base()?>user/update",form,function(json){
+    if (json.error) {
+      $('.settings-warming').load('<?=URL::base()?>public/ajax/warming.html', function(){
+        for (var i = json.message.length - 1; i >= 0; i--) {
+          $('.alert').append('<li>'+json.message[i]+'</li>');
+        }
+      });
+    } else {
+      $('.settings-warming').load('<?=URL::base()?>public/ajax/success.html',function(){
+        $('.alert').append('Изменения сохранены<br>');
+      });
+    }
+  }
 });
 
 $("#del-acc").click(function(event){
   scroll(0,0);
   if ($('#delete').prop('checked')) {
     if (confirm('Вы уверены, что хотите удалить аккаунт?')) {
-      $.post("<?php echo URL::base() ?>user/delete",{action:"delete",csrf:csrftoken},function(json){
+      $.post("<?php echo URL::base() ?>user/delete",{action:"delete"},function(json){
         if (json.error) {
           $('.alert').append('Неизвестная ошибка<br>');
         } else {
@@ -183,12 +203,12 @@ $('#del-vpn').click(function(e){
   for (var i = 0; i < items.length; i++) {
     if (items[i].checked) {
       arr.push(items[i].value);
-    };
-  };
+    }
+  }
   if (arr.length > 0 && confirm('Вы уверены, что хотите удалить выбранные vpn?')) {
     arr = btoa(JSON.stringify(arr));
 
-    $.post('<?php echo URL::base() ?>user/vpndelete',{csrf:csrftoken,host:arr}, function(res){
+    $.post('<?php echo URL::base() ?>user/vpndelete',{host:arr}, function(res){
       
       if (res.error) {
         $('.settings-warming').load('<?=URL::base()?>public/ajax/warming.html', function(){
@@ -202,7 +222,7 @@ $('#del-vpn').click(function(e){
             it = items[i];
             it.parentElement.parentElement.remove();
           }
-        };
+        }
         $('.settings-warming').load('<?=URL::base()?>public/ajax/success.html',function(){
           $('.alert').append('Выполнено<br>');
         });
@@ -214,9 +234,7 @@ $('#del-vpn').click(function(e){
         $('.alert').append('Не чего не выбрано <br>');
       });      
     }
-
   }
-  
 });
 </script>
 

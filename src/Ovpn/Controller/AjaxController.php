@@ -18,11 +18,12 @@ class AjaxController extends Controller
     public function apiAction()
     {
         $data = [
-            'auth'    => ($this->getSecurityFacade()->getUser() instanceof UsersInterface),
-            'signup'  => URL::base() . 'user/create',
-            'sitekey' => $this->getConfig()->get('captcha:sitekey'),
-            'login'   => URL::base() . 'user/login',
-            'profile' => URL::base() . 'profile',
+            'auth'      => ($this->getSecurityFacade()->getUser() instanceof UsersInterface),
+            'signup'    => URL::base() . 'user/create',
+            'sitekey'   => $this->getConfig()->get('captcha:sitekey'),
+            'login'     => URL::base() . 'user/login',
+            'profile'   => URL::base() . 'profile',
+            'resetPass' => URL::base() . 'user/newpasswordrequest',
         ];
 
         $this->setJsonResponse($data);

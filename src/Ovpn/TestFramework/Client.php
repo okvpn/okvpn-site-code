@@ -2,6 +2,8 @@
 
 namespace Ovpn\TestFramework;
 
+use Kernel\CumulativeResourceManager;
+use Symfony\Component\DependencyInjection\Container;
 use Request;
 
 class Client
@@ -10,6 +12,16 @@ class Client
      * @var Request
      */
     protected $request;
+
+    /**
+     * @var Container
+     */
+    protected $container;
+    
+    public function __construct()
+    {
+        $this->container = CumulativeResourceManager::getInstance()->getContainer();
+    }
 
     /**
      * @param $method
@@ -59,6 +71,14 @@ class Client
         }
 
         throw new \RuntimeException('Client must be init');
+    }
+
+    /**
+     * @return Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
     }
 
     /**

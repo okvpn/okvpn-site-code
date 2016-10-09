@@ -5,20 +5,20 @@ use Phinx\Seed\AbstractSeed;
 class A100UsersSeed extends AbstractSeed
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {
         $rows = [
             [
-                'email'   => 'test1',
+                'email'   => 'test1@okvpn.org',
                 'pass'    => 'pass',
                 'date'    => '2016-01-01',
                 'checked' => 'f',
                 'role'    => 1
             ],
             [
-                'email'   => 'test2',
+                'email'   => 'test2@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe', //123456
                 'date'    => '2016-01-02',
                 'checked' => 't',
@@ -26,7 +26,7 @@ class A100UsersSeed extends AbstractSeed
                 'token'   => '123456'
             ],
             [
-                'email'   => 'test3',
+                'email'   => 'test3@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-03',
                 'checked' => 't',
@@ -34,14 +34,14 @@ class A100UsersSeed extends AbstractSeed
                 'token'   => '123456'
             ],
             [
-                'email'   => 'test4',
+                'email'   => 'test4@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-04',
                 'checked' => 't',
                 'role'    => 2
             ],
             [
-                'email'   => 'test5',
+                'email'   => 'test5@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-05',
                 'checked' => 't',
@@ -49,8 +49,6 @@ class A100UsersSeed extends AbstractSeed
             ]
         ];
         
-        $this->table('users')
-            ->insert($rows)
-            ->save();
+        $this->table('users')->insert($rows)->save();
     }
 }
