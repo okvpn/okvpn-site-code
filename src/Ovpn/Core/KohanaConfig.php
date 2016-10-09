@@ -2,7 +2,6 @@
 
 namespace Ovpn\Core;
 
-
 class KohanaConfig implements ConfigInterface
 {
 
@@ -11,6 +10,5 @@ class KohanaConfig implements ConfigInterface
      */
     public function get($name)
     {
-
     }
 }

@@ -40,16 +40,6 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
     {
         return $this->kohanaController->request;
     }
-    
-    
-    public function getPostData(array $fields = null, $default = null)
-    {
-        if (null === $fields) {
-            return $this->getRequest()->post();
-        }
-        
-        //foreach ()
-    }
 
     /**
      * @return \Response
@@ -66,7 +56,6 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
     }
     
     /**
-     * 
      * Issues a HTTP redirect.
      *
      * Proxies to the [HTTP::redirect] method.
@@ -75,7 +64,7 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
      * @param  int     $code  HTTP Status code to use for the redirect
      * @throws \HTTP_Exception
      */
-    public function redirect($url = '', $code = 302) 
+    public function redirect($url = '', $code = 302)
     {
         return $this->kohanaController->redirect($url, $code);
     }
@@ -91,7 +80,7 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
      * @param  string  $etag  Resource Etag
      * @return \Response
      */
-    public function check_cache($etag = null)
+    public function checkCache($etag = null)
     {
         return \HTTP::check_cache($this->getRequest(), $this->getResponse(), $etag);
     }
@@ -141,12 +130,14 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
     /**
      * @inheritdoc
      */
-    public function before() {}
+    public function before()
+    {
+    }
 
     /**
      * @inheritdoc
      */
-    public function after() {}
-
-
+    public function after()
+    {
+    }
 }

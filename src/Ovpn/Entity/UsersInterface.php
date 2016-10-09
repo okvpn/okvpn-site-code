@@ -1,7 +1,9 @@
 <?php
+
 namespace Ovpn\Entity;
 
-interface UsersInterface {
+interface UsersInterface
+{
 
     /**
      * Get User Id
@@ -30,5 +32,4 @@ interface UsersInterface {
      * @return Roles
      */
     public function getRole();
-    
 }

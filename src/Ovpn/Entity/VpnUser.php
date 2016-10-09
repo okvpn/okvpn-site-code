@@ -1,14 +1,14 @@
 <?php
+
 namespace Ovpn\Entity;
 
-
-class VpnUser extends \ORM 
+class VpnUser extends \ORM
 {
-    protected $_table_name = 'vpn_user';
+    protected $_table_name = 'vpn_user'; // @codingStandardsIgnoreLine
 
-    protected $_foreign_key_suffix = '';
+    protected $_foreign_key_suffix = ''; // @codingStandardsIgnoreLine
 
-    protected $_belongs_to = array(
+    protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'host' => array(
             'model'       => 'Ovpn:Entity:Host',
             'foreign_key' => 'vpn_id',

@@ -1,11 +1,11 @@
 <?php
-namespace Ovpn\Entity;
 
+namespace Ovpn\Entity;
 
 class Roles extends \ORM
 {
 
-    protected $_table_name = 'roles';
+    protected $_table_name = 'roles'; // @codingStandardsIgnoreLine
 
     public function getId()
     {
@@ -96,8 +96,7 @@ class Roles extends \ORM
     public function addRoleName($name)
     {
         $rolesName = $this->getRolesName();
-        $this->setRolesName(array_merge($rolesName,[$name]));
+        $this->setRolesName(array_merge($rolesName, [$name]));
         return $this;
     }
-
 }

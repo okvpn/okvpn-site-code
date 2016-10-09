@@ -1,14 +1,14 @@
 <?php
-namespace Ovpn\Entity;
 
+namespace Ovpn\Entity;
 
 class Users extends \ORM implements UsersInterface
 {
-    protected $_table_name = 'users';
+    protected $_table_name = 'users'; // @codingStandardsIgnoreLine
 
-    protected $_foreign_key_suffix = '';
+    protected $_foreign_key_suffix = ''; // @codingStandardsIgnoreLine
 
-    protected $_belongs_to = array(
+    protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'roles' => array(
             'model'       => 'Ovpn:Entity:Roles',
             'foreign_key' => 'role',
@@ -123,5 +123,4 @@ class Users extends \ORM implements UsersInterface
     {
         return new Users($id);
     }
-
 }

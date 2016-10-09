@@ -58,7 +58,8 @@ class ResetPasswordTest extends WebTestCase
     {
         $this->request('POST', '/user/newpasswordrequest');
         $result = $this->getJsonResponse();
-        $this->assertEquals($result,
+        $this->assertEquals(
+            $result,
             [
                 'message' => 'Пользователь с такими данными не зарегистрирован',
                 'error' => true,
@@ -87,7 +88,8 @@ class ResetPasswordTest extends WebTestCase
 
         $this->request('POST', '/user/setnewpassword/', $param);
         $response = $this->getJsonResponse();
-        $this->assertEquals($response,
+        $this->assertEquals(
+            $response,
             [
                 'error'   => $error,
                 'message' => $message

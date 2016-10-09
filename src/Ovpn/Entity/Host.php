@@ -4,7 +4,7 @@ namespace Ovpn\Entity;
 
 class Host extends \ORM
 {
-    protected $_table_name = 'vpn_hosts';
+    protected $_table_name = 'vpn_hosts'; // @codingStandardsIgnoreLine
 
     public function getId()
     {

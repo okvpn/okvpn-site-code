@@ -13,7 +13,10 @@ class OvpnBundle extends AbstractBundle
 
     public function build(ContainerBuilder $container)
     {
-        AnnotationRegistry::registerAutoloadNamespace('Annotations\DependencyInjectionAnnotation', APPPATH . 'classes' );
+        AnnotationRegistry::registerAutoloadNamespace(
+            'Annotations\DependencyInjectionAnnotation',
+            APPPATH . 'classes'
+        );
         
         $container->addCompilerPass(new SecurityPass());
     }

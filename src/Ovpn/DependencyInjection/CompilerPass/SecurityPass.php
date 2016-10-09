@@ -40,7 +40,8 @@ class SecurityPass implements CompilerPassInterface
                     $priority = $name['priority'];
                 } else {
                     throw new \InvalidArgumentException(
-                        sprintf('Service "%s" must define the "priority" attribute on "%s" tags.', $id, $this->tagName));
+                        sprintf('Service "%s" must define the "priority" attribute on "%s" tags.', $id, $this->tagName)
+                    );
                 }
 
                 $sortedParsers[$priority][] = $id;
@@ -55,6 +56,5 @@ class SecurityPass implements CompilerPassInterface
                 $definition->addMethodCall('addToken', [new Reference($id)]);
             }
         }
-
     }
 }

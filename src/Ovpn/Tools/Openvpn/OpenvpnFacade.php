@@ -2,7 +2,6 @@
 
 namespace Ovpn\Tools\Openvpn;
 
-
 class OpenvpnFacade implements RsaManagerInterface
 {
     /**

@@ -2,7 +2,6 @@
 
 namespace Ovpn\Core;
 
-
 interface ControllerInterface
 {
     /**

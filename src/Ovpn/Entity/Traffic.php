@@ -7,11 +7,11 @@ class Traffic extends \ORM
     
     use GetSetUserTrait;
     
-    protected $_table_name = 'traffic';
+    protected $_table_name = 'traffic'; // @codingStandardsIgnoreLine
 
-    protected $_foreign_key_suffix = '';
+    protected $_foreign_key_suffix = ''; // @codingStandardsIgnoreLine
 
-    protected $_belongs_to = array(
+    protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'user' => array(
             'model'       => 'Ovpn:Entity:Users',
             'foreign_key' => 'uid',

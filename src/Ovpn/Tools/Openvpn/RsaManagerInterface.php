@@ -2,7 +2,6 @@
 
 namespace Ovpn\Tools\Openvpn;
 
-
 interface RsaManagerInterface
 {
     /**

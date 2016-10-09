@@ -2,7 +2,6 @@
 
 namespace Ovpn\Tools;
 
-
 interface MailerInterface
 {
     /**

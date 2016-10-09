@@ -92,5 +92,4 @@ class Client
 
         return new Request($url);
     }
-    
 }

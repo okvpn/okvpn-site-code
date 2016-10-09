@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace Ovpn\Controller;
 
 use Ovpn\Core\Controller;

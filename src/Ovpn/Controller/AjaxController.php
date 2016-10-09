@@ -60,5 +60,4 @@ class AjaxController extends Controller
     {
         return $this->container->get('ovpn_user.repository');
     }
-
 }

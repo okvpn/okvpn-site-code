@@ -80,7 +80,7 @@ class AllowConnectionTest extends WebTestCase
 
     /**
      * @dataProvider clientDataProvider
-     * 
+     *
      * @param $balance
      * @param $traffic
      * @param Roles $role

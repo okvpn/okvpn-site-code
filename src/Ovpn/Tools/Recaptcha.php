@@ -6,7 +6,6 @@ use Ovpn\Core\Config;
 
 class Recaptcha
 {
-
     const MAX_LAZY_CHECK = 3;
 
     /**
@@ -20,8 +19,8 @@ class Recaptcha
         $config = new Config();
 
         if ($session->get('captcha') == true &&
-            $session->get('captchaCount') < self::MAX_LAZY_CHECK) {
-
+            $session->get('captchaCount') < self::MAX_LAZY_CHECK
+        ) {
             $session->set('captchaCount', (int) $session->get('captchaCount') + 1);
             return true;
         }

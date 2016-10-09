@@ -11,11 +11,11 @@ class Balance extends \ORM
 
     const AMOUNT_FREE = 'free';
 
-    protected $_table_name = 'billing';
+    protected $_table_name = 'billing'; // @codingStandardsIgnoreLine
 
-    protected $_foreign_key_suffix = '';
+    protected $_foreign_key_suffix = ''; // @codingStandardsIgnoreLine
 
-    protected $_belongs_to = array(
+    protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'user' => array(
             'model'       => 'Ovpn:Entity:Users',
             'foreign_key' => 'uid',

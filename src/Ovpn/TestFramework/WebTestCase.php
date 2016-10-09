@@ -58,7 +58,7 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
      * @param array $applicationData
      * @param array $cookie
      * @throws \Request_Exception
-     * 
+     *
      * @return \Response
      */
     public function request(

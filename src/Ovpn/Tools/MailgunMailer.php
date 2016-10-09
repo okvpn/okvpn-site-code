@@ -2,7 +2,6 @@
 
 namespace Ovpn\Tools;
 
-
 use Mailgun\Mailgun;
 use Ovpn\Core\Config;
 
@@ -45,7 +44,9 @@ class MailgunMailer implements MailerInterface
             $payload['from'] = $this->buildFromHeader();
         }
         return $this->mailProvider->sendMessage(
-            $this->config->get('mailgun:site'), $payload);
+            $this->config->get('mailgun:site'),
+            $payload
+        );
     }
 
     /**
@@ -65,5 +66,4 @@ class MailgunMailer implements MailerInterface
         $from = $this->config->get('mailgun:from_email');
         return $this->config->get('mailgun:from_alias') . " <$from>";
     }
-
 }

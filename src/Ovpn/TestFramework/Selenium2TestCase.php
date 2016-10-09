@@ -36,16 +36,6 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
      */
     protected static $timeout = 5000;
 
-
-    static public function setUpBeforeClass()
-    {
-        $host = static::$hostHub;
-
-        if ($host) {
-            static::$driver = RemoteWebDriver::create($host, DesiredCapabilities::phantomjs());
-        }
-    }
-
     /**
      * @inheritdoc
      */
@@ -95,7 +85,6 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
             'script' => $this->getJsCodeErrorIgnore(),
             'args' => []
         ]);
-
     }
 
     public function waitToAjax()
@@ -110,7 +99,8 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
                 ]);
 
                 return $status ? true : null;
-            }, static::$timeout
+            },
+            static::$timeout
         );
     }
 
@@ -127,7 +117,8 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
         $this->waitUntil(
             function () use ($page) {
                 return ($this->seleniumTestUrl . $page == $this->url()) ? true : null;
-            }, static::$timeout
+            },
+            static::$timeout
         );
     }
 
@@ -158,10 +149,21 @@ abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
     {
         $this->waitUntil(
             function () use ($element) {
-
                 return $element->displayed() ? true : null;
-            }, static::$timeout
+            },
+            static::$timeout
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function setUpBeforeClass()
+    {
+        $host = static::$hostHub;
+        if ($host) {
+            static::$driver = RemoteWebDriver::create($host, DesiredCapabilities::phantomjs());
+        }
     }
 
     private function getJsCodeErrorIgnore()
@@ -181,5 +183,4 @@ JS;
             return jQuery && jQuery.active == 0;
 JS;
     }
-
 }
