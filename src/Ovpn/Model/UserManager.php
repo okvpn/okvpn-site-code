@@ -279,6 +279,29 @@ class UserManager
         return true;
     }
 
+    public function updateUser(Users $user, $post)
+    {
+        $postValid = Validation::factory($post);
+
+        $postValid
+            ->rule('email', 'email')
+            ->rule('email', 'not_empty')
+            ->rule('password', 'min_length', array(':value', 6))
+            ->rule('password', 'not_empty');
+
+        if (!$postValid->check()) {
+            return [
+                'error'   => true,
+                'message' => array_values($postValid->errors('')),
+            ];
+        }
+
+        $user->setPassword($post['password'])
+            ->setEmail($post['email']);
+        $user->save();
+        
+    }
+
     /**
      * Get database instance class
      *
