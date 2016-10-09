@@ -27,9 +27,7 @@ class ProfileController extends Controller
      */
     public function indexAction()
     {
-        $this->getResponse()->body(
-            \View::factory('profile')->set('csrf', '123')
-        );
+        $this->responseView('profile');
     }
 
     /**
@@ -38,8 +36,7 @@ class ProfileController extends Controller
     public function createAction()
     {
         $response = \View::factory('create-vpn')
-            ->set('vpn', (new VpnRepository())->getVpnStatus())
-            ->set('csrf', '123');
+            ->set('vpn', (new VpnRepository())->getVpnStatus());
 
         $this->getResponse()->body($response);
     }
@@ -55,8 +52,7 @@ class ProfileController extends Controller
         $response = \View::factory('ajax/vpninfo')
             ->set('id', $token)
             ->set('network', preg_replace('/\n/', "<br>", $info[0]['network']))
-            ->set('link', $info[0]['specifications_link'])
-            ->set('csrf', '123');
+            ->set('link', $info[0]['specifications_link']);
 
         $this->getResponse()->body($response);
     }
@@ -81,7 +77,6 @@ class ProfileController extends Controller
         $user = $this->getSecurityFacade()->getUser();
         $view = \View::factory('settings')
             ->set('email', $user->getEmail())
-            ->set('csrf', '123')
             ->set('active_vpn', (new UserRepository())->getUserVpnList($user->getId()));
         
         $this->getResponse()->body($view);

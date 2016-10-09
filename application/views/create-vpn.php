@@ -101,7 +101,6 @@
 
 
     <script type="text/javascript">
-    csrf = '<?php echo $csrf?>';
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })

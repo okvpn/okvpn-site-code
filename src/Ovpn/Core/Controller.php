@@ -129,6 +129,16 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
     }
 
     /**
+     * @param $template
+     * @param array $param
+     */
+    public function responseView($template, array $param = [])
+    {
+        $view = \View::factory($template)->set($param);
+        $this->getResponse()->body($view);
+    }
+
+    /**
      * @inheritdoc
      */
     public function before() {}

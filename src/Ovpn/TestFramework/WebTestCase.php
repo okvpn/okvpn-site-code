@@ -17,7 +17,7 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
     protected static $dbIsolation;
 
     /**
-     * @var
+     * @var \Response
      */
     protected $response;
 
@@ -72,6 +72,24 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
             ->prepareClient($method, $url, $parameters, $applicationData, $cookie)
             ->getRequest()
             ->execute();
+    }
+    
+    public function getJsonResponse()
+    {
+        $response = $this->response;
+        
+        $this->assertJsonResponse($response);
+        $this->assertTrue((bool)json_decode($response->body()));
+        return json_decode($response->body(), true);
+    }
+    
+    /**
+     * @param \Response $response
+     */
+    public function assertJsonResponse(\Response $response)
+    {
+        $contentType = $response->headers('Content-type');
+        $this->assertSame('application/json', $contentType);
     }
 
     /**

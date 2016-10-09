@@ -8,7 +8,6 @@ use Ovpn\Entity\UsersInterface;
 use Ovpn\Model\UserManager;
 use Ovpn\Security\TokenSession;
 
-
 class UserController extends Controller
 {
     use GetSecurityTrait;
@@ -30,17 +29,26 @@ class UserController extends Controller
     }
 
     /**
+     * @Route('/user/logout')
+     */
+    public function logoutAction()
+    {
+
+    }
+
+    /**
      * Email verification
-     * @Route('/user/verify')
+     * @Route('/user/verify/{token}')
      */
     public function verifyAction()
     {
         $result = $this->getUserManager()->confirmEmail(
-            $this->getRequest()->param('token'));
+            $this->getRequest()->param('token')
+        );
         
         if ($result instanceof  UsersInterface) {
             (new TokenSession())->setToken($result->getId());
-            $this->redirect( \URL::base(true) . 'profile');
+            $this->redirect(\URL::base(true) . 'profile');
         } else {
             throw new NotFoundException();
         }
@@ -58,6 +66,14 @@ class UserController extends Controller
     }
 
     /**
+     * @Route('/user/update')
+     */
+    public function updateAction()
+    {
+        $this->responseView('');
+    }
+
+    /**
      * @Route('/user/newpasswordrequest')
      */
     public function newPasswordRequestAction()
@@ -72,6 +88,21 @@ class UserController extends Controller
                 'message' => $response ? \Kohana::message('user', 'loginErr') : ''
             ]
         );
+    }
+
+    /**
+     * @Route('/user/resetpassword/{token}')
+     */
+    public function resetPasswordAction()
+    {
+        $token = $this->getRequest()->param('token');
+        $user = $this->container->get('ovpn_user.repository')->findUserByToken($token);
+        
+        if ($user === null) {
+            throw new NotFoundException();
+        }
+        
+        $this->responseView('resetPassword', ['token' => $token]);
     }
 
     /**
@@ -112,7 +143,7 @@ class UserController extends Controller
         if ($post['confirm'] !== $post['password']) {
             return [
                 'error'   => true,
-                'message' => \Kohana::message('user', 'passwordNotMatch'),
+                'message' => [\Kohana::message('user', 'passwordNotMatch')],
             ];
         }
 
