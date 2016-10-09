@@ -2,10 +2,8 @@
 
 namespace Ovpn\Tools\Openvpn;
 
-
 class ConfigBuilder implements ConfigBuilderInterface
 {
-
     protected $cumulativeConfig = '';
 
     /**
@@ -18,7 +16,6 @@ class ConfigBuilder implements ConfigBuilderInterface
         } else {
             $this->cumulativeConfig .= "ca $ca" . PHP_EOL;
         }
-
         return $this;
     }
 
@@ -32,7 +29,6 @@ class ConfigBuilder implements ConfigBuilderInterface
         } else {
             $this->cumulativeConfig .= "key $key" . PHP_EOL;
         }
-
         return $this;
     }
 
@@ -46,7 +42,6 @@ class ConfigBuilder implements ConfigBuilderInterface
         } else {
             $this->cumulativeConfig .= "cert $cert" . PHP_EOL;
         }
-
         return $this;
     }
 

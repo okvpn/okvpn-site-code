@@ -1,11 +1,12 @@
 <?php
 
+namespace Ovpn\Tests\Unit;
+
 use Ovpn\Security\Authorization;
-use Ovpn\Security\TokenStorage;
+use PHPUnit\Framework\TestCase;
 
-class AuthorizationTest extends PHPUnit_Framework_TestCase
+class AuthorizationTest extends TestCase
 {
-
     protected $token;
 
     public function setUp()
@@ -69,5 +70,4 @@ class AuthorizationTest extends PHPUnit_Framework_TestCase
     {
         return password_hash($pass, PASSWORD_BCRYPT);
     }
-
 }

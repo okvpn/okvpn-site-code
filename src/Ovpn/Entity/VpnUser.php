@@ -1,14 +1,14 @@
 <?php
+
 namespace Ovpn\Entity;
 
-
-class VpnUser extends \ORM 
+class VpnUser extends \ORM
 {
-    protected $_table_name = 'vpn_user';
+    protected $_table_name = 'vpn_user'; // @codingStandardsIgnoreLine
 
-    protected $_foreign_key_suffix = '';
+    protected $_foreign_key_suffix = ''; // @codingStandardsIgnoreLine
 
-    protected $_belongs_to = array(
+    protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'host' => array(
             'model'       => 'Ovpn:Entity:Host',
             'foreign_key' => 'vpn_id',
@@ -35,8 +35,12 @@ class VpnUser extends \ORM
         return $this;
     }
 
-    public function setDateCreate($date_create)
+    public function setDateCreate($date_create = null)
     {
+        if (null === $date_create) {
+            $date_create = date('Y-m-d H:i:s');
+        }
+        
         $this->date_create = $date_create;
         return $this;
     }
@@ -51,8 +55,12 @@ class VpnUser extends \ORM
         return $this->date_delete;
     }
 
-    public function setDateDelete($date_delete)
+    public function setDateDelete($date_delete = null)
     {
+        if (null === $date_delete) {
+            $date_delete = date('Y-m-d H:i:s');
+        }
+        
         $this->date_delete = $date_delete;
         return $this;
     }

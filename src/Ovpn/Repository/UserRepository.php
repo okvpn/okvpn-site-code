@@ -51,7 +51,8 @@ class UserRepository implements UserProviderInterface
      */
     public function getTrafficMeters($id)
     {
-        return \DB::query(\Database::SELECT,
+        return \DB::query(
+            \Database::SELECT,
             "SELECT CAST(row_number() OVER() as integer) as id, 
                     CAST(r1.dates as character varying) as date, 
                     r1.traffic as x, r1.amount as spent,
@@ -69,7 +70,8 @@ class UserRepository implements UserProviderInterface
                     left join (
                         select sum(b.amount) as amount, TO_CHAR(b.date,'YYYY-MM-DD') as dates
                             from billing as b where uid = :idd group by dates) t3
-                    on t3.dates = t2.dates) r1")
+                    on t3.dates = t2.dates) r1"
+        )
             ->param(':idd', $id)
             ->execute()
             ->as_array();
@@ -81,7 +83,8 @@ class UserRepository implements UserProviderInterface
      */
     public function getUserVpnList($uid)
     {
-        $sql = \DB::query(\Database::SELECT,
+        $sql = \DB::query(
+            \Database::SELECT,
             "SELECT T1.uid as id, T1.name, T2.name as host, T2.location, T2.icon
             FROM (
                 SELECT id as uid, vpn_id as id, name
@@ -93,7 +96,8 @@ class UserRepository implements UserProviderInterface
                 WHERE id IN (SELECT vpn_id as id
                     FROM vpn_user
                     WHERE user_id = :id)
-            ) T2 ON T1.id = T2.id")
+            ) T2 ON T1.id = T2.id"
+        )
             ->param(':id', $uid);
 
         $return = $sql->execute()->as_array();
@@ -106,11 +110,13 @@ class UserRepository implements UserProviderInterface
      */
     public function deleteAllUserVpn($uid)
     {
-        $sql = \DB::query(\Database::UPDATE,
+        $sql = \DB::query(
+            \Database::UPDATE,
             "UPDATE vpn_user set active = false
                 where user_id = :uid"
-            )
+        )
             ->param(':uid', $uid);
+
         $sql->execute();
     }
 
@@ -123,7 +129,8 @@ class UserRepository implements UserProviderInterface
      */
     public function isAllowConnection($uid, $certName)
     {
-        $sql = \DB::query(\Database::SELECT,
+        $sql = \DB::query(
+            \Database::SELECT,
             "select
                 case when count(*) > 0 then true else false end as allow_connect
             from users u
@@ -132,6 +139,7 @@ class UserRepository implements UserProviderInterface
             where vu.active = true
             and vu.name = :name
             and u.id = :uid
+            and u.checked = true
             and r.min_balance < (
                 select coalesce(sum(amount), 0) from billing
                 where uid = :uid
@@ -146,9 +154,9 @@ class UserRepository implements UserProviderInterface
                 select coalesce(sum (
                     case when count < 0 then count else 0 end
                 ), 0) from traffic
-                where uid = :uid)")
+                where uid = :uid)"
+        )
             ->parameters([':uid' => $uid, ':name' => $certName]);
-
 
         return $sql->execute()->get('allow_connect') == 't';
     }

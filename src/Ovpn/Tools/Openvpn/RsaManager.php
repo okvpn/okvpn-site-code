@@ -2,7 +2,6 @@
 
 namespace Ovpn\Tools\Openvpn;
 
-
 class RsaManager implements RsaManagerInterface
 {
     /**
@@ -39,8 +38,8 @@ class RsaManager implements RsaManagerInterface
         $this->resource['ca'] = file_get_contents($this->pathToCa());
 
         if (file_exists($this->pathToClientCert($client)) &&
-            file_exists($this->pathToClientKey($client))) {
-
+            file_exists($this->pathToClientKey($client))
+        ) {
             $this->resource['key'] = file_get_contents($this->pathToClientKey($client));
             $this->resource['cert'] = file_get_contents($this->pathToClientCert($client));
             $this->init = true;
@@ -68,8 +67,8 @@ class RsaManager implements RsaManagerInterface
         shell_exec($payload);
 
         if (file_exists($this->pathToClientCert($this->client)) &&
-            file_exists($this->pathToClientKey($this->client))) {
-
+            file_exists($this->pathToClientKey($this->client))
+        ) {
             $this->resource['key'] = file_get_contents($this->pathToClientKey($this->client));
             $this->resource['cert'] = file_get_contents($this->pathToClientCert($this->client));
             $this->init = true;
@@ -121,5 +120,4 @@ cd $this->opensslDir
 bash easyrsa.sh build-client-full $name nopass
 BASH;
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace Ovpn\Repository;
 
-
 class VpnRepository
 {
     /**
@@ -12,9 +11,11 @@ class VpnRepository
      */
     public function getVpnStatus()
     {
-        $info = \DB::query(\Database::SELECT,
+        $info = \DB::query(
+            \Database::SELECT,
             "select T2.id, T2.name as title, 
-                case when T2.free_places < coalesce(T1.cnt,0) then 0 else T2.free_places - coalesce(T1.cnt,0) end as free,
+                case when T2.free_places < coalesce(T1.cnt,0) then 0 
+                    else T2.free_places - coalesce(T1.cnt,0) end as free,
                 T2.location as country, T2.icon as img, T2.speedtest
             from (
                 select count(*) as cnt, id from (
@@ -25,7 +26,8 @@ class VpnRepository
             right join vpn_hosts T2
             on T1.id = T2.id 
             where T2.enable = true
-            order by ordernum")
+            order by ordernum"
+        )
             ->execute()->as_array();
         
         return $info;
@@ -38,9 +40,8 @@ class VpnRepository
     public function getVpnInformation($id)
     {
         $data = \DB::select('network', 'specifications_link')
-            ->from('vps')->where('vpn_id','=', $id)
+            ->from('vps')->where('vpn_id', '=', $id)
             ->execute()->as_array();
         return $data;
     }
-
 }

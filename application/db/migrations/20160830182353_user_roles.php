@@ -6,8 +6,9 @@ class UserRoles extends AbstractMigration
 {
     public function up()
     {
-        $table = $this->table('roles');
+        $table = $this->table('roles', ['id' => false, 'primary_key' => ['id']]);
         $table
+            ->addColumn('id', 'string', ['limit' => 32])
             ->addColumn('description', 'string', ['limit' => 128, 'null' => true])
             ->addColumn('tag_name', 'string', ['limit' => 32])
             ->addColumn('traffic_limit', 'float')

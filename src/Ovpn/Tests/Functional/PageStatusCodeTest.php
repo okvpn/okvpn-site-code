@@ -1,10 +1,11 @@
 <?php
 
+namespace Ovpn\Tests\Functional;
+
 use Ovpn\TestFramework\WebTestCase;
 
 class PageStatusCodeTest extends WebTestCase
 {
-
     /**
      * @dataProvider getNotExistPages
      */

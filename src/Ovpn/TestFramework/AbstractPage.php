@@ -1,4 +1,5 @@
 <?php
+
 namespace Ovpn\TestFramework;
 
 /**
@@ -47,7 +48,6 @@ abstract class AbstractPage implements PageInterface
     public function __call($name, $arguments)
     {
         if (preg_match('/open(.+)/i', $name, $result)) {
-
             if (isset($arguments[0]) && ! empty($arguments[0])) {
                 //$arguments[0] the part of namespace class
                 $namespace = $arguments[0] . '\\Tests\\Selenium';
@@ -61,7 +61,6 @@ abstract class AbstractPage implements PageInterface
             $class = new \ReflectionClass($class);
             return $class->newInstanceArgs(array_merge([$this->test], $arguments));
         }
-
         return null;
     }
 }

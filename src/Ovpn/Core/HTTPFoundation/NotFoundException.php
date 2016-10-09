@@ -2,7 +2,6 @@
 
 namespace Ovpn\Core\HTTPFoundation;
 
-
 class NotFoundException extends \HTTP_Exception_404
 {
     /**
@@ -10,7 +9,7 @@ class NotFoundException extends \HTTP_Exception_404
      * @throws \Kohana_Exception
      * @throws \View_Exception
      */
-    public function get_response()
+    public function get_response() // @codingStandardsIgnoreLine
     {
         $view = \View::factory('error/404');
         $view->message = $this->getMessage();

@@ -1,14 +1,15 @@
-<?php 
+<?php
+
 namespace Ovpn\Controller;
 
 use Ovpn\Core\Controller;
-use Ovpn\Repository\UserRepository;
+use Ovpn\Entity\Balance;
 
 class TestController extends Controller
 {
     public function indexAction()
     {
-        $ur = new UserRepository();
-        var_dump($ur->isAllowConnection('41','nl2-3368cf13'));
+        $balance = new Balance(1);
+        $user = $balance->getUser();
     }
 }

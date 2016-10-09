@@ -1,5 +1,7 @@
 <?php
 
+namespace Ovpn\Tests\Unit;
+
 use PHPUnit\Framework\TestCase;
 use Ovpn\Security\TokenCookie;
 use Ovpn\Entity\UsersInterface;
@@ -18,7 +20,7 @@ class SecurityTokenTest extends TestCase
         $session->expects($this->once())
             ->method('set');
 
-        /** @var  Ovpn\Security\TokenSession $token */
+        /** @var  \Ovpn\Security\TokenSession $token */
         $token = (new \ReflectionClass('Ovpn\Security\TokenSession'))
             ->newInstanceWithoutConstructor();
 
@@ -40,7 +42,7 @@ class SecurityTokenTest extends TestCase
 
         $reflect->getProperty('cookieDriver')
             ->setValue($storage, new class {
-                public function set() {}
+                public function set(){} // @codingStandardsIgnoreLine
             });
 
         $storage->setToken('10');
@@ -118,5 +120,4 @@ class SecurityTokenTest extends TestCase
             'MDZkMDg2NzVjMWNiMjdkNWM2NDVkYmQwODRlZWU1NmU2NzVlMjViYTQwMTlmMmVjZWEzN2NhOWUyOTk1YjQ5ZmNiMTJjMDk2' .
             'YTAzMmUiLCJub25jZSI6MTQ3MTUkNDUxNQ0=';
     }
-
 }

@@ -1,12 +1,13 @@
 <?php
 
+namespace Ovpn\Tests\Unit;
+
 use PHPUnit\Framework\TestCase;
 use Ovpn\Security\SecurityFacade;
 use Ovpn\Security\TokenStorage;
 
 class SecurityFacadeTest extends TestCase
 {
-
     protected $token;
 
     protected $abstractUser;
@@ -44,6 +45,6 @@ class SecurityFacadeTest extends TestCase
         $this->authorization->expects($this->once())
             ->method('doLogin');
         $facade = new SecurityFacade($this->authorization, $this->security, $this->tokenStorage);
-        $facade->doLogin('email','password');
+        $facade->doLogin('email', 'password');
     }
 }

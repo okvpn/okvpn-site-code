@@ -84,7 +84,7 @@ interface ConfigBuilderInterface
     /**
      * Require that peer certificate was signed with an explicit
      * key usage and extended key usage based on RFC3280 TLS rules.
-     * 
+     *
      * @param string $option
      * @return ConfigBuilderInterface
      */

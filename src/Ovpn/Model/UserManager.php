@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace Ovpn\Model;
 
 use Ovpn\Core\Config;
@@ -42,8 +43,8 @@ class UserManager
     protected $userRepository;
 
     public function __construct(
-        Config $config, 
-        MailerInterface $mailer, 
+        Config $config,
+        MailerInterface $mailer,
         RsaManagerInterface $rsa,
         UserRepository $userRepository
     ) {
@@ -55,8 +56,10 @@ class UserManager
 
     public function getUserAmount(UsersInterface $user)
     {
-        return DB::query(Database::SELECT, 
-            "SELECT sum(amount) as amount from billing where uid = :uid")
+        return DB::query(
+            Database::SELECT,
+            "SELECT sum(amount) as amount from billing where uid = :uid"
+        )
             ->param(':uid', $user->getId())
             ->execute()
             ->get('amount');
@@ -64,7 +67,7 @@ class UserManager
 
     /**
      * Set user token and send notify on email
-     * 
+     *
      * @param $email
      * @return bool
      */
@@ -80,21 +83,21 @@ class UserManager
         $user->setToken($token);
 
         $message = View::factory('mail/resetPassword')
-            ->set('src',  URL::base(true) . "user/resetpassword/" . $user->getToken());
+            ->set('src', URL::base(true) . "user/resetpassword/" . $user->getToken());
         $subject = Kohana::message('user', 'resetPassword');
 
         try {
-            $this->mailer->sendMessage([
-                'to'      => $email,
-                'subject' => $subject,
-                'html'    => $message,
-            ]);
+            $this->mailer->sendMessage(
+                [
+                    'to'      => $email,
+                    'subject' => $subject,
+                    'html'    => $message
+                ]
+            );
             $user->save();
-
         } catch (\Exception $e) {
             return false;
         }
-
         return true;
     }
 
@@ -119,7 +122,6 @@ class UserManager
         } catch (\Exception $e) {
             return false;
         }
-
         return true;
     }
 
@@ -129,8 +131,10 @@ class UserManager
             $date = date('Y-m-d H:i:s', time() - 2592000);
         }
 
-        return DB::query(Database::SELECT, 
-            "SELECT sum(count) as count from traffic where uid = :uid and date > :dt")
+        return DB::query(
+            Database::SELECT,
+            "SELECT sum(count) as count from traffic where uid = :uid and date > :dt"
+        )
             ->param(':uid', $user->getId())
             ->param(':dt', $date)
             ->execute()
@@ -150,7 +154,6 @@ class UserManager
         if ($this->getUserAmount($user) < $user->getRole()->getMinBalance()) {
             return Kohana::message('user', 'creditOut');
         }
-
         return true;
     }
 
@@ -197,7 +200,7 @@ class UserManager
             ];
         }
 
-        $role = ($post['role'] == 'free') ? (new Roles(1)) : (new Roles(2));
+        $role = ($post['role'] == 'free') ? (new Roles('free')) : (new Roles('full'));
 
         $user = new Users();
         $user
@@ -210,16 +213,17 @@ class UserManager
             ->setToken(Text::random('alnum', 16));
 
         $message = View::factory('mail/mailVerify')
-            ->set('src',  URL::base(true) . "user/verify/" . $user->getToken());
+            ->set('src', URL::base(true) . "user/verify/" . $user->getToken());
         $subject = Kohana::message('user', 'mailVerify');
         
         try {
-            $this->mailer->sendMessage([
-                'to' => $user->getEmail(),
-                'subject' => $subject,
-                'html'    => $message,
-            ]);
-
+            $this->mailer->sendMessage(
+                [
+                    'to' => $user->getEmail(),
+                    'subject' => $subject,
+                    'html'    => $message,
+                ]
+            );
         } catch (\Exception $e) {
             return [
                 'error'   => true,
@@ -299,7 +303,6 @@ class UserManager
         $user->setPassword($post['password'])
             ->setEmail($post['email']);
         $user->save();
-        
     }
 
     /**

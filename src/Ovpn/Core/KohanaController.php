@@ -2,5 +2,6 @@
 
 namespace Ovpn\Core;
 
-
-class KohanaController extends \Controller implements ControllerInterface {}
+class KohanaController extends \Controller implements ControllerInterface
+{
+}
