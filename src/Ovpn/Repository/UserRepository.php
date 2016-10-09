@@ -132,6 +132,7 @@ class UserRepository implements UserProviderInterface
             where vu.active = true
             and vu.name = :name
             and u.id = :uid
+            and u.checked = true
             and r.min_balance < (
                 select coalesce(sum(amount), 0) from billing
                 where uid = :uid

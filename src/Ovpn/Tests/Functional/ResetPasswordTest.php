@@ -145,7 +145,7 @@ class ResetPasswordTest extends WebTestCase
             ->setEmail($email)
             ->setChecked(true)
             ->setPassword('pass')
-            ->setRole(new Roles(1));
+            ->setRole(new Roles('free'));
 
         $user->save();
         return $user;

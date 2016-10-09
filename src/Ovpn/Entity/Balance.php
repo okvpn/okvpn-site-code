@@ -32,7 +32,7 @@ class Balance extends \ORM
 
     /**
      * @param mixed $type
-     * @return Balance
+     * @return $this
      */
     public function setType($type)
     {
@@ -51,9 +51,9 @@ class Balance extends \ORM
 
     /**
      * @param float $amount
-     * @return Traffic
+     * @return $this
      */
-    public function setCount($amount)
+    public function setAmount($amount)
     {
         $this->amount = $amount;
         return $this;
@@ -69,7 +69,7 @@ class Balance extends \ORM
 
     /**
      * @param mixed $date
-     * @return Traffic
+     * @return $this
      */
     public function setDate($date = null)
     {

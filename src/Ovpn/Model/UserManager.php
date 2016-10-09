@@ -197,7 +197,7 @@ class UserManager
             ];
         }
 
-        $role = ($post['role'] == 'free') ? (new Roles(1)) : (new Roles(2));
+        $role = ($post['role'] == 'free') ? (new Roles('free')) : (new Roles('full'));
 
         $user = new Users();
         $user

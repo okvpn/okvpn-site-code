@@ -35,8 +35,12 @@ class VpnUser extends \ORM
         return $this;
     }
 
-    public function setDateCreate($date_create)
+    public function setDateCreate($date_create = null)
     {
+        if (null === $date_create) {
+            $date_create = date('Y-m-d H:i:s');
+        }
+        
         $this->date_create = $date_create;
         return $this;
     }
@@ -51,8 +55,12 @@ class VpnUser extends \ORM
         return $this->date_delete;
     }
 
-    public function setDateDelete($date_delete)
+    public function setDateDelete($date_delete = null)
     {
+        if (null === $date_delete) {
+            $date_delete = date('Y-m-d H:i:s');
+        }
+        
         $this->date_delete = $date_delete;
         return $this;
     }

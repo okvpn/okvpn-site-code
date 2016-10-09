@@ -1,5 +1,6 @@
 <?php
-namespace Entity;
+
+namespace Ovpn\Entity;
 
 class Host extends \ORM
 {
