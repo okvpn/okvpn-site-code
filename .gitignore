@@ -16,5 +16,5 @@ modules
 *.mwb
 *.bak
 var/openssl/*
-!var/openssl/example/*
+!var/openssl/example/
 !.gitkeep
