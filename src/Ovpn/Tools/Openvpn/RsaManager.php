@@ -117,7 +117,7 @@ class RsaManager implements RsaManagerInterface
     {
         return <<<BASH
 cd $this->opensslDir
-bash easyrsa.sh build-client-full $name nopass
+bash easyrsa.sh build-client-full $name nopass  > /dev/null 2>&1
 BASH;
     }
 }
