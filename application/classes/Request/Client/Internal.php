@@ -4,7 +4,7 @@ use Kernel\CumulativeResourceManager;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Annotations\DependencyInjectionAnnotationInterface;
-use Ovpn\Core\KohanaController;
+use Okvpn\OkvpnBundle\Core\KohanaController;
 
 class Request_Client_Internal extends Kohana_Request_Client_Internal
 {

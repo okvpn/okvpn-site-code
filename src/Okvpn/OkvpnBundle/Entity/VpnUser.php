@@ -10,11 +10,11 @@ class VpnUser extends \ORM
 
     protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'host' => array(
-            'model'       => 'Ovpn:Entity:Host',
+            'model'       => 'OkvpnFramework:Host',
             'foreign_key' => 'vpn_id',
         ),
         'user' => array(
-            'model'       => 'Ovpn:Entity:Users',
+            'model'       => 'OkvpnFramework:Users',
             'foreign_key' => 'user_id',
         ),
     );

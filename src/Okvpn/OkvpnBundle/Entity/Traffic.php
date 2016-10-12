@@ -13,7 +13,7 @@ class Traffic extends \ORM
 
     protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'user' => array(
-            'model'       => 'Ovpn:Entity:Users',
+            'model'       => 'OkvpnFramework:Users',
             'foreign_key' => 'uid',
         ),
     );

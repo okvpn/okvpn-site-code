@@ -16,10 +16,10 @@
 >
     <testsuites>
         <testsuite name="unit">
-            <directory suffix="Test.php">src/*/Tests/Unit</directory>
+            <directory suffix="Test.php">src/Okvpn/*/Tests/Unit</directory>
         </testsuite>
         <testsuite name="functional">
-            <directory suffix="Test.php">src/*/Tests/Functional</directory>
+            <directory suffix="Test.php">src/Okvpn/*/Tests/Functional</directory>
         </testsuite>
     </testsuites>
 

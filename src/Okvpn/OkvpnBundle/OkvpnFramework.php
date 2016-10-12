@@ -7,7 +7,7 @@ use Kernel\AbstractBundle;
 use Okvpn\OkvpnBundle\DependencyInjection\CompilerPass\SecurityPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class OkvpnBundle extends AbstractBundle
+class OkvpnFramework extends AbstractBundle
 {
     protected $name = 'Okvpn\OkvpnBundle';
 

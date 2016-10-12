@@ -17,7 +17,7 @@ class Balance extends \ORM
 
     protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'user' => array(
-            'model'       => 'Ovpn:Entity:Users',//todo: rename
+            'model'       => 'OkvpnFramework:Users',//todo: rename
             'foreign_key' => 'uid',
         ),
     );
