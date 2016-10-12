@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Tools\Openvpn;
+namespace Okvpn\OkvpnBundle\Tools\Openvpn;
 
 interface ConfigBuilderInterface
 {

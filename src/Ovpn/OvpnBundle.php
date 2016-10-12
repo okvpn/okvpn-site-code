@@ -1,15 +1,15 @@
 <?php
 
-namespace Ovpn;
+namespace Okvpn\OkvpnBundle;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Kernel\AbstractBundle;
-use Ovpn\DependencyInjection\CompilerPass\SecurityPass;
+use Okvpn\OkvpnBundle\DependencyInjection\CompilerPass\SecurityPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class OvpnBundle extends AbstractBundle
+class OkvpnBundle extends AbstractBundle
 {
-    protected $name = 'Ovpn';
+    protected $name = 'Okvpn\OkvpnBundle';
 
     public function build(ContainerBuilder $container)
     {

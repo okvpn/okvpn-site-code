@@ -1,9 +1,9 @@
 <?php
 
-namespace Ovpn\Core;
+namespace Okvpn\OkvpnBundle\Core;
 
 use Annotations\DependencyInjectionAnnotation as DI;
-use Ovpn\Core\HTTPFoundation\NotFoundException;
+use Okvpn\OkvpnBundle\Core\HTTPFoundation\NotFoundException;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;

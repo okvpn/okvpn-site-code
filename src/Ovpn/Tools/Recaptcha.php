@@ -1,8 +1,8 @@
 <?php
 
-namespace Ovpn\Tools;
+namespace Okvpn\OkvpnBundle\Tools;
 
-use Ovpn\Core\Config;
+use Okvpn\OkvpnBundle\Core\Config;
 
 class Recaptcha
 {

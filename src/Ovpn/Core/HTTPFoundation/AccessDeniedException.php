@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Core\HTTPFoundation;
+namespace Okvpn\OkvpnBundle\Core\HTTPFoundation;
 
 class AccessDeniedException extends \HTTP_Exception_401
 {

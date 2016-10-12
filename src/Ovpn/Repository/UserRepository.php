@@ -1,10 +1,10 @@
 <?php
 
-namespace Ovpn\Repository;
+namespace Okvpn\OkvpnBundle\Repository;
 
-use Ovpn\Entity\Users;
-use Ovpn\Entity\VpnUser;
-use Ovpn\Security\UserProviderInterface;
+use Okvpn\OkvpnBundle\Entity\Users;
+use Okvpn\OkvpnBundle\Entity\VpnUser;
+use Okvpn\OkvpnBundle\Security\UserProviderInterface;
 
 class UserRepository implements UserProviderInterface
 {

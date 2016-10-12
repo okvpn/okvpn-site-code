@@ -1,12 +1,12 @@
 <?php
 
-namespace Ovpn\Controller;
+namespace Okvpn\OkvpnBundle\Controller;
 
-use Ovpn\Core\Controller;
-use Ovpn\Core\HTTPFoundation\NotFoundException;
-use Ovpn\Entity\UsersInterface;
-use Ovpn\Model\UserManager;
-use Ovpn\Security\TokenSession;
+use Okvpn\OkvpnBundle\Core\Controller;
+use Okvpn\OkvpnBundle\Core\HTTPFoundation\NotFoundException;
+use Okvpn\OkvpnBundle\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Model\UserManager;
+use Okvpn\OkvpnBundle\Security\TokenSession;
 
 class UserController extends Controller
 {

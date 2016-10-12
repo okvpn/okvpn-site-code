@@ -1,11 +1,11 @@
 <?php
 
-namespace Ovpn\Controller;
+namespace Okvpn\OkvpnBundle\Controller;
 
-use Ovpn\Core\Config;
-use Ovpn\Core\Controller;
-use Ovpn\Entity\UsersInterface;
-use Ovpn\Repository\UserRepository;
+use Okvpn\OkvpnBundle\Core\Config;
+use Okvpn\OkvpnBundle\Core\Controller;
+use Okvpn\OkvpnBundle\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Repository\UserRepository;
 use URL;
 
 class AjaxController extends Controller

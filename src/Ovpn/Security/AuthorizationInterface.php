@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Security;
+namespace Okvpn\OkvpnBundle\Security;
 
 interface AuthorizationInterface
 {

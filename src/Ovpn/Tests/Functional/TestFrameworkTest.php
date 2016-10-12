@@ -1,9 +1,9 @@
 <?php
 
-namespace Ovpn;
+namespace Okvpn\OkvpnBundle\Tests\Functional;
 
-use Ovpn\TestFramework\WebTestCase;
-use Ovpn\Entity\Users;
+use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
+use Okvpn\OkvpnBundle\Entity\Users;
 
 /**
  * @dbIsolation

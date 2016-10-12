@@ -1,14 +1,14 @@
 parameters:
-    config.class:                   Ovpn\Core\Config
-    user_manager.ovpn.class:        Ovpn\Model\UserManager
-    user_repositiory.class:         Ovpn\Repository\UserRepository
+    config.class:                   Okvpn\OkvpnBundle\Core\Config
+    user_manager.ovpn.class:        Okvpn\OkvpnBundle\Model\UserManager
+    user_repositiory.class:         Okvpn\OkvpnBundle\Repository\UserRepository
     proxy_container.class:          Kernel\ProxyContainer
-    security_facade.class:          Ovpn\Security\SecurityFacade
-    token.storage.class:            Ovpn\Security\TokenStorage
-    user.class:                     Ovpn\Entity\Users
-    security.class:                 Ovpn\Security\Security
-    authorization.class:            Ovpn\Security\Authorization
-    mail.mailgun.class:             Ovpn\Tools\MailgunMailer
+    security_facade.class:          Okvpn\OkvpnBundle\Security\SecurityFacade
+    token.storage.class:            Okvpn\OkvpnBundle\Security\TokenStorage
+    user.class:                     Okvpn\OkvpnBundle\Entity\Users
+    security.class:                 Okvpn\OkvpnBundle\Security\Security
+    authorization.class:            Okvpn\OkvpnBundle\Security\Authorization
+    mail.mailgun.class:             Okvpn\OkvpnBundle\Tools\MailgunMailer
 
 
 
@@ -49,16 +49,16 @@ services:
         arguments: ['@ovpn_config']
 
     ovpn_token.session:
-        class: Ovpn\Security\TokenSession
+        class: Okvpn\OkvpnBundle\Security\TokenSession
         public: false
         tags:
             - { name: secure.token, priority: 1 }
 
     ovpn_token.cookie:
-        class: Ovpn\Security\TokenCookie
+        class: Okvpn\OkvpnBundle\Security\TokenCookie
         public: false
         tags:
             - { name: secure.token, priority: 2 }
 
     ovpn_openvpn.facade:
-        class: Ovpn\Tools\Openvpn\OpenvpnFacade
+        class: Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade

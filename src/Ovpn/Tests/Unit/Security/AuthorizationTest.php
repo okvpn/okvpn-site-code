@@ -1,8 +1,8 @@
 <?php
 
-namespace Ovpn\Tests\Unit;
+namespace Okvpn\OkvpnBundle\Tests\Unit;
 
-use Ovpn\Security\Authorization;
+use Okvpn\OkvpnBundle\Security\Authorization;
 use PHPUnit\Framework\TestCase;
 
 class AuthorizationTest extends TestCase
@@ -11,7 +11,7 @@ class AuthorizationTest extends TestCase
 
     public function setUp()
     {
-        $this->token = $this->createMock('Ovpn\Security\TokenInterface');
+        $this->token = $this->createMock('Okvpn\OkvpnBundle\Security\TokenInterface');
     }
 
     /**
@@ -19,9 +19,9 @@ class AuthorizationTest extends TestCase
      */
     public function testDoLogin($hashPassword, $realPassword, $result)
     {
-        $abstractUser = $this->createMock('Ovpn\Entity\UsersInterface');
-        $userProvider = $this->createMock('Ovpn\Security\UserProviderInterface');
-        $tokenStorage = $this->createMock('Ovpn\Security\TokenStorage');
+        $abstractUser = $this->createMock('Okvpn\OkvpnBundle\Entity\UsersInterface');
+        $userProvider = $this->createMock('Okvpn\OkvpnBundle\Security\UserProviderInterface');
+        $tokenStorage = $this->createMock('Okvpn\OkvpnBundle\Security\TokenStorage');
 
         $abstractUser->expects($this->once())
             ->method('getPassword')
@@ -37,8 +37,8 @@ class AuthorizationTest extends TestCase
 
     public function testDoLoginWhenUserNotFound()
     {
-        $userProvider = $this->createMock('Ovpn\Security\UserProviderInterface');
-        $tokenStorage = $this->createMock('Ovpn\Security\TokenStorage');
+        $userProvider = $this->createMock('Okvpn\OkvpnBundle\Security\UserProviderInterface');
+        $tokenStorage = $this->createMock('Okvpn\OkvpnBundle\Security\TokenStorage');
         $userProvider->expects($this->once())
             ->method('findUserByEmail')
             ->willReturn(null);
@@ -52,8 +52,8 @@ class AuthorizationTest extends TestCase
      */
     public function testInvalidTypeArgument()
     {
-        $userProvider = $this->createMock('Ovpn\Security\UserProviderInterface');
-        $tokenStorage = $this->createMock('Ovpn\Security\TokenStorage');
+        $userProvider = $this->createMock('Okvpn\OkvpnBundle\Security\UserProviderInterface');
+        $tokenStorage = $this->createMock('Okvpn\OkvpnBundle\Security\TokenStorage');
 
         (new Authorization($tokenStorage, $userProvider))->doLogin(null, '123456');
     }

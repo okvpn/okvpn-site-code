@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Entity;
+namespace Okvpn\OkvpnBundle\Entity;
 
 class Host extends \ORM
 {

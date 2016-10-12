@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\DependencyInjection;
+namespace Okvpn\OkvpnBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;

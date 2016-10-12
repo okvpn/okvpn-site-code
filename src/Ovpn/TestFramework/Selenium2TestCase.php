@@ -1,10 +1,10 @@
 <?php
 
-namespace Ovpn\TestFramework;
+namespace Okvpn\OkvpnBundle\TestFramework;
 
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Ovpn\Tests\Selenium\Page\Login;
+use Okvpn\OkvpnBundle\Tests\Selenium\Page\Login;
 
 /**
  * Class Selenium2TestCase
@@ -14,7 +14,7 @@ use Ovpn\Tests\Selenium\Page\Login;
  * java -jar selenium-server-standalone-***.jar -role hub
  * phantomjs --webdriver=8080 --webdriver-selenium-grid-hub=http://127.0.0.1:4444
  *
- * @package Ovpn\TestFramework
+ * @package Okvpn\OkvpnBundle\TestFramework
  */
 abstract class Selenium2TestCase extends \PHPUnit_Extensions_Selenium2TestCase
 {

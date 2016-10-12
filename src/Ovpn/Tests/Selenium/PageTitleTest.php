@@ -1,8 +1,8 @@
 <?php
 
-namespace Ovpn\Tests\Selenium;
+namespace Okvpn\OkvpnBundle\Tests\Selenium;
 
-use Ovpn\TestFramework\Selenium2TestCase;
+use Okvpn\OkvpnBundle\TestFramework\Selenium2TestCase;
 
 class PageTitleTest extends Selenium2TestCase
 {

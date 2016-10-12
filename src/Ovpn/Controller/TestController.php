@@ -1,9 +1,9 @@
 <?php
 
-namespace Ovpn\Controller;
+namespace Okvpn\OkvpnBundle\Controller;
 
-use Ovpn\Core\Controller;
-use Ovpn\Entity\Balance;
+use Okvpn\OkvpnBundle\Core\Controller;
+use Okvpn\OkvpnBundle\Entity\Balance;
 
 class TestController extends Controller
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Ovpn\Tests\Functional;
+namespace Okvpn\OkvpnBundle\Tests\Functional;
 
-use Ovpn\Entity\Roles;
-use Ovpn\Entity\Users;
-use Ovpn\TestFramework\WebTestCase;
-use Ovpn\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Entity\Roles;
+use Okvpn\OkvpnBundle\Entity\Users;
+use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
+use Okvpn\OkvpnBundle\Entity\UsersInterface;
 
 /**
  * @dbIsolation
@@ -69,7 +69,7 @@ class ResetPasswordTest extends WebTestCase
     
     public function testUserFoundByToken()
     {
-        $this->assertInstanceOf('Ovpn\Entity\Users', $this->user);
+        $this->assertInstanceOf('Okvpn\OkvpnBundle\Entity\Users', $this->user);
     }
 
     /**

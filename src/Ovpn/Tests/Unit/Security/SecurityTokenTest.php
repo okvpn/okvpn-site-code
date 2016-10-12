@@ -1,10 +1,10 @@
 <?php
 
-namespace Ovpn\Tests\Unit;
+namespace Okvpn\OkvpnBundle\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Ovpn\Security\TokenCookie;
-use Ovpn\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Security\TokenCookie;
+use Okvpn\OkvpnBundle\Entity\UsersInterface;
 
 class SecurityTokenTest extends TestCase
 {
@@ -20,8 +20,8 @@ class SecurityTokenTest extends TestCase
         $session->expects($this->once())
             ->method('set');
 
-        /** @var  \Ovpn\Security\TokenSession $token */
-        $token = (new \ReflectionClass('Ovpn\Security\TokenSession'))
+        /** @var  \Okvpn\OkvpnBundle\Security\TokenSession $token */
+        $token = (new \ReflectionClass('Okvpn\OkvpnBundle\Security\TokenSession'))
             ->newInstanceWithoutConstructor();
 
         $token->setDriver($session);
@@ -33,7 +33,7 @@ class SecurityTokenTest extends TestCase
     {
         $user = $this->getUserProvider();
 
-        $reflect = new \ReflectionClass('Ovpn\Security\TokenCookie');
+        $reflect = new \ReflectionClass('Okvpn\OkvpnBundle\Security\TokenCookie');
         /** @var TokenCookie $storage */
         $storage = $reflect->newInstanceWithoutConstructor();
 
@@ -53,7 +53,7 @@ class SecurityTokenTest extends TestCase
      */
     public function testGetCookieToken($user, $token, $result)
     {
-        $reflect = new \ReflectionClass('Ovpn\Security\TokenCookie');
+        $reflect = new \ReflectionClass('Okvpn\OkvpnBundle\Security\TokenCookie');
         /** @var TokenCookie $storage */
         $storage = $reflect->newInstanceWithoutConstructor();
 
@@ -91,8 +91,8 @@ class SecurityTokenTest extends TestCase
      */
     private function getUserProvider()
     {
-        $user   = $this->createMock('Ovpn\Entity\UsersInterface');
-        $user2  = $this->createMock('Ovpn\Entity\UsersInterface');
+        $user   = $this->createMock('Okvpn\OkvpnBundle\Entity\UsersInterface');
+        $user2  = $this->createMock('Okvpn\OkvpnBundle\Entity\UsersInterface');
 
         $user2->expects($this->any())
             ->method('getToken')

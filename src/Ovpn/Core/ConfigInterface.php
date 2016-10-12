@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Core;
+namespace Okvpn\OkvpnBundle\Core;
 
 interface ConfigInterface
 {

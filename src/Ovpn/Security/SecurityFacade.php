@@ -1,9 +1,9 @@
 <?php
 
-namespace Ovpn\Security;
+namespace Okvpn\OkvpnBundle\Security;
 
-use Ovpn\Entity\Users;
-use Ovpn\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Entity\Users;
+use Okvpn\OkvpnBundle\Entity\UsersInterface;
 
 class SecurityFacade implements SecurityInterface, AuthorizationInterface
 {

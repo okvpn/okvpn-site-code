@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\TestFramework;
+namespace Okvpn\OkvpnBundle\TestFramework;
 
 final class DefaultClientParam
 {

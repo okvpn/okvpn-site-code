@@ -1,9 +1,9 @@
 <?php
 
-namespace Ovpn\Tests\Functional;
+namespace Okvpn\OkvpnBundle\Tests\Functional;
 
-use Ovpn\TestFramework\WebTestCase;
-use Ovpn\Tools\Openvpn\OpenvpnFacade;
+use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
+use Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade;
 
 class RsaManagerTest extends WebTestCase
 {

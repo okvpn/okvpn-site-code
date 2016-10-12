@@ -1,10 +1,10 @@
 <?php
 
-namespace Ovpn\Tests\Selenium;
+namespace Okvpn\OkvpnBundle\Tests\Selenium;
 
-use Ovpn\TestFramework\Selenium2TestCase;
-use Ovpn\Tests\Selenium\Page\ProfileViewList;
-use Ovpn\Tests\Selenium\Page\Settings;
+use Okvpn\OkvpnBundle\TestFramework\Selenium2TestCase;
+use Okvpn\OkvpnBundle\Tests\Selenium\Page\ProfileViewList;
+use Okvpn\OkvpnBundle\Tests\Selenium\Page\Settings;
 
 class ClickPageTest extends Selenium2TestCase
 {

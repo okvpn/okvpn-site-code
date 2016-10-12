@@ -1,8 +1,8 @@
 <?php
 
-namespace Ovpn\Security;
+namespace Okvpn\OkvpnBundle\Security;
 
-use Ovpn\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Entity\UsersInterface;
 
 interface UserProviderInterface
 {

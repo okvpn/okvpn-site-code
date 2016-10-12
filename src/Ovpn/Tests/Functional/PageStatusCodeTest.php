@@ -1,8 +1,8 @@
 <?php
 
-namespace Ovpn\Tests\Functional;
+namespace Okvpn\OkvpnBundle\Tests\Functional;
 
-use Ovpn\TestFramework\WebTestCase;
+use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
 
 class PageStatusCodeTest extends WebTestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ovpn\Controller;
+namespace Okvpn\OkvpnBundle\Controller;
 
-use Ovpn\Core\Controller;
+use Okvpn\OkvpnBundle\Core\Controller;
 
 class WelcomeController extends Controller
 {

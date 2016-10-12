@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Entity;
+namespace Okvpn\OkvpnBundle\Entity;
 
 class Balance extends \ORM
 {
@@ -17,7 +17,7 @@ class Balance extends \ORM
 
     protected $_belongs_to = array( // @codingStandardsIgnoreLine
         'user' => array(
-            'model'       => 'Ovpn:Entity:Users',
+            'model'       => 'Ovpn:Entity:Users',//todo: rename
             'foreign_key' => 'uid',
         ),
     );

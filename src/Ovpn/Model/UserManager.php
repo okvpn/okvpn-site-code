@@ -1,17 +1,17 @@
 <?php
 
-namespace Ovpn\Model;
+namespace Okvpn\OkvpnBundle\Model;
 
-use Ovpn\Core\Config;
-use Ovpn\Entity\Roles;
-use Ovpn\Entity\Users;
-use Ovpn\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Core\Config;
+use Okvpn\OkvpnBundle\Entity\Roles;
+use Okvpn\OkvpnBundle\Entity\Users;
+use Okvpn\OkvpnBundle\Entity\UsersInterface;
 use DB;
-use Ovpn\Repository\UserRepository;
-use Ovpn\Tools\MailerInterface;
-use Ovpn\Tools\Openvpn\OpenvpnFacade;
-use Ovpn\Tools\Openvpn\RsaManagerInterface;
-use Ovpn\Tools\Recaptcha;
+use Okvpn\OkvpnBundle\Repository\UserRepository;
+use Okvpn\OkvpnBundle\Tools\MailerInterface;
+use Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade;
+use Okvpn\OkvpnBundle\Tools\Openvpn\RsaManagerInterface;
+use Okvpn\OkvpnBundle\Tools\Recaptcha;
 use View;
 use Kohana;
 use URL;

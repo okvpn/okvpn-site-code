@@ -1,10 +1,10 @@
 <?php
 
-namespace Ovpn\Tests\Unit;
+namespace Okvpn\OkvpnBundle\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Ovpn\Security\SecurityFacade;
-use Ovpn\Security\TokenStorage;
+use Okvpn\OkvpnBundle\Security\SecurityFacade;
+use Okvpn\OkvpnBundle\Security\TokenStorage;
 
 class SecurityFacadeTest extends TestCase
 {
@@ -20,10 +20,10 @@ class SecurityFacadeTest extends TestCase
 
     public function setUp()
     {
-        $this->token = $this->createMock('Ovpn\Security\TokenInterface');
-        $this->abstractUser = $this->createMock('Ovpn\Entity\UsersInterface');
-        $this->authorization = $this->createMock('Ovpn\Security\Authorization');
-        $this->security = $this->createMock('Ovpn\Security\Security');
+        $this->token = $this->createMock('Okvpn\OkvpnBundle\Security\TokenInterface');
+        $this->abstractUser = $this->createMock('Okvpn\OkvpnBundle\Entity\UsersInterface');
+        $this->authorization = $this->createMock('Okvpn\OkvpnBundle\Security\Authorization');
+        $this->security = $this->createMock('Okvpn\OkvpnBundle\Security\Security');
         $this->tokenStorage = new TokenStorage();
         $this->tokenStorage->addToken($this->token);
     }

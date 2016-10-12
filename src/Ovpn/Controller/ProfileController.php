@@ -1,12 +1,12 @@
 <?php
 
-namespace Ovpn\Controller;
+namespace Okvpn\OkvpnBundle\Controller;
 
-use Ovpn\Core\Controller;
-use Ovpn\Core\HTTPFoundation\AccessDeniedException;
-use Ovpn\Entity\UsersInterface;
-use Ovpn\Repository\UserRepository;
-use Ovpn\Repository\VpnRepository;
+use Okvpn\OkvpnBundle\Core\Controller;
+use Okvpn\OkvpnBundle\Core\HTTPFoundation\AccessDeniedException;
+use Okvpn\OkvpnBundle\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Repository\UserRepository;
+use Okvpn\OkvpnBundle\Repository\VpnRepository;
 
 class ProfileController extends Controller
 {

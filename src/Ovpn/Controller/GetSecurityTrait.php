@@ -1,9 +1,9 @@
 <?php
 
-namespace Ovpn\Controller;
+namespace Okvpn\OkvpnBundle\Controller;
 
 use Annotations\DependencyInjectionAnnotation as DI;
-use Ovpn\Security\SecurityFacade;
+use Okvpn\OkvpnBundle\Security\SecurityFacade;
 
 trait GetSecurityTrait
 {

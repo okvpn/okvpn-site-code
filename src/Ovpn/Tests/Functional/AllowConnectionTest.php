@@ -1,14 +1,14 @@
 <?php
 
-namespace Ovpn\Tests\Functional;
+namespace Okvpn\OkvpnBundle\Tests\Functional;
 
-use Ovpn\Entity\Host;
-use Ovpn\Entity\Balance;
-use Ovpn\Entity\Roles;
-use Ovpn\Entity\Traffic;
-use Ovpn\Entity\Users;
-use Ovpn\Entity\VpnUser;
-use Ovpn\TestFramework\WebTestCase;
+use Okvpn\OkvpnBundle\Entity\Host;
+use Okvpn\OkvpnBundle\Entity\Balance;
+use Okvpn\OkvpnBundle\Entity\Roles;
+use Okvpn\OkvpnBundle\Entity\Traffic;
+use Okvpn\OkvpnBundle\Entity\Users;
+use Okvpn\OkvpnBundle\Entity\VpnUser;
+use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
 
 /**
  * @dbIsolation

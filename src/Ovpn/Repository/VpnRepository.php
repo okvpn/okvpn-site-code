@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Repository;
+namespace Okvpn\OkvpnBundle\Repository;
 
 class VpnRepository
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ovpn\Tools;
+namespace Okvpn\OkvpnBundle\Tools;
 
 interface MailerInterface
 {
