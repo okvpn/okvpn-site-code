@@ -55,10 +55,20 @@ class Client
 
         $this->request->method($method);
         $this->request->cookie($cookie);
-
+        //todo fix in OK-18
         $_COOKIE = $cookie;
 
         return $this;
+    }
+
+    /**
+     * @param $username
+     * @param $password
+     */
+    public function clientBasicAuthentication($username, $password)
+    {
+        $security = $this->container->get('ovpn_security');
+        $security->doLogin($username, $password);
     }
 
     /**

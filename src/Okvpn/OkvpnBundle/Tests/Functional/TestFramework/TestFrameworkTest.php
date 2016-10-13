@@ -7,6 +7,7 @@ use Okvpn\OkvpnBundle\Entity\Users;
 
 /**
  * @dbIsolation
+ * @keepCookie
  */
 class TestFrameworkTest extends WebTestCase
 {
@@ -67,5 +68,28 @@ class TestFrameworkTest extends WebTestCase
 
         $this->assertNotSame($user->getEmail(), '123456');
         $this->assertSame($this->databaseManager->getTransactionNestingLevel(), 0);
+    }
+
+
+    public function testLoginClient()
+    {
+        $this->loginClient();
+
+        $response = $this->request('GET', '/profile');
+        $this->assertStatusCode($response, 200);
+        $this->assertRedirectResponse($response, null);
+    }
+
+    /**
+     * @depends testLoginClient
+     */
+    public function testClearCookieAndSession()
+    {
+        $this->clearSession();
+        $this->clearCookie();
+
+        $response = $this->request('GET', '/profile');
+        $this->assertStatusCode($response, 200);
+        $this->assertRedirectResponse($response, '/');
     }
 }
