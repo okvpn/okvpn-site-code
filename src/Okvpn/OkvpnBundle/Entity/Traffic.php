@@ -2,7 +2,9 @@
 
 namespace Okvpn\OkvpnBundle\Entity;
 
-class Traffic extends \ORM
+use Okvpn\KohanaProxy\ORM;
+
+class Traffic extends ORM
 {
     
     use GetSetUserTrait;

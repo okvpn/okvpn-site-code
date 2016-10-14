@@ -2,7 +2,9 @@
 
 namespace Okvpn\OkvpnBundle\Entity;
 
-class Users extends \ORM implements UsersInterface
+use Okvpn\KohanaProxy\ORM;
+
+class Users extends ORM implements UsersInterface
 {
     protected $_table_name = 'users'; // @codingStandardsIgnoreLine
 
