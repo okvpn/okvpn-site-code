@@ -4,6 +4,7 @@ namespace Okvpn\TestFrameworkBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+use Okvpn\TestFrameworkBundle\DependencyInjection\CompilerPass\TestIsolationClassPass;
 use Okvpn\Bridge\Kohana\Kernel\AbstractBundle;
 
 class OkvpnTestBundle extends AbstractBundle
@@ -15,6 +16,6 @@ class OkvpnTestBundle extends AbstractBundle
     
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass();
+        $container->addCompilerPass(new TestIsolationClassPass());
     }
 }
