@@ -1,11 +1,12 @@
 <?php
 
-namespace Kernel;
+namespace Okvpn\Bridge\Kohana\Proxy;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use Okvpn\Bridge\Kohana\Kernel\CumulativeResourceManager as ResourceManager;
 
 class ProxyContainer extends Container
 {
@@ -21,7 +22,7 @@ class ProxyContainer extends Container
 
     public function __construct()
     {
-        $container = CumulativeResourceManager::getInstance()->getContainer();
+        $container = ResourceManager::getInstance()->getContainer();
 
         if ($container instanceof ContainerInterface) {
             $this->isInitialized = true;

@@ -99,4 +99,10 @@ if ( ! defined('KOHANA_START_MEMORY'))
  */
 define('KOHANA_PROD_MODE', false);
 
-require_once APPPATH.'bootstrap'.EXT;
+
+require_once __DIR__ . '../application/AppBoot.php';
+
+$loader = require_once __DIR__ . '../vendor/autoload.php';
+
+$application = new AppBoot();
+$application->boot('prod');

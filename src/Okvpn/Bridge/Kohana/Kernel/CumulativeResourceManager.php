@@ -1,6 +1,6 @@
 <?php
 
-namespace Kernel;
+namespace Okvpn\Bridge\Kohana\Kernel;
 
 use Symfony\Component\DependencyInjection\Container;
 

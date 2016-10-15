@@ -9,9 +9,25 @@ use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
  */
 class UserControllerTest extends WebTestCase
 {
+
+    public function testLoginWhenUserNotExist()
+    {
+        $this->request(
+            'POST',
+            '/user/login',
+            [
+                'email' => 'not_exist',
+                'password' => self::USER_PASSWORD
+            ]
+        );
+
+        $response = $this->getJsonResponse();
+        $this->assertArraySubset(['error' => true], $response);
+    }
+
     public function testLogin()
     {
-        $r = $this->request(
+        $this->request(
             'POST',
             '/user/login',
             [
@@ -24,4 +40,6 @@ class UserControllerTest extends WebTestCase
         $this->assertStatusCode($response, 200);
         $this->assertRedirectResponse($response, null);
     }
+
+
 }

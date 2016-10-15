@@ -1,6 +1,6 @@
 <?php
 
-namespace Kernel;
+namespace Okvpn\Bridge\Kohana\Kernel;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -20,13 +20,18 @@ abstract class AbstractKernel
      * @param array $bundles
      * @throws \Exception
      */
-    public static function registrationBundle(array $bundles)
+    public static function registrationBundles(array $bundles)
     {
         if (static::$bundles) {
             throw new \Exception('Bundles are already registered');
         }
 
         static::$bundles = $bundles;
+    }
+    
+    public static function addBundle(AbstractBundle $bundle)
+    {
+        static::$bundles[] = $bundle;
     }
 
     /**
