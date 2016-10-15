@@ -13,6 +13,13 @@ abstract class AbstractBundle
     protected $name;
 
     /**
+     * This is used to determine the order of bundle load
+     *
+     * @var int
+     */
+    protected $priority = 0;
+
+    /**
      * @return Extension
      * @throws \Exception
      */
