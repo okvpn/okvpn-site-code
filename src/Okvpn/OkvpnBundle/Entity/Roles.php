@@ -2,7 +2,9 @@
 
 namespace Okvpn\OkvpnBundle\Entity;
 
-class Roles extends \ORM
+use Okvpn\KohanaProxy\ORM;
+
+class Roles extends ORM
 {
 
     protected $_table_name = 'roles'; // @codingStandardsIgnoreLine

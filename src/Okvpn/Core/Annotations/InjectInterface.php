@@ -1,13 +1,12 @@
 <?php
 
-namespace Annotations;
+namespace Okvpn\Core\Annotations;
 
-
-interface DependencyInjectionAnnotationInterface
+interface InjectInterface
 {
     /**
      * Get service name for inject to controller
-     * 
+     *
      * @return string
      */
     public function getServiceName();

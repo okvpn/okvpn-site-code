@@ -1,4 +1,7 @@
 <?php
+$loader = require_once __DIR__ . '/../application/autoload.php';
+
+require_once __DIR__ . '/../application/AppBoot.php';
 
 /**
  * The directory in which your application specific resources are located.
@@ -101,23 +104,16 @@ if ( ! defined('KOHANA_START_MEMORY'))
 define('KOHANA_PROD_MODE', false);
 
 // Bootstrap the application
-require APPPATH.'bootstrap'.EXT;
+$application = new AppBoot();
+$application->boot('prod');
 
-if (PHP_SAPI == 'cli') // Try and load minion
-{
-    // class_exists('Minion_Task') OR die('Please enable the Minion module for CLI support.');
-    // set_exception_handler(array('Minion_Exception', 'handler'));
+if (PHP_SAPI == 'cli') {
 
-    // Minion_Task::factory(Minion_CLI::options())->execute();
-}
-else
-{
+} else {
     /**
      * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
      * If no source is specified, the URI will be automatically detected.
      */
-    echo Request::factory(TRUE, array(), FALSE)
-        ->execute()
-        ->send_headers(TRUE)
-        ->body();
+    echo Request::factory(true, array(), false)->execute()
+        ->send_headers(true)->body();
 }

@@ -2,7 +2,7 @@
 
 namespace Okvpn\OkvpnBundle\TestFramework;
 
-use Kernel\CumulativeResourceManager;
+use Okvpn\Bridge\Kohana\Kernel\CumulativeResourceManager;
 use Symfony\Component\DependencyInjection\Container;
 use Request;
 

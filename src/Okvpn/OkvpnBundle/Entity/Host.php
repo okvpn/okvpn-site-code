@@ -2,7 +2,9 @@
 
 namespace Okvpn\OkvpnBundle\Entity;
 
-class Host extends \ORM
+use Okvpn\KohanaProxy\ORM;
+
+class Host extends ORM
 {
     protected $_table_name = 'vpn_hosts'; // @codingStandardsIgnoreLine
 

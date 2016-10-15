@@ -1,5 +1,6 @@
 <?php
-namespace Kernel;
+
+namespace Okvpn\Bridge\Kohana\Kernel;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -11,7 +12,7 @@ class Kernel extends AbstractKernel
     public function prepareContainer(ContainerBuilder $container)
     {
         if (!Kernel::$bundles) {
-            throw new \Exception('');
+            throw new \Exception('Bundles empty');
         }
         
         /** @var AbstractBundle $bundle */

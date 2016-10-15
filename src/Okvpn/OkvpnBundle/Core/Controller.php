@@ -2,11 +2,12 @@
 
 namespace Okvpn\OkvpnBundle\Core;
 
-use Annotations\DependencyInjectionAnnotation as DI;
-use Okvpn\OkvpnBundle\Core\HTTPFoundation\NotFoundException;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Okvpn\Core\Annotations\Inject as DI;
+use Okvpn\OkvpnBundle\Core\HTTPFoundation\NotFoundException;
 
 /**
  * Class Controller decorate Kohana_Controller

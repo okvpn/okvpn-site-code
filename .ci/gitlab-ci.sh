@@ -7,6 +7,12 @@ ARRAY=( "var/openssl/pa1" "var/openssl/uk1" )
 case $step in
     install)
         echo "Installing...";
+        # remove vendor dir
+        if [ -d vendor ]; then
+            rm -r vendor;
+        fi
+
+        # install all dependency use composer.lock
         composer install
         cp application/phinx.yml.dist application/phinx.yml
         cp application/config/parameters.php.dist application/config/parameters.php

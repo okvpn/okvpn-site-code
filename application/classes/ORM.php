@@ -1,5 +1,10 @@
 <?php
 
+use Okvpn\Bridge\Kohana\Kernel\Kernel;
+
+/**
+ * @deprecated 
+ */
 class ORM extends Kohana_ORM
 {
     public static function factory($model, $id = null)
@@ -8,6 +13,10 @@ class ORM extends Kohana_ORM
             $class = $model;
         } else {
             $class = static::resolveClassName($model);
+
+            if (!class_exists($class)) {
+                throw new \InvalidArgumentException(sprintf('Entity class "%s" not exist', $model));
+            }
         }
         
         return (new \ReflectionClass($class))->newInstanceArgs([$id]);
@@ -25,9 +34,9 @@ class ORM extends Kohana_ORM
         $namespaces = preg_split('/:/', $name);
         
         try {
-            $searchBundle = \Kernel\Kernel::getBundleByAlias(reset($namespaces));
+            $searchBundle = Kernel::getBundleByAlias(reset($namespaces));
         } catch (\Exception $e) {
-            if (class_exists(preg_replace('/:/', '\\',$name))) {
+            if (class_exists(preg_replace('/:/', '\\', $name))) {
                 return preg_replace('/:/', '\\',$name);
             }
             throw $e;

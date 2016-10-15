@@ -2,7 +2,9 @@
 
 namespace Okvpn\OkvpnBundle\Entity;
 
-class Balance extends \ORM
+use Okvpn\KohanaProxy\ORM;
+
+class Balance extends ORM
 {
     
     use GetSetUserTrait;

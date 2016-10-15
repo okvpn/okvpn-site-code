@@ -1,10 +1,11 @@
 <?php
 
-use Kernel\CumulativeResourceManager;
-use Symfony\Component\DependencyInjection\Container;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Annotations\DependencyInjectionAnnotationInterface;
+use Symfony\Component\DependencyInjection\Container;
+
+use Okvpn\Bridge\Kohana\Kernel\CumulativeResourceManager;
 use Okvpn\OkvpnBundle\Core\KohanaController;
+use Okvpn\Core\Annotations\InjectInterface;
 
 class Request_Client_Internal extends Kohana_Request_Client_Internal
 {
@@ -71,17 +72,23 @@ class Request_Client_Internal extends Kohana_Request_Client_Internal
 
             foreach ($class->getProperties() as $property) {
 
-                /** @var DependencyInjectionAnnotationInterface $propertyInjection */
+                /** @var \Okvpn\Core\Annotations\InjectInterface $propertyInjection */
                 $propertyInjection = $reader
-                    ->getPropertyAnnotation($property, 'Annotations\\DependencyInjectionAnnotationInterface');
+                    ->getPropertyAnnotation(
+                        $property, 
+                        'Okvpn\\Core\\Annotations\\InjectInterface'
+                    );
 
-                if ($propertyInjection instanceof DependencyInjectionAnnotationInterface) {
+                if ($propertyInjection instanceof InjectInterface) {
                     $setterName = 'set' . ucfirst($property->getName());
 
-                    $class
-                        ->getMethod($setterName)
-                        ->invokeArgs($controller, [$this->getContainer()->get($propertyInjection->getServiceName())]);
-                    
+                    $class->getMethod($setterName)
+                        ->invokeArgs(
+                            $controller, 
+                            [
+                                $this->getContainer()->get($propertyInjection->getServiceName())
+                            ]
+                        );
                 }
             }
             
@@ -90,7 +97,7 @@ class Request_Client_Internal extends Kohana_Request_Client_Internal
             if ($class->isAbstract()) {
                 throw new Kohana_Exception(
                     'Cannot create instances of abstract :controller',
-                    array(':controller' => $classController)
+                    [':controller' => $classController]
                 );
             }
 

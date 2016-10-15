@@ -1,6 +1,6 @@
 <?php
 
-namespace Kernel;
+namespace Okvpn\Bridge\Kohana\Kernel;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -13,6 +13,13 @@ abstract class AbstractBundle
     protected $name;
 
     /**
+     * This is used to determine the order of bundle load
+     *
+     * @var int
+     */
+    protected $priority = 0;
+
+    /**
      * @return Extension
      * @throws \Exception
      */
@@ -21,13 +28,13 @@ abstract class AbstractBundle
         $classNameExtension = ucfirst($this->name) . '\\DependencyInjection\\Extension';
 
         if (! class_exists($classNameExtension)) {
-            throw new \Exception(sprintf('The Extension "%s" is not exsist', $classNameExtension));
+            throw new \Exception(sprintf('The Extension "%s" is not exist', $classNameExtension));
         }
 
         $class = new \ReflectionClass($classNameExtension);
-        /** @var Extension $extetion */
-        $extetion = $class->newInstance();
-        return $extetion;
+        /** @var Extension $extension */
+        $extension = $class->newInstance();
+        return $extension;
     }
 
     /**

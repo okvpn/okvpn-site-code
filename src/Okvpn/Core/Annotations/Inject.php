@@ -1,9 +1,9 @@
 <?php
 
-namespace Annotations;
+namespace Okvpn\Core\Annotations;
 
 /** @Annotation */
-class DependencyInjectionAnnotation implements DependencyInjectionAnnotationInterface
+class Inject implements InjectInterface
 {
     /**
      * @var string

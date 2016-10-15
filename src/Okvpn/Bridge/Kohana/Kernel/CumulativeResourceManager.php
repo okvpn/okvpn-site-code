@@ -1,6 +1,6 @@
 <?php
 
-namespace Kernel;
+namespace Okvpn\Bridge\Kohana\Kernel;
 
 use Symfony\Component\DependencyInjection\Container;
 
@@ -60,7 +60,7 @@ class CumulativeResourceManager
     public function getContainer()
     {
         if (is_null($this->container)) {
-            throw new \Exception('');
+            throw new \Exception('Container must be compile.');
         }
         return $this->container;
     }
@@ -72,7 +72,7 @@ class CumulativeResourceManager
     public function getBundles()
     {
         if (is_null($this->bundles)) {
-            throw new \Exception('');
+            throw new \Exception('Bundle not loaded');
         }
         return $this->bundles;
     }
@@ -95,6 +95,4 @@ class CumulativeResourceManager
     {
         throw new \Exception('CumulativeResourceManager can not be unserialize');
     }
-
-
 }

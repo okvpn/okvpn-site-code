@@ -1,4 +1,9 @@
-<?php 
+<?php
+
+$loader = require_once __DIR__ . '/../application/autoload.php';
+
+require_once __DIR__ . '/../application/AppBoot.php';
+
 /**
  * The directory in which your application specific resources are located.
  * The application directory must contain the bootstrap.php file.
@@ -99,4 +104,5 @@ if ( ! defined('KOHANA_START_MEMORY'))
  */
 define('KOHANA_PROD_MODE', false);
 
-require_once APPPATH.'bootstrap'.EXT;
+$application = new AppBoot();
+$application->boot('dev');

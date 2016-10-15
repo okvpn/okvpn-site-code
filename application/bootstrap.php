@@ -148,8 +148,6 @@ Cookie::$salt = 'csj1QsfhAsnAafrSDQzLDa';
 Cookie::$expiration = 3141596;
 
 
-define('SALT', 'y1fAgLdx8WeFsQ');
-
 Kernel::registrationBundle(
     [
         new Okvpn\OkvpnBundle\OkvpnFramework(),

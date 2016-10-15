@@ -2,7 +2,7 @@
 
 namespace Okvpn\OkvpnBundle\TestFramework;
 
-use Database;
+use Okvpn\KohanaProxy\Database;
 
 abstract class WebTestCase extends \PHPUnit_Framework_TestCase
 {
