@@ -17,11 +17,13 @@ cd applivation
 phinx migrate
 ```
 
-## Conventions and Code Version Control
+## Contributing Changes to the Code
 
-* See [Code Version Control](./doc/cvs.md) for details
-* See [Code style](./doc/code_style.md) for details
+Read Conventions & Code Version Control
+
+* See [Code Version Control](doc/cvs.md) for details
+* See [Code style](doc/code_style.md) for details
 
 ## license
 
-GPL 2
+GPLv3, see [https://www.gnu.org/licenses/gpl-3.0.txt](https://www.gnu.org/licenses/gpl-3.0.txt) for details
