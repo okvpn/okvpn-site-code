@@ -95,6 +95,4 @@ class CumulativeResourceManager
     {
         throw new \Exception('CumulativeResourceManager can not be unserialize');
     }
-
-
 }

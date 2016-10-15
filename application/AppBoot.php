@@ -59,8 +59,8 @@ class AppBoot extends AbstractBoot
     {
         Kohana::modules(
             [
-                'database'      => MODPATH .'database',   // Database access
-                'orm'           => MODPATH .'orm',        // Object Relationship Mapping
+                'database' => MODPATH . 'database',   // Database access
+                'orm' => MODPATH . 'orm',        // Object Relationship Mapping
             ]
         );
     }
