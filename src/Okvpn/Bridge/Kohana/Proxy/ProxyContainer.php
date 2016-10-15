@@ -8,6 +8,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Okvpn\Bridge\Kohana\Kernel\CumulativeResourceManager as ResourceManager;
 
+/**
+ * @deprecated since 2.1
+ * 
+ * Use Okvpn\Bridge\Kohana\Factory\ContainerCreater. More about factory method 
+ * @see http://symfony.com/doc/current/service_container/factories.html
+ * 
+ */
 class ProxyContainer extends Container
 {
     /**

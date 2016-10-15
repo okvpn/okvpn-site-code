@@ -12,7 +12,7 @@ class Kernel extends AbstractKernel
     public function prepareContainer(ContainerBuilder $container)
     {
         if (!Kernel::$bundles) {
-            throw new \Exception('');
+            throw new \Exception('Bundles empty');
         }
         
         /** @var AbstractBundle $bundle */

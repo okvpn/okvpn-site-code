@@ -10,7 +10,7 @@ use Okvpn\KohanaProxy\HTTP;
 use Okvpn\KohanaProxy\Kohana;
 use Okvpn\KohanaProxy\Cookie;
 
-
+// @codingStandardsIgnoreStart
 abstract class AbstractBoot
 {
 
@@ -28,7 +28,7 @@ abstract class AbstractBoot
         //todo: change it in 2.2
         $this->loadRouter($envelopment);
 
-        Kernel::registrationBundles($bundles[$envelopment]);
+        Kernel::registrationBundles($bundles);
 
         CumulativeResourceManager::getInstance()
             ->setContainer(
@@ -159,3 +159,4 @@ abstract class AbstractBoot
      */
     abstract protected function loadKohanaModules($envelopment);
 }
+// @codingStandardsIgnoreEnd

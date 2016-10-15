@@ -40,6 +40,4 @@ class UserControllerTest extends WebTestCase
         $this->assertStatusCode($response, 200);
         $this->assertRedirectResponse($response, null);
     }
-
-
 }

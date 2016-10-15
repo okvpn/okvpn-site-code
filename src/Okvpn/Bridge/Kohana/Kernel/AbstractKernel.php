@@ -43,6 +43,8 @@ abstract class AbstractKernel
     }
 
     /**
+     * @deprecated 
+     * 
      * @param $name
      * @return AbstractBundle
      */

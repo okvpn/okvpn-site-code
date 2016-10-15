@@ -60,7 +60,7 @@ class CumulativeResourceManager
     public function getContainer()
     {
         if (is_null($this->container)) {
-            throw new \Exception('');
+            throw new \Exception('Container must be compile.');
         }
         return $this->container;
     }
@@ -72,7 +72,7 @@ class CumulativeResourceManager
     public function getBundles()
     {
         if (is_null($this->bundles)) {
-            throw new \Exception('');
+            throw new \Exception('Bundle not loaded');
         }
         return $this->bundles;
     }

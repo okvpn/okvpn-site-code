@@ -2,7 +2,7 @@ parameters:
     config.class:                   Okvpn\OkvpnBundle\Core\Config
     user_manager.ovpn.class:        Okvpn\OkvpnBundle\Model\UserManager
     user_repositiory.class:         Okvpn\OkvpnBundle\Repository\UserRepository
-    proxy_container.class:          Kernel\ProxyContainer
+    proxy_container.class:          Okvpn\Bridge\Kohana\Proxy\ProxyContainer
     security_facade.class:          Okvpn\OkvpnBundle\Security\SecurityFacade
     token.storage.class:            Okvpn\OkvpnBundle\Security\TokenStorage
     user.class:                     Okvpn\OkvpnBundle\Entity\Users
@@ -14,38 +14,39 @@ parameters:
 
 services:
     container:
-        class: %proxy_container.class%
+        class: Symfony\Component\DependencyInjection\Container
+        factory: ['Okvpn\Bridge\Kohana\Factory\ContainerCreater', create]
 
     ovpn_config:
-        class: %config.class%
+        class: '%config.class%'
 
     ovpn_user:
-        class: %user.class%
+        class: '%user.class%'
 
     ovpn_user.repository:
-        class: %user_repositiory.class%
+        class: '%user_repositiory.class%'
 
     ovpn_token.storage:
-        class: %token.storage.class%
+        class: '%token.storage.class%'
 
     ovpn_security.abstract:
-        class: %security.class%
+        class: '%security.class%'
         arguments: ['@ovpn_user']
 
     ovpn_user.manager:
-        class: %user_manager.ovpn.class%
+        class: '%user_manager.ovpn.class%'
         arguments: ['@ovpn_config', '@ovpn_mailer', '@ovpn_openvpn.facade', '@ovpn_user.repository']
 
     ovpn_authorization:
-        class: %authorization.class%
+        class: '%authorization.class%'
         arguments: ['@ovpn_token.storage', '@ovpn_user.repository']
 
     ovpn_security:
-        class: %security_facade.class%
+        class: '%security_facade.class%'
         arguments: ['@ovpn_authorization', '@ovpn_security.abstract', '@ovpn_token.storage']
 
     ovpn_mailer:
-        class: %mail.mailgun.class%
+        class: '%mail.mailgun.class%'
         arguments: ['@ovpn_config']
 
     ovpn_token.session:

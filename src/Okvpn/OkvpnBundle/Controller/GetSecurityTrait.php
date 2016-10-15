@@ -2,7 +2,7 @@
 
 namespace Okvpn\OkvpnBundle\Controller;
 
-use Annotations\DependencyInjectionAnnotation as DI;
+use Okvpn\Core\Annotations\Inject as DI;
 use Okvpn\OkvpnBundle\Security\SecurityFacade;
 
 trait GetSecurityTrait

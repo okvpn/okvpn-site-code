@@ -1,5 +1,7 @@
 <?php
 
+use Okvpn\Bridge\Kohana\Kernel\Kernel;
+
 /**
  * @deprecated 
  */
@@ -32,7 +34,7 @@ class ORM extends Kohana_ORM
         $namespaces = preg_split('/:/', $name);
         
         try {
-            $searchBundle = \Kernel\Kernel::getBundleByAlias(reset($namespaces));
+            $searchBundle = Kernel::getBundleByAlias(reset($namespaces));
         } catch (\Exception $e) {
             if (class_exists(preg_replace('/:/', '\\', $name))) {
                 return preg_replace('/:/', '\\',$name);
