@@ -38,6 +38,22 @@ abstract class AbstractKernel
     }
 
     /**
+     * @param $name
+     * @return AbstractBundle
+     */
+    public static function getBundleByAlias($name)
+    {
+        foreach (self::$bundles as $bundleClass) {
+            $reflect = new \ReflectionClass($bundleClass);
+            if ($name == $reflect->getShortName()) {
+                return $bundleClass;
+            }
+        }
+
+        throw new \InvalidArgumentException(sprintf("Class %s not registration as bundle", $name));
+    }
+
+    /**
      * @return ContainerBuilder
      */
     public static function getContainer()

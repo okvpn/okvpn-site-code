@@ -12,7 +12,7 @@ class A100UsersSeed extends AbstractSeed
         $rows = [
             [
                 'email'   => 'test1@okvpn.org',
-                'pass'    => 'pass',
+                'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-01',
                 'checked' => 'f',
                 'role'    => 'free'
