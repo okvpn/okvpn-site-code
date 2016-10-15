@@ -2,7 +2,6 @@
 
 namespace Okvpn\OkvpnBundle\Tests\Functional;
 
-
 use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
 
 /**
