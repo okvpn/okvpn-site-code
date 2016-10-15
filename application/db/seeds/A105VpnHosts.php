@@ -13,7 +13,7 @@ class A105VpnHosts extends AbstractSeed
             [
                 'id'   => 1,
                 'name' => 'pa1',
-                'ip'   => 'pa1.ovpn.ovh',
+                'ip'   => 'pa1.yandex.ovh',
                 'location' => 'Панама',
                 'icon' => 'public/img/country/pa.png',
                 'ordernum' => 10,
@@ -24,7 +24,7 @@ class A105VpnHosts extends AbstractSeed
             [
                 'id'   => 2,
                 'name' => 'uk1',
-                'ip'   => 'uk1.ovpn.ovh',
+                'ip'   => 'uk1.yandex.ovh',
                 'location' => 'UK',
                 'icon' => 'public/img/country/uk.png',
                 'ordernum' => 5,
@@ -33,8 +33,6 @@ class A105VpnHosts extends AbstractSeed
             ]
         ];
         
-        $this->table('vpn_hosts')
-            ->insert($rows)
-            ->save();
+        $this->table('vpn_hosts')->insert($rows)->save();
     }
 }

@@ -12,17 +12,17 @@ class A100UsersSeed extends AbstractSeed
         $rows = [
             [
                 'email'   => 'test1@okvpn.org',
-                'pass'    => 'pass',
+                'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-01',
                 'checked' => 'f',
-                'role'    => 1
+                'role'    => 'free'
             ],
             [
                 'email'   => 'test2@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe', //123456
                 'date'    => '2016-01-02',
                 'checked' => 't',
-                'role'    => 1,
+                'role'    => 'free',
                 'token'   => '123456'
             ],
             [
@@ -30,7 +30,7 @@ class A100UsersSeed extends AbstractSeed
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-03',
                 'checked' => 't',
-                'role'    => 2,
+                'role'    => 'full',
                 'token'   => '123456'
             ],
             [
@@ -38,14 +38,14 @@ class A100UsersSeed extends AbstractSeed
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-04',
                 'checked' => 't',
-                'role'    => 2
+                'role'    => 'full'
             ],
             [
                 'email'   => 'test5@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-05',
                 'checked' => 't',
-                'role'    => 3
+                'role'    => 'admin'
             ]
         ];
         

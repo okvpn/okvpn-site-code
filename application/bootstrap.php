@@ -150,9 +150,11 @@ Cookie::$expiration = 3141596;
 
 define('SALT', 'y1fAgLdx8WeFsQ');
 
-Kernel::registrationBundle([
-    new Ovpn\OvpnBundle(),
-]);
+Kernel::registrationBundle(
+    [
+        new Okvpn\OkvpnBundle\OkvpnFramework(),
+    ]
+);
 
 CumulativeResourceManager::getInstance()
     ->setContainer(Kernel::getContainer())

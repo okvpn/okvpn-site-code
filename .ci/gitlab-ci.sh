@@ -2,6 +2,7 @@
 
 step=$1
 DB_NAME=okvpn;
+ARRAY=( "var/openssl/pa1" "var/openssl/uk1" )
 
 case $step in
     install)
@@ -20,11 +21,33 @@ case $step in
         psql -U okvpn -h 127.0.0.1 -c "CREATE SCHEMA public";
         cd application;
         php ../vendor/bin/phinx migrate
-        php ../vendor/bin/phinx seed:run 
+        php ../vendor/bin/phinx seed:run
+        cd -
+
+        # install pki
+        for dir in "${ARRAY[@]}"
+        do
+            if [ -d "$dir" ]; then
+                rm -r "$dir";
+            fi
+
+            mkdir "$dir";
+            echo "Creating directory $dir ...";
+            cp -r var/openssl/example/* "$dir";
+            cd "$dir";
+            echo "yes" | ./easyrsa.sh init-pki
+            echo "" | ./easyrsa.sh build-ca nopass
+            cd -
+        done
+
     ;;
     script)
         echo "Run tests...";
+        echo "Run  phpunit --verbose --testsuite=unit...";
         phpunit --verbose --testsuite=unit
+        echo "phpunit --verbose --testsuite=functional...";
         phpunit --verbose --testsuite=functional
+        echo "Run phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p...";
+        phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p
     ;;
 esac
