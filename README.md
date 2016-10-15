@@ -1,6 +1,10 @@
 # The okvpn.org site code
 
-[![Travis CI build status](https://api.travis-ci.com/Jurasikt/dev_okvpn.svg?token=JAwKtvyvJKxrU4zYifzs&branch=develop)](https://travis-ci.org)
+| Branches      | Builds                                                                                                                                            |
+| ------------- |:------------------------------------------------------------------------------------------------------------------------------------------------- |
+| master        | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/master/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/master)    |
+| develop       | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/develop/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/develop)  |
+
 
 ## Installation
 
