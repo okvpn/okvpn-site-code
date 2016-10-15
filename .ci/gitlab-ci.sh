@@ -9,7 +9,7 @@ case $step in
         echo "Installing...";
         # remove vendor dir
         if [ -d vendor ]; then
-            rm vendor;
+            rm -r vendor;
         fi
 
         # install all dependency use composer.lock
