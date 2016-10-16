@@ -5,5 +5,6 @@ return array(
         'localhost',
         'loc.okvpn.org',
         'okvpn.org',
+        'okvpn.loc'
     ),
 );

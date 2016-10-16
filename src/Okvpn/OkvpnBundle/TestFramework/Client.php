@@ -8,6 +8,9 @@ use Request;
 
 class Client
 {
+    
+    const HTTP_HOST = 'okvpn.loc';
+    
     /**
      * @var Request
      */
@@ -47,6 +50,9 @@ class Client
             ->protocol($applicationData['protocol'] ?? DefaultClientParam::PROTOCOL);
         $method = strtoupper($method);
 
+        //set server param
+        $_SERVER['HTTP_HOST'] = self::HTTP_HOST;
+        
         if ($method == 'POST') {
             $this->request->post($parameters);
         } else {
