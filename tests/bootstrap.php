@@ -105,4 +105,4 @@ if ( ! defined('KOHANA_START_MEMORY'))
 define('KOHANA_PROD_MODE', false);
 
 $application = new AppBoot();
-$application->boot('dev');
+$application->boot('test');
