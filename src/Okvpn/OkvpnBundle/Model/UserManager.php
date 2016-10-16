@@ -2,23 +2,23 @@
 
 namespace Okvpn\OkvpnBundle\Model;
 
+use Okvpn\KohanaProxy\Database;
+use Okvpn\KohanaProxy\DB;
+use Okvpn\KohanaProxy\Kohana;
+use Okvpn\KohanaProxy\View;
+use Okvpn\KohanaProxy\Validation;
+use Okvpn\KohanaProxy\Text;
+use Okvpn\KohanaProxy\URL;
+
 use Okvpn\OkvpnBundle\Core\Config;
 use Okvpn\OkvpnBundle\Entity\Roles;
 use Okvpn\OkvpnBundle\Entity\Users;
 use Okvpn\OkvpnBundle\Entity\UsersInterface;
-use Okvpn\KohanaProxy\Database;
-use Okvpn\KohanaProxy\DB;
 use Okvpn\OkvpnBundle\Repository\UserRepository;
 use Okvpn\OkvpnBundle\Tools\MailerInterface;
 use Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade;
 use Okvpn\OkvpnBundle\Tools\Openvpn\RsaManagerInterface;
 use Okvpn\OkvpnBundle\Tools\Recaptcha;
-use Okvpn\KohanaProxy\Kohana;
-use View;
-use URL;
-use Validation;
-use Text;
-
 
 class UserManager
 {
