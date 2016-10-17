@@ -15,9 +15,11 @@ class MainController extends Controller
      */
     public function faqAction()
     {
-        $this->getResponse()->body(
-            \View::factory('faq')
-                ->set('auth', $this->getSecurityFacade()->getUser() instanceof UsersInterface)
+        $this->responseView(
+            'faq',
+            [
+                'auth' => $this->getSecurityFacade()->getUser() instanceof UsersInterface
+            ]
         );
     }
 
@@ -26,8 +28,11 @@ class MainController extends Controller
      */
     public function proxyAction()
     {
-        $this->getResponse()->body(
-            \View::factory('proxy')->set('auth', $this->getSecurityFacade()->getUser() instanceof UsersInterface)
+        $this->responseView(
+            'proxy',
+            [
+                'auth' => $this->getSecurityFacade()->getUser() instanceof UsersInterface
+            ]
         );
     }
 
@@ -36,9 +41,11 @@ class MainController extends Controller
      */
     public function guideAction()
     {
-        $this->getResponse()->body(
-            \View::factory('userguide')
-                ->set('auth', $this->getSecurityFacade()->getUser() instanceof UsersInterface)
+        $this->responseView(
+            'userguide',
+            [
+                'auth' => $this->getSecurityFacade()->getUser() instanceof UsersInterface
+            ]
         );
     }
 }
