@@ -99,4 +99,12 @@ class SecurityFacade implements SecurityInterface, AuthorizationInterface
     {
         return $this->authorization->doLogin($login, $password);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doLogout()
+    {
+        $this->authorization->doLogout();
+    }
 }

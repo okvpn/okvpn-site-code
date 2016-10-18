@@ -16,4 +16,7 @@ interface TokenInterface
      * @return void
      */
     public function setToken(string $token);
+    
+    
+    public function removeToken();
 }

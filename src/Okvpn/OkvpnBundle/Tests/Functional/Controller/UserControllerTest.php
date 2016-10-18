@@ -156,11 +156,23 @@ class UserControllerTest extends WebTestCase
             ]
         );
 
-        $response = $this->request('GET', '/profile');
-        $this->assertStatusCode($response, 200);
-        $this->assertRedirectResponse($response, null);
-        $this->clearCookie();
-        $this->clearSession();
+        $this->assertNotNull(
+            $this->getClient()->getContainer()->get('ovpn_security')->getUser()
+        );
+    }
+
+    /**
+     * @depends testLogin
+     */
+    public function testLogout()
+    {
+        $response = $this->request('GET', '/user/logout');
+        $this->assertStatusCode($response, 302);
+        $this->assertRedirectResponse($response, '');
+
+        $this->assertNull(
+            $this->get('ovpn_security')->getUser()
+        );
     }
 
     public function userDataProvider()
