@@ -17,7 +17,7 @@ class ProfileController extends Controller
      */
     public function before()
     {
-        if (! ($this->getSecurityFacade()->getUser() instanceof UsersInterface)) {
+        if (!$this->getSecurityFacade()->getUser() instanceof UsersInterface) {
             throw new AccessDeniedException;
         }
     }
@@ -31,30 +31,42 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route('/profile/create')
+     * @Route('/profile/vpncreate')
      */
-    public function createAction()
+    public function vpnCreateAction()
     {
-        $response = \View::factory('create-vpn')
-            ->set('vpn', (new VpnRepository())->getVpnStatus());
-
-        $this->getResponse()->body($response);
+        $this->responseView(
+            'create-vpn', 
+            [
+                'vpn' => (new VpnRepository())->getVpnStatus()
+            ]
+        );
     }
 
     /**
-     * @Route('/profile/getinfovpn')
+     * @Route('/profile/activate')
+     */
+    public function activateAction()
+    {
+        
+    }
+
+    /**
+     * @Route('/profile/getinfovpn/{id}')
      */
     public function getInfoVpnAction()
     {
         $token = $this->getRequest()->param('token');
         $info = (new VpnRepository())->getVpnInformation($token);
-
-        $response = \View::factory('ajax/vpninfo')
-            ->set('id', $token)
-            ->set('network', preg_replace('/\n/', "<br>", $info[0]['network']))
-            ->set('link', $info[0]['specifications_link']);
-
-        $this->getResponse()->body($response);
+        
+        $this->responseView(
+            'ajax/vpninfo',
+            [
+                'id' => $token,
+                'network' => preg_replace('/\n/', "<br>", $info[0]['network']),
+                'link' => $info[0]['specifications_link']
+            ]
+        );
     }
 
     /**
@@ -70,15 +82,35 @@ class ProfileController extends Controller
     }
 
     /**
+     * @Route('/profile/update')
+     */
+    public function updateAction()
+    {
+        $this->responseView('');
+    }
+
+    /**
+     * @Route('/profile/delete')
+     */
+    public function deleteAction()
+    {
+        $this->securityFacade->doLogout();
+        $this->redirect();
+    }
+
+    /**
      * @Route('/profile/settings')
      */
     public function settingsAction()
     {
         $user = $this->getSecurityFacade()->getUser();
-        $view = \View::factory('settings')
-            ->set('email', $user->getEmail())
-            ->set('active_vpn', (new UserRepository())->getUserVpnList($user->getId()));
-        
-        $this->getResponse()->body($view);
+
+        $this->responseView(
+            'settings',
+            [
+                'email' => $user->getEmail(),
+                'active_vpn' => (new UserRepository())->getUserVpnList($user->getId())
+            ]
+        );
     }
 }

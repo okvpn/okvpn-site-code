@@ -17,7 +17,8 @@ class A108Vps extends AbstractSeed
                 'price' => 0,
                 'specifications' => $this->getSpecification(),
                 'network' => $this->getNetwork(),
-                'code' => 1
+                'code' => 1,
+                'specifications_link' => 'http://google.com'
             ],
             [
                 'vpn_id' => 2,
@@ -26,7 +27,8 @@ class A108Vps extends AbstractSeed
                 'price' => 0,
                 'specifications' => $this->getSpecification(),
                 'network' => $this->getNetwork(),
-                'code' => 1
+                'code' => 1,
+                'specifications_link' => 'http://google.com'
             ],
         ];
 

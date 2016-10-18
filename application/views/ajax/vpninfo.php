@@ -89,7 +89,7 @@ $('.act').click(function(){
     $(".loader").html(loader);
     $('.vpn-content').html('');
     setTimeout(function(){
-        $.post('<?php echo URL::base()."user/createvpn"?>',{"id":"<?php echo $id ?>","csrf":""},
+        $.post('<?php echo URL::base(true). "profile/activate"?>', {"id":"<?php echo $id ?>","csrf":""},
           function(json){
             $("#modal").modal('hide');
             scroll(0,0);

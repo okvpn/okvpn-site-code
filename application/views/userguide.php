@@ -50,7 +50,7 @@
                 <li><a href="<?=URL::base()?>profile">Статистика</a></li>
                 <li><a href="#">Оплатить доступ</a></li>
                 <li><a href="<?=URL::base()?>profile/settings">Настройки</a></li>
-                <li><a href="<?=URL::base()?>profile/create">Создать VPN</a></li>
+                <li><a href="<?=URL::base()?>profile/vpncreate">Создать VPN</a></li>
                 <li><a href="<?=URL::base()?>user/logout">Выйти</a></li>
               </ul>
             </li>
@@ -79,7 +79,7 @@
       <h2>Подключение</h2>
       <p style ="padding-left:50px; padding-right: 30px">
         После регистрации и подтверждения почты  вы можете активировать VPN доступ, для этого на 
-        <a href="/profile/create">странице выбора VPN</a> выберите страну размещения сервера.
+        <a href="/profile/vpncreate">странице выбора VPN</a> выберите страну размещения сервера.
         После этого Вам на почту придет конфигурационный файл с ключем для подключения к OpenVPN серверу. 
         Если письмо не пришло, попробуйте <a href="<?php echo URL::base() ?>profile/settings">удалить</a>
         имеющиеся подключение и заново активировать новое или написать в <a href=mailto:team@okvpn.org>тех. поддержку</a>
