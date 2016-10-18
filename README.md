@@ -1,6 +1,10 @@
 # The okvpn.org site code
 
-[![Travis CI build status](https://api.travis-ci.com/Jurasikt/dev_okvpn.svg?token=JAwKtvyvJKxrU4zYifzs&branch=develop)](https://travis-ci.org)
+| Branches      | Builds                                                                                                                                            |
+| ------------- |:------------------------------------------------------------------------------------------------------------------------------------------------- |
+| master        | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/master/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/master)    |
+| develop       | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/develop/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/develop)  |
+
 
 ## Installation
 
@@ -17,11 +21,13 @@ cd applivation
 phinx migrate
 ```
 
-## Conventions and Code Version Control
+## Contributing Changes to the Code
 
-* See [Code Version Control](./doc/cvs.md) for details
-* See [Code style](./doc/code_style.md) for details
+Read Conventions & Code Version Control
+
+* See [Code Version Control](doc/cvs.md) for details
+* See [Code style](doc/code_style.md) for details
 
 ## license
 
-GPL 2
+GPLv3, see [https://www.gnu.org/licenses/gpl-3.0.txt](https://www.gnu.org/licenses/gpl-3.0.txt) for details

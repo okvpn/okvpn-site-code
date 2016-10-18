@@ -11,9 +11,9 @@ class A099RolesSeed extends AbstractSeed
     {
         $rows = [
             [
-                'id'    => 1,
+                'id'    => 'free',
                 'description'  => 'free user account',
-                'tag_name' => 'free',
+                'tag_name' => 'Free',
                 'traffic_limit' => 16500,
                 'hosts_limit' => 1,
                 'min_balance' => -0.0001,
@@ -21,9 +21,9 @@ class A099RolesSeed extends AbstractSeed
                 'role_name' => serialize(['USER_ROLE', 'FREE_USER_ROLE'])
             ],
             [
-                'id'    => 2,
+                'id'    => 'full',
                 'description'  => 'pay user account',
-                'tag_name' => 'full',
+                'tag_name' => 'Full',
                 'traffic_limit' => 76400,
                 'hosts_limit' => 7,
                 'day_cost' => 0.0334,
@@ -31,7 +31,7 @@ class A099RolesSeed extends AbstractSeed
                 'role_name' => serialize(['USER_ROLE', 'PAY_USER_ROLE'])
             ],
             [
-                'id'    => 3,
+                'id'    => 'admin',
                 'description'  => 'admin role',
                 'tag_name' => 'admin',
                 'traffic_limit' => 76400,

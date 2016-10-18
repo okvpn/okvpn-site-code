@@ -1,9 +1,10 @@
 <?php
 
-use Ovpn\Core\Config;
+use Okvpn\OkvpnBundle\Core\Config;
 /**
  * Class Database
  * todo fix - decorate it with two classes
+ * @deprecated 
  */
 abstract class Database extends Kohana_Database
 {

@@ -1,0 +1,73 @@
+parameters:
+    config.class:                   Okvpn\OkvpnBundle\Core\Config
+    user_manager.ovpn.class:        Okvpn\OkvpnBundle\Model\UserManager
+    user_repositiory.class:         Okvpn\OkvpnBundle\Repository\UserRepository
+    proxy_container.class:          Okvpn\Bridge\Kohana\Proxy\ProxyContainer
+    security_facade.class:          Okvpn\OkvpnBundle\Security\SecurityFacade
+    token.storage.class:            Okvpn\OkvpnBundle\Security\TokenStorage
+    user.class:                     Okvpn\OkvpnBundle\Entity\Users
+    security.class:                 Okvpn\OkvpnBundle\Security\Security
+    authorization.class:            Okvpn\OkvpnBundle\Security\Authorization
+    mail.mailgun.class:             Okvpn\OkvpnBundle\Tools\MailgunMailer
+
+
+
+services:
+    container:
+        class: Symfony\Component\DependencyInjection\Container
+        factory: ['Okvpn\Bridge\Kohana\Factory\ContainerCreater', create]
+
+    ovpn_recaptcha:
+        class: Okvpn\OkvpnBundle\Tools\Recaptcha
+
+    ovpn_config:
+        class: '%config.class%'
+
+    ovpn_user:
+        class: '%user.class%'
+
+    ovpn_user.repository:
+        class: '%user_repositiory.class%'
+
+    ovpn_token.storage:
+        class: '%token.storage.class%'
+
+    ovpn_security.abstract:
+        class: '%security.class%'
+        arguments: ['@ovpn_user']
+
+    ovpn_user.manager:
+        class: '%user_manager.ovpn.class%'
+        arguments:
+            - '@ovpn_config'
+            - '@ovpn_mailer'
+            - '@ovpn_openvpn.facade'
+            - '@ovpn_user.repository'
+            - '@ovpn_recaptcha'
+
+    ovpn_authorization:
+        class: '%authorization.class%'
+        arguments: ['@ovpn_token.storage', '@ovpn_user.repository']
+
+    ovpn_security:
+        class: '%security_facade.class%'
+        arguments: ['@ovpn_authorization', '@ovpn_security.abstract', '@ovpn_token.storage']
+
+    ovpn_mailer:
+        class: '%mail.mailgun.class%'
+        arguments: ['@ovpn_config']
+
+    ovpn_token.session:
+        class: Okvpn\OkvpnBundle\Security\TokenSession
+        public: false
+        tags:
+            - { name: secure.token, priority: 1 }
+
+    ovpn_token.cookie:
+        class: Okvpn\OkvpnBundle\Security\TokenCookie
+        public: false
+        tags:
+            - { name: secure.token, priority: 2 }
+
+    ovpn_openvpn.facade:
+        class: Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade
