@@ -36,7 +36,7 @@ class ProfileController extends Controller
     public function vpnCreateAction()
     {
         $this->responseView(
-            'create-vpn', 
+            'create-vpn',
             [
                 'vpn' => (new VpnRepository())->getVpnStatus()
             ]
@@ -48,7 +48,6 @@ class ProfileController extends Controller
      */
     public function activateAction()
     {
-        
     }
 
     /**
