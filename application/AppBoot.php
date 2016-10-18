@@ -18,7 +18,7 @@ class AppBoot extends AbstractBoot
             $bundles = array_merge(
                 $bundles,
                 [
-                    
+                    new Okvpn\TestFrameworkBundle\OkvpnTestBundle()
                 ]
             );
         }

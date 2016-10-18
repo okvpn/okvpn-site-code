@@ -2,6 +2,8 @@
 
 namespace Okvpn\OkvpnBundle\Controller;
 
+use Okvpn\KohanaProxy\Kohana;
+use Okvpn\KohanaProxy\Validation;
 use Okvpn\OkvpnBundle\Core\Controller;
 use Okvpn\OkvpnBundle\Core\HTTPFoundation\NotFoundException;
 use Okvpn\OkvpnBundle\Entity\UsersInterface;
@@ -24,7 +26,7 @@ class UserController extends Controller
         
         $this->setJsonResponse([
             'error' => ! $result,
-            'message' => [\Kohana::message('user', 'accountNotFound')]
+            'message' => [Kohana::message('user', 'accountNotFound')]
         ]);
     }
 
@@ -33,6 +35,8 @@ class UserController extends Controller
      */
     public function logoutAction()
     {
+        $this->securityFacade->doLogout();
+        $this->redirect('');
     }
 
     /**
@@ -47,7 +51,7 @@ class UserController extends Controller
         
         if ($result instanceof  UsersInterface) {
             (new TokenSession())->setToken($result->getId());
-            $this->redirect(\URL::base(true) . 'profile');
+            $this->redirect('profile');
         } else {
             throw new NotFoundException();
         }
@@ -65,14 +69,6 @@ class UserController extends Controller
     }
 
     /**
-     * @Route('/user/update')
-     */
-    public function updateAction()
-    {
-        $this->responseView('');
-    }
-
-    /**
      * @Route('/user/newpasswordrequest')
      */
     public function newPasswordRequestAction()
@@ -84,7 +80,7 @@ class UserController extends Controller
         $this->setJsonResponse(
             [
                 'error' => $response,
-                'message' => $response ? \Kohana::message('user', 'loginErr') : ''
+                'message' => $response ? Kohana::message('user', 'loginErr') : ''
             ]
         );
     }
@@ -127,7 +123,7 @@ class UserController extends Controller
     {
         $post = $this->getRequest()->post();
 
-        $postValid = \Validation::factory($post);
+        $postValid = Validation::factory($post);
         $postValid->rule('token', 'not_empty')
             ->rule('password', 'min_length', array(':value', 6))
             ->rule('confirm', 'not_empty');
@@ -142,7 +138,7 @@ class UserController extends Controller
         if ($post['confirm'] !== $post['password']) {
             return [
                 'error'   => true,
-                'message' => [\Kohana::message('user', 'passwordNotMatch')],
+                'message' => [Kohana::message('user', 'passwordNotMatch')],
             ];
         }
 

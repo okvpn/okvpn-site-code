@@ -3,6 +3,8 @@
 namespace Okvpn\OkvpnBundle\TestFramework;
 
 use Okvpn\KohanaProxy\Database;
+use Okvpn\KohanaProxy\URL;
+use Symfony\Component\DependencyInjection\Container;
 
 abstract class WebTestCase extends \PHPUnit_Framework_TestCase
 {
@@ -116,6 +118,14 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function get($service, $invalidBehavior = Container::EXCEPTION_ON_INVALID_REFERENCE)
+    {
+        return $this->getClient()->getContainer()->get($service, $invalidBehavior);
+    }
+
+    /**
      * todo: move to VariableContext class 2.2
      * Create and save cookie from headers
      */
@@ -187,7 +197,13 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertRedirectResponse(\Response $response, $url)
     {
-        $this->assertSame($response->headers('location'), $url);
+        $this->assertThat(
+            $response->headers('location'),
+            $this->logicalOr(
+                $this->equalTo($url),
+                $this->equalTo(URL::base(true) . $url)
+            )
+        );
     }
 
     /**

@@ -28,7 +28,7 @@ class TokenCookie implements TokenInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getToken()
     {
@@ -46,7 +46,7 @@ class TokenCookie implements TokenInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setToken(string $token)
     {
@@ -61,6 +61,14 @@ class TokenCookie implements TokenInterface
         ]);
 
         $this->cookieDriver->set($this->name, $encodeToken);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeToken()
+    {
+        $this->cookieDriver->delete($this->name);
     }
 
     private function encodeToken(array $data)

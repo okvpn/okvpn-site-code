@@ -2,9 +2,9 @@
 
 namespace Ovpn\Tests\Selenium\Page;
 
-use Ovpn\TestFramework\AbstractPage;
+use Okvpn\OkvpnBundle\TestFramework\AbstractPage;
 
 class ProfileViewList extends AbstractPage
 {
-    const URL = 'profile/create';
+    const URL = 'profile/vpncreate';
 }

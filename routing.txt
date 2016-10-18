@@ -5,7 +5,7 @@ url                  name(description)           methods          response   tes
 /proxy               proxy api                   GET              500        no     Main
 /profile             profile                     GET              500        no     Profile
 /profile/settings    settings                    GET              500        no     Profile
-/profile/create      create vpn                  GET              200        no     Profile
+/profile/vpncreate      create vpn                  GET              200        no     Profile
 /profile/billing     billing info                GET              200        no     Profile
 /profile/getinfovpn  -                           GET              200        no     Profile
 /user/vpndelete                                  POST             500        no

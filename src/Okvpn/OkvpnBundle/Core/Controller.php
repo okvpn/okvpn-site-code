@@ -2,6 +2,7 @@
 
 namespace Okvpn\OkvpnBundle\Core;
 
+use Okvpn\KohanaProxy\URL;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -67,7 +68,7 @@ abstract class Controller implements ContainerAwareInterface, ControllerInterfac
      */
     public function redirect($url = '', $code = 302)
     {
-        return $this->kohanaController->redirect($url, $code);
+        return $this->kohanaController->redirect(URL::base(true) . $url, $code);
     }
     
 

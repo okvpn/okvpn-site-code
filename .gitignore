@@ -16,5 +16,6 @@ modules
 *.mwb
 *.bak
 var/openssl/*
+phpunit.xml
 !var/openssl/example/
 !.gitkeep

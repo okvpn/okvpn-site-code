@@ -2,26 +2,26 @@
 
 namespace Okvpn\OkvpnBundle\Model;
 
+use Okvpn\KohanaProxy\Database;
+use Okvpn\KohanaProxy\DB;
+use Okvpn\KohanaProxy\Kohana;
+use Okvpn\KohanaProxy\View;
+use Okvpn\KohanaProxy\Validation;
+use Okvpn\KohanaProxy\Text;
+use Okvpn\KohanaProxy\URL;
+
 use Okvpn\OkvpnBundle\Core\Config;
 use Okvpn\OkvpnBundle\Entity\Roles;
 use Okvpn\OkvpnBundle\Entity\Users;
 use Okvpn\OkvpnBundle\Entity\UsersInterface;
-use DB;
 use Okvpn\OkvpnBundle\Repository\UserRepository;
 use Okvpn\OkvpnBundle\Tools\MailerInterface;
 use Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade;
 use Okvpn\OkvpnBundle\Tools\Openvpn\RsaManagerInterface;
 use Okvpn\OkvpnBundle\Tools\Recaptcha;
-use View;
-use Kohana;
-use URL;
-use Database;
-use Validation;
-use Text;
 
 class UserManager
 {
-    
     /**
      * @var Config
      */
@@ -38,6 +38,11 @@ class UserManager
     protected $openvpnRsa;
 
     /**
+     * @var Recaptcha
+     */
+    protected $recaptcha;
+
+    /**
      * @var UserRepository
      */
     protected $userRepository;
@@ -46,12 +51,14 @@ class UserManager
         Config $config,
         MailerInterface $mailer,
         RsaManagerInterface $rsa,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        Recaptcha $recaptcha
     ) {
         $this->config     = $config;
         $this->mailer     = $mailer;
         $this->openvpnRsa = $rsa;
         $this->userRepository = $userRepository;
+        $this->recaptcha = $recaptcha;
     }
 
     public function getUserAmount(UsersInterface $user)
@@ -181,7 +188,7 @@ class UserManager
         }
         
         if ($this->config->get('captcha:check') &&
-            ! Recaptcha::check($post['g-recaptcha-response'])) {
+            ! $this->recaptcha->check($post['g-recaptcha-response'])) {
             return [
                 'error'   => true,
                 'message' => [Kohana::message('user', 'captchaErr')],
@@ -200,7 +207,7 @@ class UserManager
             ];
         }
 
-        $role = ($post['role'] == 'free') ? (new Roles('free')) : (new Roles('full'));
+        $role = (isset($post['role']) && $post['role'] == 'free') ? (new Roles('free')) : (new Roles('full'));
 
         $user = new Users();
         $user
@@ -303,6 +310,11 @@ class UserManager
         $user->setPassword($post['password'])
             ->setEmail($post['email']);
         $user->save();
+
+        return [
+            'error'   => false,
+            'message' => [],
+        ];
     }
 
     /**
@@ -313,6 +325,6 @@ class UserManager
      */
     private function getDatabaseManager()
     {
-        return \Database::instance();
+        return Database::instance();
     }
 }

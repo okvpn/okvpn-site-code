@@ -28,7 +28,7 @@
         <div class='child-menu'>
           <a href='<?php echo  URL::base()?>profile/settings'>Настройки</a>
           <a href='#'>Оплатить</a>
-          <a href='<?php echo  URL::base()?>profile/create'>Создать VPN</a>
+          <a href='<?php echo  URL::base()?>profile/vpncreate'>Создать VPN</a>
           <a href='<?php echo  URL::base()?>profile'>Статистика</a>
           <a href='<?php echo  URL::base()?>user/logout'>Выйти</a>
         </div>

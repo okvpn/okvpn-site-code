@@ -27,6 +27,7 @@ class VpsTable extends AbstractMigration
             ->addColumn('network', 'text', ['null' => true])
             ->addColumn('code', 'integer')
             ->addColumn('note', 'text', ['null' => true])
+            ->addColumn('specifications_link', 'string', ['limit' => 255, 'null' => true])
             ->addForeignKey('vpn_id', 'vpn_hosts', 'id', ['delete'=> 'NO_ACTION', 'update'=> 'NO_ACTION'])
             ->addIndex('vpn_id', ['unique' => true])
             ->save();

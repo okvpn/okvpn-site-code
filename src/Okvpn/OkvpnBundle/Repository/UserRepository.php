@@ -18,7 +18,11 @@ class UserRepository implements UserProviderInterface
             ->where('email', '=', $email)
             ->find();
 
-        return (null === $user->getId() && ($onlyActive && !$user->getChecked())) ? null : $user;
+        if ($onlyActive && !$user->getChecked()) {
+            return null;
+        }
+
+        return null === $user->getId() ? null : $user;
     }
 
     public function findUserByCertName($cert)
