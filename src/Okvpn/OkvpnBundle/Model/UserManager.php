@@ -298,7 +298,9 @@ class UserManager
             ->rule('email', 'email')
             ->rule('email', 'not_empty')
             ->rule('password', 'min_length', array(':value', 6))
-            ->rule('password', 'not_empty');
+            ->rule('password', 'not_empty')
+            ->rule('re_password', 'not_empty')
+            ->rule('re_password', 'matches', [':validation', 're_password', 'password']);
 
         if (!$postValid->check()) {
             return [

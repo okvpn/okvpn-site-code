@@ -32,6 +32,19 @@ class ProfileControllerTest extends WebTestCase
         $this->assertStatusCode($response, 200);
         $this->assertContains('pa1', $response->body());
     }
+
+    /**
+     * @dataProvider updateUserProvider
+     *
+     * @param $post
+     * @param bool $error
+     */
+    public function testUpdate(array $post, $error)
+    {
+        $this->request('POST', 'profile/update', $post);
+        $response = $this->getJsonResponse();
+        $this->assertSame($response['error'], $error);
+    }
     
     public function testInfoVpn()
     {
@@ -56,5 +69,49 @@ class ProfileControllerTest extends WebTestCase
             $this->get('ovpn_security')->getUser()->getEmail(),
             $response->body()
         );
+    }
+
+    public function updateUserProvider()
+    {
+        return [
+            [
+                'post' => [
+                    'email' => 'not_valid',
+                    'password' => '123456',
+                    're_password' => '123456'
+                ],
+                'error' => true,
+            ],
+            [
+                'post' => [
+                    'email' => 'test@okvpn.org',
+                    'password' => '1234',
+                ],
+                'error' => true,
+            ],
+            [
+                'post' => [
+                    'email' => 'test@okvpn.org',
+                    're_password' => '123456'
+                ],
+                'error' => true,
+            ],
+            [
+                'post' => [
+                    'email' => 'test@okvpn.org',
+                    'password' => '12345',
+                    're_password' => '12345'
+                ],
+                'error' => true,
+            ],
+            [
+                'post' => [
+                    'email' => 'test@okvpn.org',
+                    'password' => '123456',
+                    're_password' => '123456'
+                ],
+                'error' => false,
+            ],
+        ];
     }
 }
