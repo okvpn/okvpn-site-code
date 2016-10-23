@@ -58,17 +58,17 @@
   <div class ="col-md-6 col-md-offset-3">
     <form id="change-settings">
       <div class="input-group">
-        <input type="text" class="form-control" value ="<?=$email?>">
+        <input type="text" class="form-control" name="email" value ="<?=$email?>">
         <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbspНовый Email </span>
       </div>
       <div class ="zero-20"></div>
       <div class ="input-group">
-        <input type="password" class="form-control">
+        <input type="password" class="form-control" name="password">
         <span class="input-group-addon" id="sizing-addon2">Новый пароль</span>
       </div>
       <div class ="zero-20"></div>
       <div class ="input-group">
-        <input type="password" class="form-control">
+        <input type="password" class="form-control" name="re_password">
         <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp Re пароль</span>
       </div>
     </form>
@@ -161,9 +161,11 @@ $(function () {
 $('#set').click(function(){
   scroll(0,0);
   var form = $('#change-settings').serialize();
-  $.post("<?php echo URL::base()?>user/update",form,function(json){
+  
+  $.post("<?php echo URL::base()?>profile/update", form, function(json) {
+
     if (json.error) {
-      $('.settings-warming').load('<?=URL::base()?>public/ajax/warming.html', function(){
+      $('.settings-warming').load('<?=URL::base()?>public/ajax/warming.html', function() {
         for (var i = json.message.length - 1; i >= 0; i--) {
           $('.alert').append('<li>'+json.message[i]+'</li>');
         }
@@ -173,14 +175,15 @@ $('#set').click(function(){
         $('.alert').append('Изменения сохранены<br>');
       });
     }
-  }
+
+  });
 });
 
 $("#del-acc").click(function(event){
   scroll(0,0);
   if ($('#delete').prop('checked')) {
     if (confirm('Вы уверены, что хотите удалить аккаунт?')) {
-      $.post("<?php echo URL::base() ?>user/delete",{action:"delete"},function(json){
+      $.post("<?php echo URL::base() ?>profile/delete",{action:"delete"},function(json){
         if (json.error) {
           $('.alert').append('Неизвестная ошибка<br>');
         } else {

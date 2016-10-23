@@ -85,7 +85,13 @@ class ProfileController extends Controller
      */
     public function updateAction()
     {
-        $this->responseView('');
+        $userManager = $this->container->get('ovpn_user.manager');
+        $this->setJsonResponse(
+            $userManager->updateUser(
+                $this->securityFacade->getUser(),
+                $this->getRequest()->post()
+            )
+        );
     }
 
     /**
