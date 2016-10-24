@@ -5,5 +5,6 @@ return [
     'port' => 5432,
     'username' => '',
     'password' => '',
-    'database' => ''
+    'database' => '',
+    'vpn_domain_name' => 'yandex.ovh'
 ];

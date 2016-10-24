@@ -44,6 +44,7 @@ services:
             - '@ovpn_openvpn.facade'
             - '@ovpn_user.repository'
             - '@ovpn_recaptcha'
+            - '@ovpn_user.filter'
 
     ovpn_authorization:
         class: '%authorization.class%'
@@ -71,3 +72,17 @@ services:
 
     ovpn_openvpn.facade:
         class: Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade
+
+    ovpn_user.filter:
+        class: Okvpn\OkvpnBundle\Filter\UserFilter
+        arguments:
+            - '@ovpn_user.repository'
+
+    ovpn_openvpn.config.builder:
+        class: Okvpn\OkvpnBundle\Tools\Openvpn\ConfigBuilder
+
+    ovpn_openvpn.config.factory:
+        class: Okvpn\OkvpnBundle\Tools\Openvpn\Config\ConfigFactory
+        arguments:
+            - '@ovpn_config'
+            - '@ovpn_openvpn.config.builder'

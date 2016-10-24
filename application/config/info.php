@@ -3,6 +3,7 @@
 return [
     'site' => "https://example.com",
     'mail' => true,
+    'vpn_domain' => '%vpn_domain%',
    
     'wallet'  => 'wallet',
     

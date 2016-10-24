@@ -163,9 +163,9 @@ class ConfigBuilder implements ConfigBuilderInterface
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    public function build()
+    public function getConfig()
     {
         $config = $this->cumulativeConfig;
         return $config;

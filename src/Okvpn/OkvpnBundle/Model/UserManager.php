@@ -14,6 +14,7 @@ use Okvpn\OkvpnBundle\Core\Config;
 use Okvpn\OkvpnBundle\Entity\Roles;
 use Okvpn\OkvpnBundle\Entity\Users;
 use Okvpn\OkvpnBundle\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Filter\UserFilter;
 use Okvpn\OkvpnBundle\Repository\UserRepository;
 use Okvpn\OkvpnBundle\Tools\MailerInterface;
 use Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade;
@@ -47,18 +48,25 @@ class UserManager
      */
     protected $userRepository;
 
+    /**
+     * @var UserFilter
+     */
+    protected $userFilter;
+
     public function __construct(
         Config $config,
         MailerInterface $mailer,
         RsaManagerInterface $rsa,
         UserRepository $userRepository,
-        Recaptcha $recaptcha
+        Recaptcha $recaptcha,
+        UserFilter $userFilter
     ) {
         $this->config     = $config;
         $this->mailer     = $mailer;
         $this->openvpnRsa = $rsa;
         $this->userRepository = $userRepository;
         $this->recaptcha = $recaptcha;
+        $this->userFilter = $userFilter;
     }
 
     public function getUserAmount(UsersInterface $user)
@@ -317,6 +325,11 @@ class UserManager
             'error'   => false,
             'message' => [],
         ];
+    }
+    
+    public function createNamedVpn()
+    {
+        
     }
 
     /**

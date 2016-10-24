@@ -2,6 +2,9 @@
 
 namespace Okvpn\OkvpnBundle\Tools\Openvpn;
 
+/**
+ * @deprecated
+ */
 class OpenvpnFacade implements RsaManagerInterface
 {
     /**
