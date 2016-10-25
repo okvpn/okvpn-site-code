@@ -2,6 +2,8 @@
 
 namespace Okvpn\OkvpnBundle\Repository;
 
+use Okvpn\KohanaProxy\Database;
+use Okvpn\KohanaProxy\DB;
 use Okvpn\OkvpnBundle\Entity\Users;
 use Okvpn\OkvpnBundle\Entity\VpnUser;
 use Okvpn\OkvpnBundle\Security\UserProviderInterface;
@@ -163,5 +165,78 @@ class UserRepository implements UserProviderInterface
             ->parameters([':uid' => $uid, ':name' => $certName]);
 
         return $sql->execute()->get('allow_connect') == 't';
+    }
+
+    /**
+     * Checks the user can create a VPN
+     *
+     * @param $userId
+     * @param $vpnId
+     */
+    public function isAllowCreateVpnSelected($userId, $vpnId)
+    {
+        $query = 
+            "with o_free_places as 
+            (
+                select (T1.free - COALESCE(T2.cnt, 0)) as free
+                from (
+                    select id, free_places as free from vpn_hosts where id = :vpn
+                ) T1 
+                left join (
+                    select count(vpn_id) AS cnt, max(vpn_id) as id
+                    from vpn_user where vpn_id = :vpn and active = true group by user_id 
+                ) T2 on T1.id = T2.id
+            ), o_traffic as (
+                select COALESCE(sum(count), 0) as traffic_count from traffic where uid = :user
+                    and date > (select now() - interval '1 month')
+            ), o_money as (
+                select COALESCE(sum(amount), 0) as amount from billing where uid = :user
+            ), o_host as (
+                select count(*) as count from vpn_user where user_id = :user and active = true
+            )
+            select o_free_places.free < 0 as error, 'vpnPlacesOut' as message, o_free_places.free as current_value, 0 as allow_value
+                from o_free_places
+            union all 
+                select o_traffic.traffic_count > r.traffic_limit as error, 'trafficOut' as message, 
+                    o_traffic.traffic_count as current_value, r.traffic_limit as allow_value
+                from o_traffic
+                cross join (
+                    select r.traffic_limit from users u
+                    inner join roles r on r.id = u.role
+                    where u.id = :user
+                ) r
+            union all
+                select o_money.amount < r.min_balance as error, 'creditOut' as message, 
+                    o_money.amount as current_value, r.min_balance as allow_value
+                from o_money
+                cross join (
+                    select r.min_balance from users u
+                    inner join roles r on r.id = u.role
+                    where u.id = :user
+                ) r
+            union all
+                select o.count >= r.hosts_limit as error, 'vpnUserOut' as message,
+                    o.count as current_value, r.hosts_limit as allow_value
+                from o_host o
+                cross join (
+                    select r.hosts_limit from users u
+                    inner join roles r on r.id = u.role
+                    where u.id = :user
+                ) r
+            union all
+                select o.count != 1 as error, 'vpnNotExist' as message,
+                    o.count as current_value, 1 as allow_value
+                from (
+                    select count(*) as count from vpn_hosts where id = :vpn
+                ) o";
+
+        $sql = DB::query(Database::SELECT, $query)->parameters(
+            [
+                ':user' => $userId, 
+                ':vpn' => $vpnId
+            ]
+        );
+        
+        return $sql->execute()->as_array();
     }
 }

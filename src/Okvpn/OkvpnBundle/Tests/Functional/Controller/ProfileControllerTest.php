@@ -28,7 +28,7 @@ class ProfileControllerTest extends WebTestCase
     
     public function testCreate()
     {
-        $response = $this->request('GET', '/profile/vpncreate');
+        $response = $this->request('GET', '/profile/viewvpn');
         $this->assertStatusCode($response, 200);
         $this->assertContains('pa1', $response->body());
     }

@@ -17,7 +17,7 @@
           <div class="col-md-8">
             <a href="<?php echo URL::base() ?>profile"><p>Статистика</p></a>
             <a href="#"><p>Оплатить доступ</p></a>
-            <a href="<?php echo URL::base() ?>profile/vpncreate"><p>Создать VPN</p></a>
+            <a href="<?php echo URL::base() ?>profile/viewvpn"><p>Создать VPN</p></a>
             <a href="<?php echo URL::base() ?>profile/settings"><p>Настройки</p></a>            
           </div>
 

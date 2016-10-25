@@ -145,5 +145,5 @@ interface ConfigBuilderInterface
     /**
      * @return string
      */
-    public function build();
+    public function getConfig();
 }

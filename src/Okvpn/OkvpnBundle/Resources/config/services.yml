@@ -14,11 +14,11 @@ parameters:
 
 services:
     container:
-        class: Symfony\Component\DependencyInjection\Container
+        class: 'Symfony\Component\DependencyInjection\Container'
         factory: ['Okvpn\Bridge\Kohana\Factory\ContainerCreater', create]
 
     ovpn_recaptcha:
-        class: Okvpn\OkvpnBundle\Tools\Recaptcha
+        class: 'Okvpn\OkvpnBundle\Tools\Recaptcha'
 
     ovpn_config:
         class: '%config.class%'
@@ -41,9 +41,10 @@ services:
         arguments:
             - '@ovpn_config'
             - '@ovpn_mailer'
-            - '@ovpn_openvpn.facade'
+            - '@ovpn_openvpn.factory'
             - '@ovpn_user.repository'
             - '@ovpn_recaptcha'
+            - '@ovpn_user.filter'
 
     ovpn_authorization:
         class: '%authorization.class%'
@@ -54,20 +55,34 @@ services:
         arguments: ['@ovpn_authorization', '@ovpn_security.abstract', '@ovpn_token.storage']
 
     ovpn_mailer:
-        class: '%mail.mailgun.class%'
+        class: 'Okvpn\OkvpnBundle\Tools\SwiftMailer'
         arguments: ['@ovpn_config']
 
     ovpn_token.session:
-        class: Okvpn\OkvpnBundle\Security\TokenSession
+        class: 'Okvpn\OkvpnBundle\Security\TokenSession'
         public: false
         tags:
             - { name: secure.token, priority: 1 }
 
     ovpn_token.cookie:
-        class: Okvpn\OkvpnBundle\Security\TokenCookie
+        class: 'Okvpn\OkvpnBundle\Security\TokenCookie'
         public: false
         tags:
             - { name: secure.token, priority: 2 }
 
     ovpn_openvpn.facade:
-        class: Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade
+        class: 'Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade'
+
+    ovpn_user.filter:
+        class: 'Okvpn\OkvpnBundle\Filter\UserFilter'
+        arguments:
+            - '@ovpn_user.repository'
+
+    ovpn_openvpn.config.builder:
+        class: 'Okvpn\OkvpnBundle\Tools\Openvpn\ConfigBuilder'
+
+    ovpn_openvpn.factory:
+        class: 'Okvpn\OkvpnBundle\Tools\Openvpn\Config\ExtensionFactory'
+        arguments:
+            - '@ovpn_config'
+            - '@ovpn_openvpn.config.builder'

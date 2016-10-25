@@ -50,7 +50,7 @@
                 <li><a href="<?=URL::base()?>profile">Статистика</a></li>
                 <li><a href="#">Оплатить доступ</a></li>
                 <li><a href="<?=URL::base()?>profile/settings">Настройки</a></li>
-                <li><a href="<?=URL::base()?>profile/vpncreate">Создать VPN</a></li>
+                <li><a href="<?=URL::base()?>profile/viewvpn">Создать VPN</a></li>
                 <li><a href="<?=URL::base()?>user/logout">Выйти</a></li>
               </ul>
             </li>

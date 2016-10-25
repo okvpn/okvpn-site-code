@@ -2,14 +2,12 @@
 
 namespace Okvpn\OkvpnBundle\Controller;
 
-use Okvpn\OkvpnBundle\Core\Controller;
-use Okvpn\OkvpnBundle\Entity\Balance;
+use Okvpn\OkvpnBundle\Core\Controller;;
 
 class TestController extends Controller
 {
     public function indexAction()
     {
-        $balance = new Balance(1);
-        $user = $balance->getUser();
+        echo json_encode(['TCP', 'UPD']);
     }
 }
