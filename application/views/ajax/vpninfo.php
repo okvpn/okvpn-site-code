@@ -83,23 +83,26 @@
 </style>
 
 <script type="text/javascript">
-var loader = '<div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>';
+var loader = '<div class="loader"><svg class="circular" viewBox="25 25 50 50">' +
+    '<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>';
 $('.act').click(function(){
   if (confirm("Вы уверены, что хотите активировать VPN доступ?")) {
     $(".loader").html(loader);
     $('.vpn-content').html('');
     setTimeout(function(){
-        $.post('<?php echo URL::base(true). "profile/activate"?>', {"id":"<?php echo $id ?>","csrf":""},
+        $.post('<?php echo URL::base(true). "profile/activate/$id"?>', {},
           function(json){
             $("#modal").modal('hide');
             scroll(0,0);
             if (!json.error) {
               $('.alert-box').load('<?=URL::base()?>public/ajax/success.html',function(){
-                $('.alert').append('VPN доступ успешно активирован. На ваш адрес электронной почты отправлено письмо с .ovpn файлом   <br>');
+                $('.alert').append(
+                    'VPN доступ успешно активирован. На ваш адрес электронной почты отправлено письмо с .ovpn файлами   <br>'
+                );
               });
             } else {
               $('.alert-box').load('<?=URL::base()?>public/ajax/warming.html',function(){
-                $('.alert').append('Opps..'+json.message+'<br>');
+                $('.alert').append('Opps..'+json.messages[0]+'<br>');
               });
             }
           });

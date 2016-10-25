@@ -56,7 +56,10 @@ class RsaManager implements RsaManagerInterface
             return;
         }
         
-        $payload = $this->getCommandForGenerateCert($this->context->getClient());
+        $payload = $this->getCommandForGenerateCert(
+            $this->context->getClient(), 
+            $this->context->getExpire()
+            );
        
         if (! function_exists('shell_exec')) {
             throw new \Exception('shell_exec');
@@ -111,9 +114,10 @@ class RsaManager implements RsaManagerInterface
         return $this->opensslDir . 'pki/ca.crt';
     }
 
-    private function getCommandForGenerateCert($name)
+    private function getCommandForGenerateCert($name, $expire)
     {
         return <<<BASH
+export EASYRSA_CERT_EXPIRE=$expire
 cd $this->opensslDir
 bash easyrsa.sh build-client-full $name nopass  > /dev/null 2>&1
 BASH;

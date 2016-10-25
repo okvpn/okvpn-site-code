@@ -168,6 +168,7 @@ class ConfigBuilder implements ConfigBuilderInterface
     public function getConfig()
     {
         $config = $this->cumulativeConfig;
+        $this->cumulativeConfig = '';
         return $config;
     }
 }

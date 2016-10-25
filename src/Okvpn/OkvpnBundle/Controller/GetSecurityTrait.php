@@ -7,7 +7,6 @@ use Okvpn\OkvpnBundle\Security\SecurityFacade;
 
 trait GetSecurityTrait
 {
-
     /**
      * @var SecurityFacade
      * @DI(service="ovpn_security")

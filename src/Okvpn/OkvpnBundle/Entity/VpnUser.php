@@ -101,6 +101,9 @@ class VpnUser extends ORM
         return $this;
     }
 
+    /**
+     * @return Host
+     */
     public function getHost()
     {
         return $this->host;

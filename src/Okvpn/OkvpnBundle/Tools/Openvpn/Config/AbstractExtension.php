@@ -7,7 +7,7 @@ use Okvpn\OkvpnBundle\Tools\Openvpn\ConfigBuilderInterface;
 use Okvpn\OkvpnBundle\Tools\Openvpn\RsaManager;
 use Okvpn\OkvpnBundle\Tools\Openvpn\RsaManagerInterface;
 
-abstract class AbstractConfig
+abstract class AbstractExtension
 {
     const VPN_DOMAIN_PARAM = 'vpn_domain';
 
@@ -34,7 +34,8 @@ abstract class AbstractConfig
     public function createOpenvpnConfiguration($client, $hostname)
     {
         $context = new Context($client, $hostname);
-        $openvpnConfiguration = $this->create($this->getRsaManager($context));
+        $this->initRsaManager($context);
+        $openvpnConfiguration = $this->create($context);
 
         return new OpenvpnConfigurationFile(
             $this->rsaManager->get('ca'),
@@ -48,7 +49,7 @@ abstract class AbstractConfig
      * @param Context $context
      * @return RsaManager
      */
-    protected function getRsaManager(Context $context)
+    protected function initRsaManager(Context $context)
     {
         if (null === $this->rsaManager) {
             $this->rsaManager = $this->createRsaManager($context);
@@ -71,16 +72,17 @@ abstract class AbstractConfig
     /**
      * Return domain name for used as remote param into client.ovpn config
      *
+     * @param $context
      * @return string
      */
-    protected function getDomainName()
+    protected function getDomainName(Context $context)
     {
-        return $this->config->get(self::VPN_DOMAIN_PARAM);
+        return sprintf("%s.%s", $context->getHostname(), $this->config->get(self::VPN_DOMAIN_PARAM));
     }
 
     /**
-     * @param RsaManagerInterface $rsaManager
-     * @return mixed
+     * @param Context $context
+     * @return string
      */
-    abstract protected function create(RsaManagerInterface $rsaManager);
+    abstract protected function create(Context $context);
 }

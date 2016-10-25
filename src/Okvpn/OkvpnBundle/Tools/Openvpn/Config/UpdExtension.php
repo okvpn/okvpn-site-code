@@ -2,28 +2,28 @@
 
 namespace Okvpn\OkvpnBundle\Tools\Openvpn\Config;
 
-use Okvpn\OkvpnBundle\Tools\Openvpn\RsaManagerInterface;
-
-class TcpConfig extends AbstractConfig
+class UpdExtension extends AbstractExtension
 {
-    const REMOTE_PORT = '443';
 
     /**
      * {@inheritdoc}
      */
-    protected function create(RsaManagerInterface $rsaManager)
+    protected function create(Context $context)
     {
         return $this->configBuilder
             ->addClientMode()
             ->addDev()
-            ->addProto('tcp')
-            ->addRemote($this->getDomainName(), self::REMOTE_PORT)
+            ->addProto('upd')
+            ->addSndbuf()
+            ->addRcvbuf()
+            ->addRemote($this->getDomainName($context))
             ->addRequireRemoteCertSign()
             ->addPersistKey()
             ->addPersistTun()
             ->addResolvRetry()
             ->addVerb()
             ->addNobind()
+            ->addComplzo()
             ->addCa($this->rsaManager->get('ca'))
             ->addCert($this->rsaManager->get('cert'))
             ->addKey($this->rsaManager->get('key'))

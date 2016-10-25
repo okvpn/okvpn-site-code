@@ -106,7 +106,6 @@ class UserController extends Controller
     public function setNewPasswordAction()
     {
         $response = $this->prepareRequestForResetPassword();
-
         if (true === $response) {
             $post = $this->getRequest()->post();
             $error = $this->getUserManager()->resetPassword($post['token'], $post['password']);

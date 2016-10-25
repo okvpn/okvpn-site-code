@@ -11,14 +11,16 @@ use Okvpn\KohanaProxy\Text;
 use Okvpn\KohanaProxy\URL;
 
 use Okvpn\OkvpnBundle\Core\Config;
+use Okvpn\OkvpnBundle\Entity\Host;
 use Okvpn\OkvpnBundle\Entity\Roles;
 use Okvpn\OkvpnBundle\Entity\Users;
 use Okvpn\OkvpnBundle\Entity\UsersInterface;
+use Okvpn\OkvpnBundle\Entity\VpnUser;
 use Okvpn\OkvpnBundle\Filter\UserFilter;
 use Okvpn\OkvpnBundle\Repository\UserRepository;
 use Okvpn\OkvpnBundle\Tools\MailerInterface;
-use Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade;
-use Okvpn\OkvpnBundle\Tools\Openvpn\RsaManagerInterface;
+use Okvpn\OkvpnBundle\Tools\Openvpn\Config\ExtensionFactory;
+use Okvpn\OkvpnBundle\Tools\Openvpn\Config\OpenvpnConfigurationFile;
 use Okvpn\OkvpnBundle\Tools\Recaptcha;
 
 class UserManager
@@ -32,11 +34,6 @@ class UserManager
      * @var MailerInterface
      */
     protected $mailer;
-
-    /**
-     * @var OpenvpnFacade
-     */
-    protected $openvpnRsa;
 
     /**
      * @var Recaptcha
@@ -53,17 +50,22 @@ class UserManager
      */
     protected $userFilter;
 
+    /**
+     * @var ExtensionFactory
+     */
+    protected $openvpnFactory;
+
     public function __construct(
         Config $config,
         MailerInterface $mailer,
-        RsaManagerInterface $rsa,
+        ExtensionFactory $openvpnFactory,
         UserRepository $userRepository,
         Recaptcha $recaptcha,
         UserFilter $userFilter
     ) {
         $this->config     = $config;
         $this->mailer     = $mailer;
-        $this->openvpnRsa = $rsa;
+        $this->openvpnFactory = $openvpnFactory;
         $this->userRepository = $userRepository;
         $this->recaptcha = $recaptcha;
         $this->userFilter = $userFilter;
@@ -102,13 +104,13 @@ class UserManager
         $subject = Kohana::message('user', 'resetPassword');
 
         try {
-            $this->mailer->sendMessage(
-                [
-                    'to'      => $email,
-                    'subject' => $subject,
-                    'html'    => $message
-                ]
-            );
+            /** @var \Swift_Message $message */
+            $sMessage = \Swift_Message::newInstance();
+            $sMessage->setTo([$user->getEmail()]);
+            $sMessage->setBody($message);
+            $sMessage->setSubject($subject);
+            $this->mailer->send($sMessage);
+
             $user->save();
         } catch (\Exception $e) {
             return false;
@@ -326,10 +328,91 @@ class UserManager
             'message' => [],
         ];
     }
-    
-    public function createNamedVpn()
+
+    /**
+     *
+     * @param Users $user
+     * @param $hostId
+     * @return array
+     */
+    public function activateVpn(Users $user, $hostId)
     {
-        
+        $valid = $this->userFilter->isAllowCreated($user, $hostId);
+
+        if ($valid['error']) {
+            return $valid;
+        }
+
+        $host = new Host($hostId);
+        $newHost = new VpnUser();
+        $newHost->setHost($host)
+            ->setName(
+                sprintf("%s-%s", $host->getName(), Text::random('alnum', 10))
+            )
+            ->setActive(true)
+            ->setDateCreate()
+            ->setUser($user);
+
+        $extensions = $user->getRole()->getExtensions();
+
+        $configurationFiles = [];
+
+        try {
+            foreach ($extensions as $type) {
+                $extension = $this->openvpnFactory->create($type);
+                $configurationFiles[$type] = $extension->createOpenvpnConfiguration(
+                    $newHost->getName(),
+                    $newHost->getHost()->getName()
+                );
+            }
+        } catch (\Exception $e) {
+            return [
+                'error' => true,
+                'message' => [$e->getMessage()]
+            ];
+        }
+
+
+        $message = \Swift_Message::newInstance();
+        $message->setBody(View::factory('mail/vpnActivate'), 'text/html');
+        $message->setSubject(Kohana::message('user', 'vpnActivate'));
+        $message->setTo($user->getEmail());
+
+        /** @var OpenvpnConfigurationFile $file */
+        foreach ($configurationFiles as $name => $file) {
+            $message->attach(
+                \Swift_Attachment::newInstance(
+                    $file->getConfiguration(),
+                    sprintf('%s-%s.ovpn', $name, $host->getName())
+                )
+            );
+        }
+
+        $message->attach(
+            \Swift_Attachment::newInstance($file->getCa(), 'ca.crt')
+        );
+        $message->attach(
+            \Swift_Attachment::newInstance($file->getCertificate(), 'client.crt')
+        );
+        $message->attach(
+            \Swift_Attachment::newInstance($file->getPrivateKey(), 'client.key')
+        );
+
+        try {
+            $this->mailer->send($message);
+            $newHost->save();
+
+            return [
+                'error' => false,
+                'message' => []
+            ];
+
+        } catch (\Swift_SwiftException $e) {
+            return [
+                'error' => true,
+                'message' => [$e->getMessage()]
+            ];
+        }
     }
 
     /**

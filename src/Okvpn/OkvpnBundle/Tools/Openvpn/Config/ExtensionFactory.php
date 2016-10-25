@@ -5,7 +5,7 @@ namespace Okvpn\OkvpnBundle\Tools\Openvpn\Config;
 use Okvpn\OkvpnBundle\Core\Config;
 use Okvpn\OkvpnBundle\Tools\Openvpn\ConfigBuilderInterface;
 
-class ConfigFactory
+class ExtensionFactory
 {
     /** @var  Config */
     protected $config;
@@ -21,7 +21,7 @@ class ConfigFactory
 
     /**
      * @param string $namedConfig
-     * @return AbstractConfig
+     * @return AbstractExtension
      */
     public function create($namedConfig)
     {
@@ -36,7 +36,7 @@ class ConfigFactory
     private function nameConverter($name)
     {
         return sprintf(
-            "Okvpn\\OkvpnBundle\\Tools\\Openvpn\\Config\\%sConfig",
+            "Okvpn\\OkvpnBundle\\Tools\\Openvpn\\Config\\%sExtension",
             ucfirst(strtolower($name))
         );
     }

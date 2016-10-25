@@ -5,6 +5,11 @@ namespace Okvpn\OkvpnBundle\Tools;
 use Mailgun\Mailgun;
 use Okvpn\OkvpnBundle\Core\Config;
 
+/**
+ * Class MailgunMailer
+ *
+ * @deprecated
+ */
 class MailgunMailer implements MailerInterface
 {
     /**
@@ -20,29 +25,36 @@ class MailgunMailer implements MailerInterface
     public function __construct(Config $config)
     {
         $this->config = $config;
+        $this->init();
     }
 
-    public function initMailProvider(MailerInterface $provider = null)
+    public function init()
     {
         if ($this->mailProvider) {
             throw new \LogicException('The mail provider has been already init');
         }
 
-        $this->mailProvider = $provider ?? new Mailgun($this->config->get('mailgun:key'));
+        $this->mailProvider = new Mailgun($this->config->get('mailgun:key'));
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-    public function sendMessage(array $payload)
+    public function send($payload)
     {
-        if (! $this->mailProvider) {
-            $this->initMailProvider();
+        if (!is_array($payload)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "MailgunMailer::send array supported only, but %s given",
+                    is_object($payload) ? get_class($payload) : gettype($payload)
+                )
+            );
         }
 
         if (! array_key_exists('from', $payload)) {
             $payload['from'] = $this->buildFromHeader();
         }
+
         return $this->mailProvider->sendMessage(
             $this->config->get('mailgun:site'),
             $payload
@@ -54,10 +66,6 @@ class MailgunMailer implements MailerInterface
      */
     public function getMailProvider()
     {
-        if (! $this->mailProvider) {
-            $this->initMailProvider();
-        }
-        
         return $this->mailProvider;
     }
 
