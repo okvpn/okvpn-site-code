@@ -57,9 +57,9 @@ class RsaManager implements RsaManagerInterface
         }
         
         $payload = $this->getCommandForGenerateCert(
-            $this->context->getClient(), 
+            $this->context->getClient(),
             $this->context->getExpire()
-            );
+        );
        
         if (! function_exists('shell_exec')) {
             throw new \Exception('shell_exec');

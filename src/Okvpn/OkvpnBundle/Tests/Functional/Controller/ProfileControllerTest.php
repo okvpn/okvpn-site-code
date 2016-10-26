@@ -4,6 +4,7 @@ namespace Okvpn\OkvpnBundle\Tests\Functional\Controller;
 
 use Okvpn\KohanaProxy\ORM;
 use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
+use Okvpn\TestFrameworkBundle\Mock\MockMailer;
 
 /**
  * @dbIsolation
@@ -69,6 +70,30 @@ class ProfileControllerTest extends WebTestCase
             $this->get('ovpn_security')->getUser()->getEmail(),
             $response->body()
         );
+    }
+
+    public function testActivateVpn()
+    {
+        $response = $this->request('POST', '/profile/activate/1');
+        $this->assertStatusCode($response, 200);
+        $response = $this->getJsonResponse();
+        $this->assertSame(false, $response['error']);
+
+        /** @var MockMailer $mailer */
+        $mailer = $this->get('ovpn_mailer');
+        /** @var \Swift_Message $message */
+        $message = $mailer->getLastInvokeValue('send');
+
+        $this->assertInstanceOf('Swift_Message', $message);
+        /** @var \Swift_Attachment[] $attach */
+        $attach = $message->getChildren();
+        $this->assertCount(4, $attach);
+        foreach ($attach as $item) {
+            $this->assertInstanceOf('Swift_Attachment', $item);
+            if ($item->getFilename() == 'client.key') {
+                $this->assertContains('BEGIN PRIVATE KEY', $item->getBody());
+            }
+        }
     }
 
     public function updateUserProvider()

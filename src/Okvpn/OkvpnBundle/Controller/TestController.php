@@ -1,5 +1,4 @@
-<?php
-
+<?php // @codingStandardsIgnoreStart
 namespace Okvpn\OkvpnBundle\Controller;
 
 use Okvpn\OkvpnBundle\Core\Controller;;
@@ -11,3 +10,4 @@ class TestController extends Controller
         echo json_encode(['TCP', 'UPD']);
     }
 }
+// @codingStandardsIgnoreEnd

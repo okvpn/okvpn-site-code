@@ -85,9 +85,9 @@ class UserControllerTest extends WebTestCase
             'Okvpn\OkvpnBundle\Entity\UsersInterface',
             $this->userRepo->findUserByEmail('test@example.com')
         );
-
-        $mail = $mockMailer->getLastInvokeValue('sendMessage');
-        $message = (string) $mail['html'];
+        /** @var \Swift_Message $mail */
+        $mail = $mockMailer->getLastInvokeValue('send');
+        $message = (string) $mail->getBody();
         $this->assertRegExp('/user\/verify\/(\w+)/', $message);
 
         preg_match_all('/user\/verify\/(\w+)/', $message, $result);

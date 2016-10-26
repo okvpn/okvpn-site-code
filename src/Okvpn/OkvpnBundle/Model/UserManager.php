@@ -229,22 +229,20 @@ class UserManager
             ->setChecked(false)
             ->setToken(Text::random('alnum', 16));
 
-        $message = View::factory('mail/mailVerify')
+        $body = View::factory('mail/mailVerify')
             ->set('src', URL::base(true) . "user/verify/" . $user->getToken());
-        $subject = Kohana::message('user', 'mailVerify');
         
         try {
-            $this->mailer->sendMessage(
-                [
-                    'to' => $user->getEmail(),
-                    'subject' => $subject,
-                    'html'    => $message,
-                ]
-            );
-        } catch (\Exception $e) {
+            /** @var \Swift_Message $message */
+            $message = \Swift_Message::newInstance();
+            $message->setBody($body, 'text/html');
+            $message->setTo($user->getEmail());
+            $message->setSubject(Kohana::message('user', 'mailVerify'));
+            $this->mailer->send($message);
+        } catch (\Swift_SwiftException $e) {
             return [
                 'error'   => true,
-                'message' => ['mail err'],
+                'message' => [$e->getMessage()],
             ];
         }
 
@@ -401,12 +399,10 @@ class UserManager
         try {
             $this->mailer->send($message);
             $newHost->save();
-
             return [
                 'error' => false,
                 'message' => []
             ];
-
         } catch (\Swift_SwiftException $e) {
             return [
                 'error' => true,
