@@ -161,8 +161,7 @@ class UserRepository implements UserProviderInterface
                     case when count < 0 then count else 0 end
                 ), 0) from traffic
                 where uid = :uid)"
-        )
-            ->parameters([':uid' => $uid, ':name' => $certName]);
+        )->parameters([':uid' => $uid, ':name' => $certName]);
 
         return $sql->execute()->get('allow_connect') == 't';
     }
@@ -175,8 +174,7 @@ class UserRepository implements UserProviderInterface
      */
     public function isAllowCreateVpnSelected($userId, $vpnId)
     {
-        $query = 
-            "with o_free_places as 
+        $query = "with o_free_places as 
             (
                 select (T1.free - COALESCE(T2.cnt, 0)) as free
                 from (
@@ -194,8 +192,9 @@ class UserRepository implements UserProviderInterface
             ), o_host as (
                 select count(*) as count from vpn_user where user_id = :user and active = true
             )
-            select o_free_places.free < 0 as error, 'vpnPlacesOut' as message, o_free_places.free as current_value, 0 as allow_value
-                from o_free_places
+            select o_free_places.free < 0 as error, 'vpnPlacesOut' as message, 
+                o_free_places.free as current_value, 0 as allow_value
+            from o_free_places
             union all 
                 select o_traffic.traffic_count > r.traffic_limit as error, 'trafficOut' as message, 
                     o_traffic.traffic_count as current_value, r.traffic_limit as allow_value
@@ -230,12 +229,13 @@ class UserRepository implements UserProviderInterface
                     select count(*) as count from vpn_hosts where id = :vpn
                 ) o";
 
-        $sql = DB::query(Database::SELECT, $query)->parameters(
-            [
-                ':user' => $userId, 
-                ':vpn' => $vpnId
-            ]
-        );
+        $sql = DB::query(Database::SELECT, $query)
+            ->parameters(
+                [
+                    ':user' => $userId,
+                    ':vpn' => $vpnId
+                ]
+            );
         
         return $sql->execute()->as_array();
     }

@@ -104,7 +104,7 @@ class Roles extends ORM
 
     /**
      * Return all names class of config extensions
-     * 
+     *
      * @return array
      */
     public function getExtensions()
