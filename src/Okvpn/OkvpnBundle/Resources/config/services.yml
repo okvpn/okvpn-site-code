@@ -17,8 +17,15 @@ services:
         class: 'Symfony\Component\DependencyInjection\Container'
         factory: ['Okvpn\Bridge\Kohana\Factory\ContainerCreater', create]
 
+    event_dispatcher:
+        class: 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher'
+        arguments:
+            - '@container'
+
     ovpn_recaptcha:
         class: 'Okvpn\OkvpnBundle\Tools\Recaptcha'
+        arguments:
+            - '@ovpn_config'
 
     ovpn_config:
         class: '%config.class%'
@@ -39,6 +46,7 @@ services:
     ovpn_user.manager:
         class: '%user_manager.ovpn.class%'
         arguments:
+            - '@event_dispatcher'
             - '@ovpn_config'
             - '@ovpn_mailer'
             - '@ovpn_openvpn.factory'
@@ -70,13 +78,11 @@ services:
         tags:
             - { name: secure.token, priority: 2 }
 
-    ovpn_openvpn.facade:
-        class: 'Okvpn\OkvpnBundle\Tools\Openvpn\OpenvpnFacade'
-
     ovpn_user.filter:
         class: 'Okvpn\OkvpnBundle\Filter\UserFilter'
         arguments:
             - '@ovpn_user.repository'
+            - '@ovpn_recaptcha'
 
     ovpn_openvpn.config.builder:
         class: 'Okvpn\OkvpnBundle\Tools\Openvpn\ConfigBuilder'
@@ -86,3 +92,12 @@ services:
         arguments:
             - '@ovpn_config'
             - '@ovpn_openvpn.config.builder'
+
+    ovpn_create_user.event.listener:
+        class: 'Okvpn\OkvpnBundle\EventListener\CreateUserEventListener'
+        arguments:
+            - '@ovpn_mailer'
+            - '@ovpn_user.filter'
+        tags:
+            - { name: kernel.event_listener, event: pre.create_user, method: preCreateUser }
+            - { name: kernel.event_listener, event: post.create_user, method: postCreateUser }
