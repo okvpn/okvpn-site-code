@@ -11,7 +11,7 @@ class MockRecaptcha extends BaseRecaptcha
     /**
      * {@inheritdoc}
      */
-    public static function check($gCaptchaResponse)
+    public function check($gCaptchaResponse)
     {
         if (self::isEnableParentMethod('check')) {
             parent::check($gCaptchaResponse);

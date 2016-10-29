@@ -6,5 +6,5 @@ use Okvpn\OkvpnBundle\TestFramework\AbstractPage;
 
 class ProfileViewList extends AbstractPage
 {
-    const URL = 'profile/vpncreate';
+    const URL = 'profile/viewvpn';
 }

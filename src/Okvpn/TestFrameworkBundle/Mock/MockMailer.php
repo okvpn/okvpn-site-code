@@ -3,6 +3,7 @@
 namespace Okvpn\TestFrameworkBundle\Mock;
 
 use Okvpn\OkvpnBundle\Tools\MailerInterface;
+use Okvpn\TestFrameworkBundle\Mock\Fixtures\Mailer;
 
 class MockMailer implements MailerInterface
 {
@@ -12,10 +13,10 @@ class MockMailer implements MailerInterface
      * @param array $payload
      * @return mixed
      */
-    public function sendMessage(array $payload)
+    public function send($payload)
     {
-        $this->saveInvokeValue('sendMessage', $payload);
-        if ($this->isEnableParentMethod('sendMessage')) {
+        $this->saveInvokeValue('send', $payload);
+        if ($this->isEnableParentMethod('send')) {
             return true;
         }
 
@@ -23,7 +24,7 @@ class MockMailer implements MailerInterface
             return true;
         }
         
-        return self::$mockObject->sendMessage($payload);
+        return $this->getMockClass()->send($payload);
     }
 
     /**
@@ -39,6 +40,14 @@ class MockMailer implements MailerInterface
             return true;
         }
 
-        return self::$mockObject->getMailProvider();
+        return $this->getMockClass()->getMailProvider();
+    }
+
+    /**
+     * @return Mailer
+     */
+    public static function getMockClass()
+    {
+        return self::getMock();
     }
 }

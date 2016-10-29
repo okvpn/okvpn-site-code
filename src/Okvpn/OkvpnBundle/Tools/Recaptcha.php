@@ -7,16 +7,27 @@ use Okvpn\OkvpnBundle\Core\Config;
 class Recaptcha
 {
     const MAX_LAZY_CHECK = 3;
+    
+    /** @var  Config */
+    private $config;
+    
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @param $gCaptchaResponse
      * @return bool
      * @throws \Exception
      */
-    public static function check($gCaptchaResponse)
+    public function check($gCaptchaResponse)
     {
+        if (! $this->config->get('captcha:check')) {
+            return true;
+        }
+        
         $session = \Session::instance();
-        $config = new Config();
 
         if ($session->get('captcha') == true &&
             $session->get('captchaCount') < self::MAX_LAZY_CHECK
@@ -25,10 +36,10 @@ class Recaptcha
             return true;
         }
 
-        $ch = curl_init($config->get('captcha:api'));
+        $ch = curl_init($this->config->get('captcha:api'));
 
         $form = [
-            'secret'   => $config->get('captcha:secret'),
+            'secret'   => $this->config->get('captcha:secret'),
             'response' => $gCaptchaResponse,
         ];
 

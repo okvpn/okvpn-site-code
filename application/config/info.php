@@ -3,8 +3,7 @@
 return [
     'site' => "https://example.com",
     'mail' => true,
-   
-    'wallet'  => 'wallet',
+    'vpn_domain' => '%vpn_domain_name%',
     
     /**
      * ReCaptcha 
@@ -25,6 +24,14 @@ return [
         'from_email'  => 'noreply@okvpn.org',
         'from_alias'  => 'OkVPN',
         'site'        => 'okvpn.org',
+    ],
+
+    'mailer' => [
+        'username' => 'postmaster@okvpn.org',
+        'password' => '7069eb5bf7cf705729492616f00cee79',
+        'transport_host' => 'smtp.mailgun.org',
+        'transport_port' => '25',
+        'sender' => 'noreply@okvpn.org',
     ],
 
     'database' => [

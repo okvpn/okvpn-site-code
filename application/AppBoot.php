@@ -27,7 +27,7 @@ class AppBoot extends AbstractBoot
     }
 
     /**
-     * Activate kohana rouging role
+     * Activate kohana rouging rule
      *
      * @param string $envelopment
      */

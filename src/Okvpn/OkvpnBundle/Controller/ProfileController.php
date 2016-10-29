@@ -31,9 +31,9 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route('/profile/vpncreate')
+     * @Route('/profile/viewvpn')
      */
-    public function vpnCreateAction()
+    public function viewVpnAction()
     {
         $this->responseView(
             'create-vpn',
@@ -44,10 +44,18 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route('/profile/activate')
+     * @Route('/profile/activate/{host}')
      */
     public function activateAction()
     {
+        $userManager = $this->container->get('ovpn_user.manager');
+
+        $this->setJsonResponse(
+            $userManager->activateVpn(
+                $this->getSecurityFacade()->getUser(),
+                $this->getRequest()->param('token')
+            )
+        );
     }
 
     /**
@@ -85,7 +93,13 @@ class ProfileController extends Controller
      */
     public function updateAction()
     {
-        $this->responseView('');
+        $userManager = $this->container->get('ovpn_user.manager');
+        $this->setJsonResponse(
+            $userManager->updateUser(
+                $this->securityFacade->getUser(),
+                $this->getRequest()->post()
+            )
+        );
     }
 
     /**

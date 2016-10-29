@@ -5,10 +5,10 @@ namespace Okvpn\OkvpnBundle\Tools;
 interface MailerInterface
 {
     /**
-     * @param array $payload
-     * @return mixed
+     * @param mixed $message
+     * @return bool
      */
-    public function sendMessage(array $payload);
+    public function send($message);
 
     /**
      * @return Object

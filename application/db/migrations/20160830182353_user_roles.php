@@ -16,6 +16,7 @@ class UserRoles extends AbstractMigration
             ->addColumn('hosts_limit', 'integer')
             ->addColumn('min_balance', 'float')
             ->addColumn('role_name', 'string', ['limit' => 512, 'null' => true])
+            ->addColumn('extensions', 'string', ['limit' => 512, 'null' => true])
             ->save();
 
         $refTable = $this->table('users');
