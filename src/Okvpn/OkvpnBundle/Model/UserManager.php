@@ -257,13 +257,13 @@ class UserManager
 
         if (isset($post['email'])) {
             $postValid->rule('email', 'email');
-            $postValid->rule('re_password', 'not_empty');
-            $postValid->rule('re_password', 'matches', [':validation', 're_password', 'password']);
             $user->setEmail($post['email']);
         }
 
         if (isset($post['password'])) {
             $postValid->rule('password', 'min_length', array(':value', 6));
+            $postValid->rule('re_password', 'not_empty');
+            $postValid->rule('re_password', 'matches', [':validation', 're_password', 'password']);
             $user->setPassword($post['password']);
         }
 

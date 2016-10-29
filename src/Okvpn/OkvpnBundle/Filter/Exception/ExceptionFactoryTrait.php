@@ -12,7 +12,7 @@ trait ExceptionFactoryTrait
      */
     protected function getExceptionFactory()
     {
-        if ($this->exceptionFactory) {
+        if (!$this->exceptionFactory) {
             $this->exceptionFactory = new ExceptionFactory();
         }
         return $this->exceptionFactory;

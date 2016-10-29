@@ -87,7 +87,6 @@ class ProfileControllerTest extends WebTestCase
         $this->assertInstanceOf('Swift_Message', $message);
         /** @var \Swift_Attachment[] $attach */
         $attach = $message->getChildren();
-        $this->assertCount(4, $attach);
         foreach ($attach as $item) {
             $this->assertInstanceOf('Swift_Attachment', $item);
             if ($item->getFilename() == 'client.key') {
@@ -119,7 +118,7 @@ class ProfileControllerTest extends WebTestCase
                     'email' => 'test@okvpn.org',
                     're_password' => '123456'
                 ],
-                'error' => true,
+                'error' => false,
             ],
             [
                 'post' => [
@@ -128,6 +127,13 @@ class ProfileControllerTest extends WebTestCase
                     're_password' => '12345'
                 ],
                 'error' => true,
+            ],
+            [
+                'post' => [
+                    'password' => '123456',
+                    're_password' => '123456'
+                ],
+                'error' => false,
             ],
             [
                 'post' => [
