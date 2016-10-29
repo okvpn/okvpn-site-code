@@ -2,7 +2,6 @@
 
 namespace Okvpn\OkvpnBundle\Model;
 
-use Bitpay\User;
 use Okvpn\KohanaProxy\Database;
 use Okvpn\KohanaProxy\DB;
 use Okvpn\KohanaProxy\Kohana;
@@ -20,12 +19,13 @@ use Okvpn\OkvpnBundle\Entity\VpnUser;
 use Okvpn\OkvpnBundle\Event\CreateUserEvent;
 use Okvpn\OkvpnBundle\Event\UserEvents;
 use Okvpn\OkvpnBundle\Filter\Exception\UserCreateException;
+use Okvpn\OkvpnBundle\Filter\Exception\UserException;
 use Okvpn\OkvpnBundle\Filter\UserFilter;
 use Okvpn\OkvpnBundle\Repository\UserRepository;
 use Okvpn\OkvpnBundle\Tools\MailerInterface;
 use Okvpn\OkvpnBundle\Tools\Openvpn\Config\ExtensionFactory;
 use Okvpn\OkvpnBundle\Tools\Openvpn\Config\OpenvpnConfigurationFile;
-use Okvpn\OkvpnBundle\Tools\Recaptcha;
+
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class UserManager
@@ -39,11 +39,6 @@ class UserManager
      * @var MailerInterface
      */
     protected $mailer;
-
-    /**
-     * @var Recaptcha
-     */
-    protected $recaptcha;
 
     /**
      * @var UserRepository
@@ -69,7 +64,6 @@ class UserManager
         MailerInterface $mailer,
         ExtensionFactory $openvpnFactory,
         UserRepository $userRepository,
-        Recaptcha $recaptcha,
         UserFilter $userFilter
     ) {
         $this->eventDispatcher = $eventDispatcher;
@@ -77,7 +71,6 @@ class UserManager
         $this->mailer     = $mailer;
         $this->openvpnFactory = $openvpnFactory;
         $this->userRepository = $userRepository;
-        $this->recaptcha = $recaptcha;
         $this->userFilter = $userFilter;
     }
 
@@ -187,8 +180,6 @@ class UserManager
     /**
      * @param $post
      * @return array
-     * @throws \Kohana_Exception
-     * @throws \Mailgun\Messages\Exceptions\MissingRequiredMIMEParameters
      */
     public function createUser($post)
     {
@@ -203,13 +194,8 @@ class UserManager
             
             $event->setUser($user);
             $this->eventDispatcher->dispatch(UserEvents::POST_CREATE_USER, $event);
-        } catch (\Swift_SwiftException $e) {
-            return [
-                'error'   => true,
-                'message' => ['mailer error'],
-            ];
-        } catch (UserCreateException $e) {
-            return $e->getValidateMessages();
+        } catch (UserException $e) {
+            return $e->getAjaxMessages();
         }
 
         $user = $event->getUser();
@@ -269,13 +255,17 @@ class UserManager
     {
         $postValid = Validation::factory($post);
 
-        $postValid
-            ->rule('email', 'email')
-            ->rule('email', 'not_empty')
-            ->rule('password', 'min_length', array(':value', 6))
-            ->rule('password', 'not_empty')
-            ->rule('re_password', 'not_empty')
-            ->rule('re_password', 'matches', [':validation', 're_password', 'password']);
+        if (isset($post['email'])) {
+            $postValid->rule('email', 'email');
+            $postValid->rule('re_password', 'not_empty');
+            $postValid->rule('re_password', 'matches', [':validation', 're_password', 'password']);
+            $user->setEmail($post['email']);
+        }
+
+        if (isset($post['password'])) {
+            $postValid->rule('password', 'min_length', array(':value', 6));
+            $user->setPassword($post['password']);
+        }
 
         if (!$postValid->check()) {
             return [
@@ -283,9 +273,7 @@ class UserManager
                 'message' => array_values($postValid->errors('')),
             ];
         }
-
-        $user->setPassword($post['password'])
-            ->setEmail($post['email']);
+        
         $user->save();
 
         return [
@@ -363,19 +351,17 @@ class UserManager
             \Swift_Attachment::newInstance($file->getPrivateKey(), 'client.key')
         );
 
-        try {
-            $this->mailer->send($message);
+        if ($this->mailer->send($message)) {
             $newHost->save();
             return [
                 'error' => false,
                 'message' => []
             ];
-        } catch (\Swift_SwiftException $e) {
-            return [
-                'error' => true,
-                'message' => [$e->getMessage()]
-            ];
         }
+        return [
+            'error' => true,
+            'messages' => ['Mail error']
+        ];
     }
 
     /**

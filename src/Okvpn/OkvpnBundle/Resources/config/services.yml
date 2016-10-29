@@ -22,6 +22,11 @@ services:
         arguments:
             - '@container'
 
+    logger:
+        class: 'Monolog\Logger'
+        factory: ['Okvpn\Component\Logger\LoggerFactory', create]
+        arguments: ['monolog']
+
     ovpn_recaptcha:
         class: 'Okvpn\OkvpnBundle\Tools\Recaptcha'
         arguments:
@@ -51,7 +56,6 @@ services:
             - '@ovpn_mailer'
             - '@ovpn_openvpn.factory'
             - '@ovpn_user.repository'
-            - '@ovpn_recaptcha'
             - '@ovpn_user.filter'
 
     ovpn_authorization:
@@ -65,6 +69,8 @@ services:
     ovpn_mailer:
         class: 'Okvpn\OkvpnBundle\Tools\SwiftMailer'
         arguments: ['@ovpn_config']
+        calls:
+            - [setLogger, ['@logger']]
 
     ovpn_token.session:
         class: 'Okvpn\OkvpnBundle\Security\TokenSession'

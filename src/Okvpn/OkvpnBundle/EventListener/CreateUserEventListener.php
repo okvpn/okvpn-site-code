@@ -8,11 +8,14 @@ use Okvpn\KohanaProxy\URL;
 use Okvpn\KohanaProxy\View;
 use Okvpn\OkvpnBundle\Entity\Users;
 use Okvpn\OkvpnBundle\Event\CreateUserEvent;
+use Okvpn\OkvpnBundle\Filter\Exception\ExceptionFactoryTrait;
 use Okvpn\OkvpnBundle\Filter\UserFilter;
 use Okvpn\OkvpnBundle\Tools\MailerInterface;
 
 class CreateUserEventListener
 {
+    use ExceptionFactoryTrait;
+
     /** @var  MailerInterface */
     protected $mailer;
     
@@ -35,7 +38,13 @@ class CreateUserEventListener
     {
         $user = $event->getUser();
         $this->updateUserFields($user);
-        $this->sendEmail($user);
+        if (! $this->sendEmail($user)) {
+            throw $this->getExceptionFactory()->createUserException(
+                [
+                    'message' => 'Mail error'
+                ]
+            );
+        }
     }
     
     private function updateUserFields(Users $user)
@@ -56,6 +65,6 @@ class CreateUserEventListener
         $message->setBody($body, 'text/html');
         $message->setTo($user->getEmail());
         $message->setSubject(Kohana::message('user', 'mailVerify'));
-        $this->mailer->send($message);
+        return $this->mailer->send($message);
     }
 }

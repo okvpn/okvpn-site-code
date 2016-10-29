@@ -2,7 +2,7 @@
 
 namespace Okvpn\OkvpnBundle\Filter\Exception;
 
-class UserCreateException extends \Exception
+class UserException extends \Exception
 {
     /** @var  array */
     private $messages;
@@ -10,15 +10,16 @@ class UserCreateException extends \Exception
     /**
      * @param array $messages
      */
-    public function setValidateMessages(array $messages)
+    public function setAjaxMessages(array $messages)
     {
+        $messages['error'] = true;
         $this->messages = $messages;
     }
 
     /**
      * @return array
      */
-    public function getValidateMessages()
+    public function getAjaxMessages()
     {
         return $this->messages;
     }

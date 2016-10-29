@@ -4,16 +4,17 @@ namespace Okvpn\OkvpnBundle\Filter;
 
 use Okvpn\KohanaProxy\Kohana;
 use Okvpn\KohanaProxy\Validation;
-use Okvpn\OkvpnBundle\Core\Config;
 use Okvpn\OkvpnBundle\Entity\Users;
 use Okvpn\OkvpnBundle\Entity\UsersInterface;
-use Okvpn\OkvpnBundle\Filter\Exception\UserCreateException;
+use Okvpn\OkvpnBundle\Filter\Exception\ExceptionFactoryTrait;
+use Okvpn\OkvpnBundle\Filter\Exception\UserException;
 use Okvpn\OkvpnBundle\Repository\UserRepository;
 use Okvpn\OkvpnBundle\Tools\Recaptcha;
 
 class UserFilter
 {
-
+    use ExceptionFactoryTrait;
+    
     /**
      * @var UserRepository
      */
@@ -53,7 +54,7 @@ class UserFilter
 
     /**
      * @param array $data
-     * @throws UserCreateException
+     * @throws UserException
      * @throws \Kohana_Exception
      */
     public function validateUserRegistrationForm(array $data)
@@ -66,7 +67,7 @@ class UserFilter
             ->rule('g-recaptcha-response', 'not_empty');
 
         if (!$validator->check()) {
-            throw $this->createUserCreateException(
+            throw $this->getExceptionFactory()->createUserException(
                 [
                     'error'   => true,
                     'message' => array_values($validator->errors('')),
@@ -75,7 +76,7 @@ class UserFilter
         }
 
         if (! $this->recaptcha->check($data['g-recaptcha-response'])) {
-            throw $this->createUserCreateException(
+            throw $this->getExceptionFactory()->createUserException(
                 [
                     'error'   => true,
                     'message' => [Kohana::message('user', 'captchaErr')],
@@ -89,23 +90,12 @@ class UserFilter
             ->find();
 
         if (null !== $userAlreadyExist->getId()) {
-            throw $this->createUserCreateException(
+            throw $this->getExceptionFactory()->createUserException(
                 [
                     'error'   => true,
                     'message' => [Kohana::message('user', 'emailErr')],
                 ]
             );
         }
-    }
-
-    /**
-     * @param array $messages
-     * @return UserCreateException
-     */
-    private function createUserCreateException(array $messages)
-    {
-        $exception = new UserCreateException('An error occupied during create user');
-        $exception->setValidateMessages($messages);
-        return $exception;
     }
 }

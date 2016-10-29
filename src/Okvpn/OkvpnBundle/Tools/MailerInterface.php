@@ -6,7 +6,7 @@ interface MailerInterface
 {
     /**
      * @param mixed $message
-     * @return mixed
+     * @return bool
      */
     public function send($message);
 
