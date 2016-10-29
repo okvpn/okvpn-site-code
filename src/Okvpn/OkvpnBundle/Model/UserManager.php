@@ -16,12 +16,17 @@ use Okvpn\OkvpnBundle\Entity\Roles;
 use Okvpn\OkvpnBundle\Entity\Users;
 use Okvpn\OkvpnBundle\Entity\UsersInterface;
 use Okvpn\OkvpnBundle\Entity\VpnUser;
+use Okvpn\OkvpnBundle\Event\CreateUserEvent;
+use Okvpn\OkvpnBundle\Event\UserEvents;
+use Okvpn\OkvpnBundle\Filter\Exception\UserCreateException;
+use Okvpn\OkvpnBundle\Filter\Exception\UserException;
 use Okvpn\OkvpnBundle\Filter\UserFilter;
 use Okvpn\OkvpnBundle\Repository\UserRepository;
 use Okvpn\OkvpnBundle\Tools\MailerInterface;
 use Okvpn\OkvpnBundle\Tools\Openvpn\Config\ExtensionFactory;
 use Okvpn\OkvpnBundle\Tools\Openvpn\Config\OpenvpnConfigurationFile;
-use Okvpn\OkvpnBundle\Tools\Recaptcha;
+
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class UserManager
 {
@@ -34,11 +39,6 @@ class UserManager
      * @var MailerInterface
      */
     protected $mailer;
-
-    /**
-     * @var Recaptcha
-     */
-    protected $recaptcha;
 
     /**
      * @var UserRepository
@@ -54,20 +54,23 @@ class UserManager
      * @var ExtensionFactory
      */
     protected $openvpnFactory;
+    
+    /** @var  EventDispatcher */
+    protected $eventDispatcher;
 
     public function __construct(
+        EventDispatcher $eventDispatcher,
         Config $config,
         MailerInterface $mailer,
         ExtensionFactory $openvpnFactory,
         UserRepository $userRepository,
-        Recaptcha $recaptcha,
         UserFilter $userFilter
     ) {
+        $this->eventDispatcher = $eventDispatcher;
         $this->config     = $config;
         $this->mailer     = $mailer;
         $this->openvpnFactory = $openvpnFactory;
         $this->userRepository = $userRepository;
-        $this->recaptcha = $recaptcha;
         $this->userFilter = $userFilter;
     }
 
@@ -177,75 +180,25 @@ class UserManager
     /**
      * @param $post
      * @return array
-     * @throws \Kohana_Exception
-     * @throws \Mailgun\Messages\Exceptions\MissingRequiredMIMEParameters
      */
     public function createUser($post)
     {
-        $postValid = Validation::factory($post);
-
-        $postValid->rule('email', 'email')
-            ->rule('email', 'not_empty')
-            ->rule('password', 'min_length', array(':value', 6))
-            ->rule('password', 'not_empty')
-            ->rule('g-recaptcha-response', 'not_empty');
-
-        if (!$postValid->check()) {
-            return [
-                'error'   => true,
-                'message' => array_values($postValid->errors('')),
-            ];
-        }
-        
-        if ($this->config->get('captcha:check') &&
-            ! $this->recaptcha->check($post['g-recaptcha-response'])) {
-            return [
-                'error'   => true,
-                'message' => [Kohana::message('user', 'captchaErr')],
-                ];
-        }
-
-        /** @var Users $userAlreadyExist */
-        $userAlreadyExist = (new Users)
-            ->where('email', '=', $post['email'])
-            ->find();
-
-        if (null !== $userAlreadyExist->getId()) {
-            return [
-                'error'   => true,
-                'message' => [Kohana::message('user', 'emailErr')],
-            ];
-        }
-
-        $role = (isset($post['role']) && $post['role'] == 'free') ? (new Roles('free')) : (new Roles('full'));
-
-        $user = new Users();
-        $user
-            ->setEmail($post['email'])
-            ->setPassword($post['password'])
-            ->setRole($role)
-            ->setDate()
-            ->setLastLogin()
-            ->setChecked(false)
-            ->setToken(Text::random('alnum', 16));
-
-        $body = View::factory('mail/mailVerify')
-            ->set('src', URL::base(true) . "user/verify/" . $user->getToken());
+        $event = new CreateUserEvent(new Users());
+        $event->setData($post);
         
         try {
-            /** @var \Swift_Message $message */
-            $message = \Swift_Message::newInstance();
-            $message->setBody($body, 'text/html');
-            $message->setTo($user->getEmail());
-            $message->setSubject(Kohana::message('user', 'mailVerify'));
-            $this->mailer->send($message);
-        } catch (\Swift_SwiftException $e) {
-            return [
-                'error'   => true,
-                'message' => [$e->getMessage()],
-            ];
+            $this->eventDispatcher->dispatch(UserEvents::PRE_CREATE_USER, $event);
+            $post = $event->getData();
+            
+            $user = $this->createUserFromRequest($post);
+            
+            $event->setUser($user);
+            $this->eventDispatcher->dispatch(UserEvents::POST_CREATE_USER, $event);
+        } catch (UserException $e) {
+            return $e->getAjaxMessages();
         }
 
+        $user = $event->getUser();
         $user->save();
 
         return [
@@ -302,13 +255,17 @@ class UserManager
     {
         $postValid = Validation::factory($post);
 
-        $postValid
-            ->rule('email', 'email')
-            ->rule('email', 'not_empty')
-            ->rule('password', 'min_length', array(':value', 6))
-            ->rule('password', 'not_empty')
-            ->rule('re_password', 'not_empty')
-            ->rule('re_password', 'matches', [':validation', 're_password', 'password']);
+        if (isset($post['email'])) {
+            $postValid->rule('email', 'email');
+            $user->setEmail($post['email']);
+        }
+
+        if (isset($post['password'])) {
+            $postValid->rule('password', 'min_length', array(':value', 6));
+            $postValid->rule('re_password', 'not_empty');
+            $postValid->rule('re_password', 'matches', [':validation', 're_password', 'password']);
+            $user->setPassword($post['password']);
+        }
 
         if (!$postValid->check()) {
             return [
@@ -316,9 +273,7 @@ class UserManager
                 'message' => array_values($postValid->errors('')),
             ];
         }
-
-        $user->setPassword($post['password'])
-            ->setEmail($post['email']);
+        
         $user->save();
 
         return [
@@ -396,19 +351,32 @@ class UserManager
             \Swift_Attachment::newInstance($file->getPrivateKey(), 'client.key')
         );
 
-        try {
-            $this->mailer->send($message);
+        if ($this->mailer->send($message)) {
             $newHost->save();
             return [
                 'error' => false,
                 'message' => []
             ];
-        } catch (\Swift_SwiftException $e) {
-            return [
-                'error' => true,
-                'message' => [$e->getMessage()]
-            ];
         }
+        return [
+            'error' => true,
+            'messages' => ['Mail error']
+        ];
+    }
+
+    /**
+     * @param $post
+     * @return Users
+     */
+    private function createUserFromRequest($post)
+    {
+        $user = new Users;
+        $role = (isset($post['role']) && $post['role'] == 'free') ? (new Roles('free')) : (new Roles('full'));
+        $user->setEmail($post['email'])
+            ->setPassword($post['password'])
+            ->setRole($role);
+
+        return $user;
     }
 
     /**
