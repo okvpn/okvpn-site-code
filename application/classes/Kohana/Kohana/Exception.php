@@ -88,6 +88,8 @@ class Kohana_Kohana_Exception extends Exception {
 		// Send the response to the browser
 		if (Kohana::$environment >= Kohana::TESTING) {
 			echo $response->send_headers()->body();
+		} else {
+			echo static::generateErrorHTMLResponse();
 		}
 
 		exit(1);
@@ -290,4 +292,26 @@ class Kohana_Kohana_Exception extends Exception {
 		return $response;
 	}
 
+    /**
+     * @deprecated remove in 3.0
+     */
+    private static function generateErrorHTMLResponse()
+    {
+        header('Content-Type: text/html; charset='.Kohana::$charset, true, 500);
+        $response = <<<HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Oops!</title>
+</head>
+<body>
+<h1>Oops! An Error Occurred</h1>
+<h2>The server returned a "500 Internal server error".</h2>
+<p>Something is broken. Please let us know what you were doing when this error occurred.
+ We will fix it as soon as possible. Sorry for any inconvenience caused.</p>
+</body>
+</html>
+HTML;
+        echo $response;
+    }
 }

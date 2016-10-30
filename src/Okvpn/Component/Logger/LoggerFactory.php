@@ -24,6 +24,7 @@ class LoggerFactory
      */
     protected static function getHandler()
     {
-        return new StreamHandler(APPPATH . sprintf('logs/monolog/%s.log', date('Ymd')));
+        $dir = APPPATH . 'logs/monolog';
+        return new StreamHandler(sprintf('%s/%s/%s.log', $dir, date('Ym'), date('Ymd')));
     }
 }
