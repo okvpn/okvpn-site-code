@@ -24,8 +24,6 @@ class UsersTable extends AbstractMigration
             ->addColumn('last_login', 'timestamp', ['null' => true])
             ->addColumn('checked', 'boolean')
             ->addColumn('role', 'string', ['limit' => 32])
-            ->addColumn('promo', 'string', ['limit' => 16, 'null' => true])
-            ->addColumn('wallet', 'string', ['limit' => 64, 'null' => true])
             ->addColumn('token', 'string', ['limit' => 64, 'null' => true])
             ->addIndex('email', ['unique' => true])
             ->save();
