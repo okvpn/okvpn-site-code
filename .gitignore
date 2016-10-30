@@ -17,4 +17,5 @@ modules
 var/openssl/*
 phpunit.xml
 !var/openssl/example/
+!application/logs/monolog
 !.gitkeep
