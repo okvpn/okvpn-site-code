@@ -4,8 +4,3 @@ before_script:
 test:
     script:
         - bash .ci/gitlab-ci.sh script
-
-    only:
-        - master
-        - develop
-        - fix/OK-59
