@@ -109,10 +109,11 @@ class Kohana_Kohana_Exception extends Exception {
 		{
 			Kohana_Exception::log($e);
 
-			// Generate the response
-			$response = Kohana_Exception::response($e);
-
-			return $response;
+            if (Kohana::$environment >= Kohana::TESTING) {
+                return Kohana_Exception::response($e);
+            } else {
+                return static::generateErrorHTMLResponse();
+            }
 		}
 		catch (Exception $e)
 		{
@@ -312,6 +313,6 @@ class Kohana_Kohana_Exception extends Exception {
 </body>
 </html>
 HTML;
-        echo $response;
+        return $response;
     }
 }
