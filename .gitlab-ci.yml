@@ -8,4 +8,4 @@ test:
     only:
         - master
         - develop
-        - fix/*
+        - fix/OK-59
