@@ -57,6 +57,8 @@ services:
             - '@ovpn_openvpn.factory'
             - '@ovpn_user.repository'
             - '@ovpn_user.filter'
+        calls:
+            - [setLogger, ['@logger']]
 
     ovpn_authorization:
         class: '%authorization.class%'

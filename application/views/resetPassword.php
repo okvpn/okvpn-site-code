@@ -82,6 +82,9 @@
                 if (! json.error) {
                     $('.message').load('<?=URL::base()?>public/ajax/success.html',function(){
                         $('.alert').append('Пароль сброшен<br>');
+                        setTimeout(function () {
+                            window.location.replace('/');
+                        }, 1500);
                     });
                 } else {
                     $('.message').load('<?=URL::base()?>public/ajax/warming.html',function(){

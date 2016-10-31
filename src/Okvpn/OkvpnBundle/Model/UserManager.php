@@ -18,7 +18,6 @@ use Okvpn\OkvpnBundle\Entity\UsersInterface;
 use Okvpn\OkvpnBundle\Entity\VpnUser;
 use Okvpn\OkvpnBundle\Event\CreateUserEvent;
 use Okvpn\OkvpnBundle\Event\UserEvents;
-use Okvpn\OkvpnBundle\Filter\Exception\UserCreateException;
 use Okvpn\OkvpnBundle\Filter\Exception\UserException;
 use Okvpn\OkvpnBundle\Filter\UserFilter;
 use Okvpn\OkvpnBundle\Repository\UserRepository;
@@ -26,10 +25,14 @@ use Okvpn\OkvpnBundle\Tools\MailerInterface;
 use Okvpn\OkvpnBundle\Tools\Openvpn\Config\ExtensionFactory;
 use Okvpn\OkvpnBundle\Tools\Openvpn\Config\OpenvpnConfigurationFile;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class UserManager
+class UserManager implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var Config
      */
@@ -110,7 +113,7 @@ class UserManager
             /** @var \Swift_Message $message */
             $sMessage = \Swift_Message::newInstance();
             $sMessage->setTo([$user->getEmail()]);
-            $sMessage->setBody($message);
+            $sMessage->setBody($message, 'text/html');
             $sMessage->setSubject($subject);
             $this->mailer->send($sMessage);
 
@@ -319,9 +322,10 @@ class UserManager
                 );
             }
         } catch (\Exception $e) {
+            $this->logger->error('error occupied during create vpn', ['exception' => $e]);
             return [
                 'error' => true,
-                'message' => [$e->getMessage()]
+                'messages' => [Kohana::message('user', 'errorOnCreateVpn')]
             ];
         }
 

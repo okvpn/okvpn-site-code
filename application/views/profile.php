@@ -93,36 +93,7 @@
 <body class="grad">
   <div class="container">
   <div class="zero-20"></div>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          </button>
-          <a class="navbar-brand" href="<?=URL::base()?>">OkVPN</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="<?=URL::base()?>faq">FAQ</a></li>
-            <li><a href="<?=URL::base()?>guide">Подключение</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown active">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="<?=URL::base()?>profile">Статистика</a></li>
-                <li><a href="#">Оплатить доступ</a></li>
-                <li><a href="<?=URL::base()?>profile/settings">Настройки</a></li>
-                <li><a href="<?=URL::base()?>profile/viewvpn">Создать VPN</a></li>
-                <li><a href="<?=URL::base()?>user/logout">Выйти</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
+    <?php include 'include/navbar.php'?>
     <div class="zero-50"></div>
     <div class="tbl">
       <div class="zero-20"></div>
