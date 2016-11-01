@@ -17,4 +17,4 @@ deploy_job:
     script:
         - bash .ci/deploy.sh
     only:
-        - task/OK-63
+        - task/OK-63_test
