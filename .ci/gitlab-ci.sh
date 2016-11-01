@@ -9,6 +9,8 @@ export PGPASSWORD;
 case $step in
     install)
         if [ "$CI_BUILD_NAME" = "deploy_job" ]; then
+            echo "Skip install...";
+            echo "Exit with code 0";
             exit 0;
         fi
         echo "Installing...";
