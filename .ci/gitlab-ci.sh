@@ -60,7 +60,7 @@ case $step in
         phpunit --verbose --testsuite=unit
         echo "phpunit --verbose --testsuite=functional...";
         phpunit --verbose --testsuite=functional
-#        echo "Run phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p...";
-#        phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p
+        echo "Run phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p...";
+        phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p
     ;;
 esac
