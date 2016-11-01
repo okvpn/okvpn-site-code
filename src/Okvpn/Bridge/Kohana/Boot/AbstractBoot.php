@@ -14,7 +14,7 @@ use Okvpn\KohanaProxy\Cookie;
 abstract class AbstractBoot
 {
 
-    public function boot($envelopment = 'prod')
+    public function boot($envelopment)
     {
         $this->loadKohanaKernel($envelopment);
         $this->setDefaultTimeZone();

@@ -140,8 +140,6 @@ $('.btn-green').click(function(e){
   $('.m-warning').html('');
   $(".loader").html(loader);
 
-
-
   $.post(system.signup, form, function(json){
       setTimeout(function(){
         $('.m-warning').html(''); 

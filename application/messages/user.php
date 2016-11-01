@@ -26,5 +26,6 @@ return array(
     'vpnUserOut'        => 'У Вас уже есть активные ovpn подключения.',
     'resetPassword'     => 'Сброс пароля',
     'passwordNotMatch'  => 'Пароли не совпадают',
-    'vpnNotExist'       => 'Выбранный сервер не существует'
+    'vpnNotExist'       => 'Выбранный сервер не существует',
+    'errorOnCreateVpn'  => 'Не удалось активировать VPN. Ошибка сервера'
     );
