@@ -8,7 +8,9 @@ before_script:
 test_job:
     stage: test
     script:
-        - bash .ci/gitlab-ci.sh script
+        - bash .ci/gitlab-ci.sh script unit
+        - bash .ci/gitlab-ci.sh script functional
+        - bash .ci/gitlab-ci.sh script phpcs
 
 deploy_job:
     stage: deploy
