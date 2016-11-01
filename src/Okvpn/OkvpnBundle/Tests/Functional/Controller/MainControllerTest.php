@@ -26,7 +26,7 @@ class MainControllerTest extends WebTestCase
         return [
             [
                 'url' => '/faq',
-                'contains' => 'OkVPN - FAQ'
+                'contains' => 'OkVPN - FAQ11'
             ],
             [
                 'url' => '/proxy',
