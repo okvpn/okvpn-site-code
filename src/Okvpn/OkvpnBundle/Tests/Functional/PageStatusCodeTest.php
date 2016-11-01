@@ -12,7 +12,7 @@ class PageStatusCodeTest extends WebTestCase
     public function testNotFoundPage($url)
     {
         $response = $this->request('GET', $url);
-        $this->assertStatusCode($response, 405);
+        $this->assertStatusCode($response, 404);
     }
 
     /**
