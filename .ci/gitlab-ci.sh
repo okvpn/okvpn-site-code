@@ -3,9 +3,13 @@
 step=$1
 DB_NAME=okvpn;
 ARRAY=( "var/openssl/pa1" "var/openssl/uk1" )
+export $SKIP_INSTALL
 
 case $step in
     install)
+        if [ $SKIP_INSTALL = "true" ]; then
+            exit 0;
+        fi
         echo "Installing...";
         # remove vendor dir
         if [ -d vendor ]; then
@@ -45,7 +49,7 @@ case $step in
             echo "" | ./easyrsa.sh build-ca nopass
             cd -
         done
-
+        export SKIP_INSTALL=true;
     ;;
     script)
         echo "Run tests...";
