@@ -62,5 +62,6 @@ case $step in
         phpunit --verbose --testsuite=functional
         echo "Run phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p...";
         phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p
+        exit 1;
     ;;
 esac
