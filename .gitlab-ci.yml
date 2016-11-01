@@ -1,6 +1,18 @@
+stages:
+    - test
+    - deploy
+
 before_script:
     - bash .ci/gitlab-ci.sh install
 
-test:
+test_job:
+    stage: test
     script:
         - bash .ci/gitlab-ci.sh script
+
+deploy_job:
+    stage: deploy
+    script:
+        - bash .ci/deploy.sh
+    only:
+        - task/OK-63

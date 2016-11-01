@@ -1,4 +1,4 @@
-#!/usr/bash
+#!/bin/bash
 
 step=$1
 DB_NAME=okvpn;
