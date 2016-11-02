@@ -181,9 +181,9 @@ $('#del-vpn').click(function(e){
     }
   }
   if (arr.length > 0 && confirm('Вы уверены, что хотите удалить выбранные vpn?')) {
-    arr = btoa(JSON.stringify(arr));
+    arr = JSON.stringify(arr);
 
-    $.post('<?php echo URL::base() ?>user/vpndelete',{host:arr}, function(res){
+    $.post('<?php echo URL::base(true) ?>profile/deleteitemsvpn',{hosts :arr}, function(res){
       
       if (res.error) {
         $('.settings-warming').load('<?=URL::base()?>public/ajax/warming.html', function(){

@@ -59,6 +59,18 @@ class ProfileController extends Controller
     }
 
     /**
+     * @Route('/profile/deleteitemsvpn')
+     */
+    public function deleteItemsVpnAction()
+    {
+        $data = $this->getRequest()->post('hosts');
+        if ($data = json_decode($data, true) and is_array($data)) {
+            $this->container->get('ovpn_vpn.manager')->deleteVpnItemsByList($data);
+        }
+        $this->setJsonResponse(['error' => !is_array($data)]);
+    }
+
+    /**
      * @Route('/profile/getinfovpn/{id}')
      */
     public function getInfoVpnAction()
