@@ -2,6 +2,8 @@
 
 namespace Okvpn\OkvpnBundle\Repository;
 
+use Okvpn\OkvpnBundle\Entity\VpnUser;
+
 class VpnRepository
 {
     /**
@@ -43,5 +45,17 @@ class VpnRepository
             ->from('vps')->where('vpn_id', '=', $id)
             ->execute()->as_array();
         return $data;
+    }
+
+    /**
+     * @param $clientNo
+     * 
+     * @return VpnUser
+     */
+    public function getVpnItemByClientNo($clientNo)
+    {
+        $vpnItem = new VpnUser();
+        $vpnItem->where('name', '=', $clientNo)->find();
+        return $vpnItem->getId() === null ? null : $vpnItem;
     }
 }

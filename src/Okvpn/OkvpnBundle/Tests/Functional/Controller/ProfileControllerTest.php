@@ -3,6 +3,8 @@
 namespace Okvpn\OkvpnBundle\Tests\Functional\Controller;
 
 use Okvpn\KohanaProxy\ORM;
+use Okvpn\OkvpnBundle\Entity\VpnUser;
+use Okvpn\OkvpnBundle\Repository\VpnRepository;
 use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
 use Okvpn\TestFrameworkBundle\Mock\MockMailer;
 
@@ -87,12 +89,46 @@ class ProfileControllerTest extends WebTestCase
         $this->assertInstanceOf('Swift_Message', $message);
         /** @var \Swift_Attachment[] $attach */
         $attach = $message->getChildren();
+
+        $result = null;
         foreach ($attach as $item) {
             $this->assertInstanceOf('Swift_Attachment', $item);
             if ($item->getFilename() == 'client.key') {
                 $this->assertContains('BEGIN PRIVATE KEY', $item->getBody());
             }
+
+            if ($item->getFilename() == 'client.crt') {
+                preg_match_all('/Subject:\x20CN=(\w{1,4}\-\w+)/', $item->getBody(), $result);
+            }
         }
+
+        $this->assertArrayHasKey(1, $result);
+        $clientNo = reset($result[1]);
+
+        /** @var VpnRepository $vpnRepository */
+        $vpnRepository = $this->get('ovpn_vpn.repository');
+        $vpnItem = $vpnRepository->getVpnItemByClientNo($clientNo);
+        $this->assertNotNull($vpnItem);
+        return $vpnItem;
+    }
+
+    /**
+     * @depends testActivateVpn
+     *
+     * @param VpnUser $vpnItem
+     */
+    public function testDeleteVpn($vpnItem)
+    {
+        $vpnItemId = $vpnItem->getId();
+        $post = ['hosts' => json_encode([$vpnItemId])];
+
+        $response = $this->request('POST', '/profile/deleteitemsvpn', $post);
+        $this->assertStatusCode($response, 200);
+        $response = $this->getJsonResponse();
+        $this->assertFalse($response['error']);
+
+        $vpnItem = new VpnUser($vpnItemId);
+        $this->assertFalse($vpnItem->getActive());
     }
 
     public function updateUserProvider()
