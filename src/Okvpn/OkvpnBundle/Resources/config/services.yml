@@ -92,6 +92,19 @@ services:
             - '@ovpn_user.repository'
             - '@ovpn_recaptcha'
 
+    ovpn_vpn.helper:
+        class: 'Okvpn\OkvpnBundle\Helper\VpnHelper'
+        arguments:
+            - '@ovpn_security'
+
+    ovpn_vpn.manager:
+        class: 'Okvpn\OkvpnBundle\Model\VpnManager'
+        arguments:
+            - '@ovpn_vpn.helper'
+
+    ovpn_vpn.repository:
+        class: 'Okvpn\OkvpnBundle\Repository\VpnRepository'
+
     ovpn_openvpn.config.builder:
         class: 'Okvpn\OkvpnBundle\Tools\Openvpn\ConfigBuilder'
 

@@ -30,15 +30,20 @@ case "$STEP" in
         sed -i "s/'username'\s"\=\>".*/'username' "\=\>" 'okvpn',/g" application/config/parameters.php;
         sed -i "s/'password'\s"\=\>".*/'password' "\=\>" '$PGPASSWORD',/g" application/config/parameters.php;
         sed -i "s/'database'\s"\=\>".*/'database' "\=\>" '$DB_NAME',/g" application/config/parameters.php;
+        #install database when test_job.
+        if [ "$CI_BUILD_NAME" = "test_job" ]; then
+            # install database
+            psql -U okvpn -h 127.0.0.1 -c "DROP SCHEMA IF EXISTS public CASCADE";
+            psql -U okvpn -h 127.0.0.1 -c "CREATE SCHEMA public";
+        fi
 
-        # install database
-        psql -U okvpn -h 127.0.0.1 -c "DROP SCHEMA IF EXISTS public CASCADE";
-        psql -U okvpn -h 127.0.0.1 -c "CREATE SCHEMA public";
         cd application;
         php ../vendor/bin/phinx migrate
-        php ../vendor/bin/phinx seed:run
-        cd -
+        if [ "$CI_BUILD_NAME" = "test_job" ]; then
+            php ../vendor/bin/phinx seed:run
+        fi
 
+        cd -
         # install pki
         for dir in "${ARRAY[@]}"
         do
