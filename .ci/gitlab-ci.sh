@@ -22,16 +22,16 @@ case "$STEP" in
 
         # install all dependency use composer.lock
         composer install
+        cp application/phinx.yml.dist application/phinx.yml
+        cp application/config/parameters.php.dist application/config/parameters.php
+        sed -i "s/name"\:".*/name"\:" $DB_NAME/g" application/phinx.yml;
+        sed -i "s/pass"\:".*/pass"\:" $PGPASSWORD/g" application/phinx.yml;
+        sed -i "s/user"\:".*/user"\:" okvpn/g" application/phinx.yml;
+        sed -i "s/'username'\s"\=\>".*/'username' "\=\>" 'okvpn',/g" application/config/parameters.php;
+        sed -i "s/'password'\s"\=\>".*/'password' "\=\>" '$PGPASSWORD',/g" application/config/parameters.php;
+        sed -i "s/'database'\s"\=\>".*/'database' "\=\>" '$DB_NAME',/g" application/config/parameters.php;
         #install database when test_job.
         if [ "$CI_BUILD_NAME" = "test_job" ]; then
-            cp application/phinx.yml.dist application/phinx.yml
-            cp application/config/parameters.php.dist application/config/parameters.php
-            sed -i "s/name"\:".*/name"\:" $DB_NAME/g" application/phinx.yml;
-            sed -i "s/pass"\:".*/pass"\:" $PGPASSWORD/g" application/phinx.yml;
-            sed -i "s/user"\:".*/user"\:" okvpn/g" application/phinx.yml;
-            sed -i "s/'username'\s"\=\>".*/'username' "\=\>" 'okvpn',/g" application/config/parameters.php;
-            sed -i "s/'password'\s"\=\>".*/'password' "\=\>" '$PGPASSWORD',/g" application/config/parameters.php;
-            sed -i "s/'database'\s"\=\>".*/'database' "\=\>" '$DB_NAME',/g" application/config/parameters.php;
             # install database
             psql -U okvpn -h 127.0.0.1 -c "DROP SCHEMA IF EXISTS public CASCADE";
             psql -U okvpn -h 127.0.0.1 -c "CREATE SCHEMA public";
