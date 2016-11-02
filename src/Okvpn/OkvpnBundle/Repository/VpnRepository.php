@@ -49,7 +49,7 @@ class VpnRepository
 
     /**
      * @param $clientNo
-     * 
+     *
      * @return VpnUser
      */
     public function getVpnItemByClientNo($clientNo)
