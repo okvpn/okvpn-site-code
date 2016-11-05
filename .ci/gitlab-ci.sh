@@ -63,22 +63,21 @@ case "$STEP" in
         cd -
 
         # install pki
-        if [ "$CI_BUILD_NAME" != "migrate_job" ]; then
-            for dir in "${ARRAY[@]}"
-            do
-                if [ -d "$dir" ]; then
-                    rm -r "$dir";
-                fi
 
-                mkdir "$dir";
-                echo "Creating directory $dir ...";
-                cp -r var/openssl/example/* "$dir";
-                cd "$dir";
-                echo "yes" | ./easyrsa.sh init-pki
-                echo "" | ./easyrsa.sh build-ca nopass
-                cd -
-            done
-        fi
+        for dir in "${ARRAY[@]}"
+        do
+            if [ -d "$dir" ]; then
+                rm -r "$dir";
+            fi
+
+            mkdir "$dir";
+            echo "Creating directory $dir ...";
+            cp -r var/openssl/example/* "$dir";
+            cd "$dir";
+            echo "yes" | ./easyrsa.sh init-pki
+            echo "" | ./easyrsa.sh build-ca nopass
+            cd -
+        done
     ;;
     script)
         echo "Run tests...";
