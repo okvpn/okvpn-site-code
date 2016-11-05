@@ -71,6 +71,7 @@ case "$STEP" in
             export DUMP_USER;
             export DUMP_PASS;
             export DUMP_HOST;
+            echo "$DUMP_HOST";
             sshpass -p "$DUMP_PASS" sftp "$DUMP_USER@$DUMP_HOST" << EOF
                 get gitlab-ci.okvpn.sql
                 exit
