@@ -68,9 +68,12 @@ case "$STEP" in
         psql -U "$DB_USER" -h 127.0.0.1 -c "CREATE SCHEMA public";
 
         if [ "$CI_BUILD_NAME" = "migrate_job" ]; then
+            export DUMP_USER;
+            export DUMP_PASS;
+            export DUMP_HOST;
             sshpass -p "$DUMP_PASS" sftp "$DUMP_USER@$DUMP_HOST" << EOF
-get gitlab-ci.okvpn.sql
-exit
+                get gitlab-ci.okvpn.sql
+                exit
 EOF
             psql -U "$DB_USER" -h 127.0.0.1 -d okvpn < gitlab-ci.okvpn.sql
             rm gitlab-ci.okvpn.sql
