@@ -12,7 +12,8 @@ git pull origin master
 rm -r vendor
 composer install
 cd application
-php ../vendor/bin/phinx
+php ../vendor/bin/phinx migrate
+chown www-data:www-data -R /var/www/okvpn
 SSH
 
 chmod 600 ssh.key;

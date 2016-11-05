@@ -28,7 +28,7 @@ class MockMailer implements MailerInterface
     }
 
     /**
-     * @return Object
+     * {@inheritdoc}
      */
     public function getMailProvider()
     {

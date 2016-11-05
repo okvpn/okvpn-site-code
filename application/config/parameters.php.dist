@@ -3,8 +3,12 @@
 return [
     'host' => '127.0.0.1',
     'port' => 5432,
-    'username' => '',
-    'password' => '',
-    'database' => '',
-    'vpn_domain_name' => 'yandex.ovh'
+    'username' => '123',
+    'password' => '123',
+    'database' => '123',
+    'mailer_username' => '123@okvpn.org',
+    'mailer_password' => '123',
+    'google_captcha_id'   => '123',
+    'google_captcha_key'  => '123',
+    'vpn_domain_name'     => 'example.com',
 ];

@@ -9,26 +9,15 @@ return [
      * ReCaptcha 
      */
     'captcha' => [
-        'secret'    => '6Lfx8RYTAAAAAGCPPHkhnSHcw1soijwp0Tbt_k0S',
-        'sitekey'   => '6Lfx8RYTAAAAAGz8nElfv0c3VY-4PKqjFViR24V2',
+        'secret'    => '%google_captcha_key%',
+        'sitekey'   => '%google_captcha_id%',
         'api'       => 'https://www.google.com/recaptcha/api/siteverify',
-        'check'     =>  false,
-        ],
-
-    /**
-     * MailGun config param
-     */
-    'mailgun' => [
-        'key'         => 'key-36281d987d387a436e8fc273b02c465a',
-        'secret'      => 'key-8cX7ieq4Zdl',
-        'from_email'  => 'noreply@okvpn.org',
-        'from_alias'  => 'OkVPN',
-        'site'        => 'okvpn.org',
+        'check'     =>  true,
     ],
 
     'mailer' => [
-        'username' => 'postmaster@okvpn.org',
-        'password' => '7069eb5bf7cf705729492616f00cee79',
+        'username' => '%mailer_username%',
+        'password' => '%mailer_password%',
         'transport_host' => 'smtp.mailgun.org',
         'transport_port' => '25',
         'sender' => 'noreply@okvpn.org',
@@ -70,14 +59,5 @@ return [
             'charset'      => 'utf8',
             'caching'      =>  false,
         ]
-    ],
-    
-    /**
-     * Bitpay config param
-     */
-    'bitpay_token'          => 'bitpay_token',
-    'bitpay_private'        => 'private',
-    'bitpay_public'         => 'public',
-    'notification_url'      => 'https://example.com/notification_url/',
-    'redirect_url'          => 'https://example.com/redirect_url/'
+    ]
 ];

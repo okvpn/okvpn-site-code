@@ -1,5 +1,6 @@
 application/cache/*
 application/logs/*
+application/phinx.yml
 .idea
 sftp-config.json
 application/out/*
