@@ -20,7 +20,7 @@ class ResetPasswordTest extends WebTestCase
      */
     protected static $token = 'secretToken';
 
-    protected static $email = 'test1@okvpn.org';
+    protected static $email = 'test1.ci@okvpn.org';
 
     /**
      * @var UsersInterface
@@ -35,7 +35,7 @@ class ResetPasswordTest extends WebTestCase
         parent::setUpBeforeClass();
 
         $user = self::$client->getContainer()->get('ovpn_user.repository')
-            ->findUserByEmail('test1@okvpn.org');
+            ->findUserByEmail('test1.ci@okvpn.org');
 
         if (null === $user) {
             $user = self::createUser(self::$email);

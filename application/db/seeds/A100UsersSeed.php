@@ -11,14 +11,14 @@ class A100UsersSeed extends AbstractSeed
     {
         $rows = [
             [
-                'email'   => 'test1@okvpn.org',
+                'email'   => 'test1.ci@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-01',
                 'checked' => 't',
                 'role'    => 'free'
             ],
             [
-                'email'   => 'test2@okvpn.org',
+                'email'   => 'test2.ci@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe', //123456
                 'date'    => '2016-01-02',
                 'checked' => 't',
@@ -26,7 +26,7 @@ class A100UsersSeed extends AbstractSeed
                 'token'   => '123456'
             ],
             [
-                'email'   => 'test3@okvpn.org',
+                'email'   => 'test3.ci@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-03',
                 'checked' => 'f',
@@ -34,14 +34,14 @@ class A100UsersSeed extends AbstractSeed
                 'token'   => '123456'
             ],
             [
-                'email'   => 'test4@okvpn.org',
+                'email'   => 'test4.ci@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-04',
                 'checked' => 't',
                 'role'    => 'full'
             ],
             [
-                'email'   => 'test5@okvpn.org',
+                'email'   => 'test5.ci@okvpn.org',
                 'pass'    => '$2y$10$QTYAfuYOmTNLcYDVdawpPuunZogLpmENESfudSvqiFsPBfeuqQGFe',
                 'date'    => '2016-01-05',
                 'checked' => 't',
