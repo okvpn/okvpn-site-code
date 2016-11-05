@@ -192,8 +192,8 @@ class AllowConnectionTest extends WebTestCase
      */
     protected static function getHost()
     {
-        $vpnServer = new Host();
-        $vpnServer->where('name', '=', 'pa1')->find();
-        return $vpnServer;
+        $vpnHost = new Host();
+        $vpnHost->where('name', '=', 'pa1')->find();
+        return $vpnHost;
     }
 }

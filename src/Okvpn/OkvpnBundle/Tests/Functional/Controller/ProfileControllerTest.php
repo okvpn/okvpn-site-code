@@ -3,6 +3,7 @@
 namespace Okvpn\OkvpnBundle\Tests\Functional\Controller;
 
 use Okvpn\KohanaProxy\ORM;
+use Okvpn\OkvpnBundle\Entity\Host;
 use Okvpn\OkvpnBundle\Entity\VpnUser;
 use Okvpn\OkvpnBundle\Repository\VpnRepository;
 use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
@@ -51,8 +52,7 @@ class ProfileControllerTest extends WebTestCase
     
     public function testInfoVpn()
     {
-        $vpnHost = ORM::factory('OkvpnFramework:Host')->find_all()->current();
-
+        $vpnHost = $this->getHost();
         $response = $this->request('GET', 'profile/getinfovpn/' . $vpnHost->getId());
         $this->assertStatusCode($response, 200);
         $this->assertContains('Действительная скортость', $response->body());
@@ -180,5 +180,15 @@ class ProfileControllerTest extends WebTestCase
                 'error' => false,
             ],
         ];
+    }
+
+    /**
+     * @return Host
+     */
+    protected function getHost()
+    {
+        $vpnServer = new Host();
+        $vpnServer->where('name', '=', 'pa1')->find();
+        return $vpnServer;
     }
 }
