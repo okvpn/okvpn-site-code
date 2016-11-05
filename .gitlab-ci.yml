@@ -1,15 +1,10 @@
 stages:
-    - migrate
     - test
+    - migrate
     - deploy
 
 before_script:
     - bash .ci/gitlab-ci.sh install
-
-migrate_job:
-    stage: migrate
-    script:
-        - bash .ci/gitlab-ci.sh script functional
 
 test_job:
     stage: test
@@ -17,6 +12,11 @@ test_job:
         - bash .ci/gitlab-ci.sh script unit
         - bash .ci/gitlab-ci.sh script functional
         - bash .ci/gitlab-ci.sh script phpcs
+
+migrate_job:
+    stage: migrate
+    script:
+        - bash .ci/gitlab-ci.sh script functional
 
 deploy_job:
     stage: deploy
