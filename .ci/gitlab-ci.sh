@@ -85,6 +85,8 @@ EOF
 
         if [ "$CI_BUILD_NAME" != "migrate_job" ]; then
             php ../vendor/bin/phinx seed:run
+        else
+            php ../vendor/bin/phinx seed:run -s A105VpnHosts -s A107VpnUser
         fi
         cd -
     ;;
