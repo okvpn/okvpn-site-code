@@ -2,6 +2,7 @@
 
 namespace Okvpn\OkvpnBundle\Tests\Functional;
 
+use Okvpn\KohanaProxy\Database;
 use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
 use Okvpn\OkvpnBundle\Entity\Users;
 
@@ -11,21 +12,24 @@ use Okvpn\OkvpnBundle\Entity\Users;
  */
 class TestFrameworkTest extends WebTestCase
 {
+    const USER = 'test1.ci@okvpn.org';
+
+    protected static $userId;
 
     /**
-     * @var \Database
+     * @var Database
      */
     protected $databaseManager;
 
     public function setUp()
     {
-        $this->databaseManager = \Database::instance();
+        $this->databaseManager = Database::instance();
         parent::setUp();
     }
 
     public function testPrepare()
     {
-        $user = new Users(1);
+        $user = $this->getUser();
         $this->assertNotSame($user->getEmail(), '123456');
     }
 
@@ -34,7 +38,7 @@ class TestFrameworkTest extends WebTestCase
      */
     public function testUpdateEntity()
     {
-        $user = new Users(1);
+        $user =$this->getUser();
         $user->setEmail('123456');
         $user->save();
 
@@ -46,7 +50,7 @@ class TestFrameworkTest extends WebTestCase
      */
     public function testEnableUpdateEntity()
     {
-        $user = new Users(1);
+        $user = $this->getUser();
         $this->assertSame($user->getEmail(), '123456');
     }
 
@@ -64,7 +68,7 @@ class TestFrameworkTest extends WebTestCase
     public function testRollbackTransaction()
     {
         $this->databaseManager->rollback();
-        $user = new Users(1);
+        $user = $this->getUser();
 
         $this->assertNotSame($user->getEmail(), '123456');
         $this->assertSame($this->databaseManager->getTransactionNestingLevel(), 0);
@@ -91,5 +95,26 @@ class TestFrameworkTest extends WebTestCase
         $response = $this->request('GET', '/profile');
         $this->assertStatusCode($response, 200);
         $this->assertRedirectResponse($response, '/');
+    }
+
+    /**
+     * @return Users
+     */
+    protected function getUser()
+    {
+        if (null !== self::$userId) {
+            return new Users(self::$userId);
+        }
+
+        $user = new Users();
+        $user->where('email', '=', self::USER)->find();
+        $userId = $user->getId();
+        if (null === $userId) {
+            $this->markTestIncomplete('Incomplete tests, run seeds required');
+        } else {
+            self::$userId = $userId;
+        }
+
+        return $user;
     }
 }

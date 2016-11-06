@@ -12,7 +12,7 @@ export PGPASSWORD;
 
 case "$STEP" in
     install)
-        if [ "$CI_BUILD_NAME" = "deploy_job" ]; then
+        if [ "$CI_BUILD_NAME" = "deploy_job" ] || [ "$CI_BUILD_NAME" = "dump_database_job" ]; then
             echo "Skip install...";
             echo "Exit with code 0";
             exit 0;
@@ -46,24 +46,7 @@ case "$STEP" in
         sed -i "s/pass"\:".*/pass"\:" $PGPASSWORD/g" application/phinx.yml;
         sed -i "s/user"\:".*/user"\:" $DB_USER/g" application/phinx.yml;
 
-        #install database when test_job.
-        if [ "$CI_BUILD_NAME" != "migrate_job" ]; then
-            # install database
-            psql -U "$DB_USER" -h 127.0.0.1 -c "DROP SCHEMA IF EXISTS public CASCADE";
-            psql -U "$DB_USER" -h 127.0.0.1 -c "CREATE SCHEMA public";
-        fi
-
-        cd application;
-        php ../vendor/bin/phinx migrate
-
-        if [ "$CI_BUILD_NAME" != "migrate_job" ]; then
-            php ../vendor/bin/phinx seed:run
-        fi
-
-        cd -
-
         # install pki
-
         for dir in "${ARRAY[@]}"
         do
             if [ -d "$dir" ]; then
@@ -78,6 +61,29 @@ case "$STEP" in
             echo "" | ./easyrsa.sh build-ca nopass
             cd -
         done
+
+
+        # install database
+        psql -U "$DB_USER" -h 127.0.0.1 -c "DROP SCHEMA IF EXISTS public CASCADE";
+        psql -U "$DB_USER" -h 127.0.0.1 -c "CREATE SCHEMA public";
+
+        if [ "$CI_BUILD_NAME" = "migrate_job" ]; then
+            export DUMP_USER;
+            export DUMP_PASS;
+            export DUMP_HOST;
+            echo "$DUMP_HOST";
+            sshpass -p "$DUMP_PASS" sftp -o StrictHostKeyChecking=no "$DUMP_USER@$DUMP_HOST" << EOF
+                get gitlab-ci.okvpn.sql
+                exit
+EOF
+            psql -U "$DB_USER" -h 127.0.0.1 -d okvpn < gitlab-ci.okvpn.sql
+            rm gitlab-ci.okvpn.sql
+        fi
+
+        cd application;
+        php ../vendor/bin/phinx migrate
+        php ../vendor/bin/phinx seed:run
+        cd -
     ;;
     script)
         echo "Run tests...";

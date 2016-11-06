@@ -2,7 +2,7 @@
 
 namespace Okvpn\OkvpnBundle\Tests\Functional\Controller;
 
-use Okvpn\KohanaProxy\ORM;
+use Okvpn\OkvpnBundle\Entity\Host;
 use Okvpn\OkvpnBundle\Entity\VpnUser;
 use Okvpn\OkvpnBundle\Repository\VpnRepository;
 use Okvpn\OkvpnBundle\TestFramework\WebTestCase;
@@ -51,8 +51,7 @@ class ProfileControllerTest extends WebTestCase
     
     public function testInfoVpn()
     {
-        $vpnHost = ORM::factory('OkvpnFramework:Host')->find_all()->current();
-
+        $vpnHost = $this->getHost();
         $response = $this->request('GET', 'profile/getinfovpn/' . $vpnHost->getId());
         $this->assertStatusCode($response, 200);
         $this->assertContains('Действительная скортость', $response->body());
@@ -76,7 +75,8 @@ class ProfileControllerTest extends WebTestCase
 
     public function testActivateVpn()
     {
-        $response = $this->request('POST', '/profile/activate/1');
+        $this->getHost();
+        $response = $this->request('POST', sprintf('/profile/activate/%s', $this->getHost()->getId()));
         $this->assertStatusCode($response, 200);
         $response = $this->getJsonResponse();
         $this->assertSame(false, $response['error']);
@@ -144,21 +144,21 @@ class ProfileControllerTest extends WebTestCase
             ],
             [
                 'post' => [
-                    'email' => 'test@okvpn.org',
+                    'email' => 'test.ci@okvpn.org',
                     'password' => '1234',
                 ],
                 'error' => true,
             ],
             [
                 'post' => [
-                    'email' => 'test@okvpn.org',
+                    'email' => 'test.ci@okvpn.org',
                     're_password' => '123456'
                 ],
                 'error' => false,
             ],
             [
                 'post' => [
-                    'email' => 'test@okvpn.org',
+                    'email' => 'test.ci@okvpn.org',
                     'password' => '12345',
                     're_password' => '12345'
                 ],
@@ -173,12 +173,25 @@ class ProfileControllerTest extends WebTestCase
             ],
             [
                 'post' => [
-                    'email' => 'test@okvpn.org',
+                    'email' => 'test.ci@okvpn.org',
                     'password' => '123456',
                     're_password' => '123456'
                 ],
                 'error' => false,
             ],
         ];
+    }
+
+    /**
+     * @return Host
+     */
+    protected function getHost()
+    {
+        $vpnServer = new Host();
+        $vpnServer->where('name', '=', 'uk1')->find();
+        if ($vpnServer->getId() === null) {
+            $this->markTestIncomplete('Incomplete tests, run seeds required');
+        }
+        return $vpnServer;
     }
 }

@@ -13,7 +13,7 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
 
     const COOKIE_ENABLE_ANNOTATION = 'keepCookie';
     
-    const USER_NAME = 'test1@okvpn.org';
+    const USER_NAME = 'test1.ci@okvpn.org';
     const USER_PASSWORD = '123456';
 
     /**

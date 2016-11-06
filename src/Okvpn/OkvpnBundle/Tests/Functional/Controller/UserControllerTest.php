@@ -190,7 +190,7 @@ class UserControllerTest extends WebTestCase
                 'payload' => [
                     'g-recaptcha-response' => 'not_empty',
                     'password' => '123456',
-                    'email' => 'test1@okvpn.org'
+                    'email' => 'test1.ci@okvpn.org'
                 ],
                 'result' => 'Пользователь с таким емайлом был зарегистрирован ранее',
             ],
@@ -198,7 +198,7 @@ class UserControllerTest extends WebTestCase
                 'payload' => [
                     'g-recaptcha-response' => 'not_empty',
                     'password' => '123456',
-                    'email' => 'test1@okvpn'
+                    'email' => 'test1.ci@okvpn'
                 ],
                 'result' => 'Поле емайл должно быть адресом электронной почты',
             ]

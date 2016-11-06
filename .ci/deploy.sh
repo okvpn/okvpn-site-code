@@ -9,6 +9,7 @@ ssh -o StrictHostKeyChecking=no "root@$DEPLOY_HOST" -i ssh.key <<'SSH'
 cd /var/www/okvpn
 git checkout .
 git pull origin master
+git push github master
 rm -r vendor
 composer install
 cd application
