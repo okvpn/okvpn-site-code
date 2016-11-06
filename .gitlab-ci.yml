@@ -14,10 +14,10 @@ test_job:
         - bash .ci/gitlab-ci.sh script functional
         - bash .ci/gitlab-ci.sh script phpcs
 
-#migrate_job:
-#    stage: migrate
-#    script:
-#        - bash .ci/gitlab-ci.sh script functional
+migrate_job:
+    stage: migrate
+    script:
+        - bash .ci/gitlab-ci.sh script functional
 
 dump_database_job:
     stage: dump_database
