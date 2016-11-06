@@ -23,6 +23,8 @@ dump_database_job:
     stage: dump_database
     script:
         - bash .ci/dumper.sh
+    only:
+        - master
 
 deploy_job:
     stage: deploy
