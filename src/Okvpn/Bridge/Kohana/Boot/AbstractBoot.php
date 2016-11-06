@@ -106,7 +106,7 @@ abstract class AbstractBoot
 
         Kohana::init(['base_url' => '/']);
 
-        if ($envelopment == 'dev') {
+        if (in_array($envelopment, ['dev', 'test'])) {
             Kohana::$environment = Kohana::DEVELOPMENT;
         } else {
             Kohana::$environment = Kohana::PRODUCTION;
