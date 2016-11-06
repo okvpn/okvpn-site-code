@@ -12,7 +12,7 @@ export PGPASSWORD;
 
 case "$STEP" in
     install)
-        if [ "$CI_BUILD_NAME" = "deploy_job" ]; then
+        if [ "$CI_BUILD_NAME" = "deploy_job" ] || [ "$CI_BUILD_NAME" = "dump_database_job" ]; then
             echo "Skip install...";
             echo "Exit with code 0";
             exit 0;
