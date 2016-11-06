@@ -107,13 +107,5 @@ define('KOHANA_PROD_MODE', false);
 $application = new AppBoot();
 $application->boot('prod');
 
-if (PHP_SAPI == 'cli') {
-
-} else {
-    /**
-     * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
-     * If no source is specified, the URI will be automatically detected.
-     */
-    echo Request::factory(true, array(), false)->execute()
-        ->send_headers(true)->body();
-}
+$response = Request::factory(true, [], false)->execute()->send_headers(true)->body();
+echo $response;

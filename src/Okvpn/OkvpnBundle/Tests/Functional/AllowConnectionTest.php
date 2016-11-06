@@ -56,7 +56,7 @@ class AllowConnectionTest extends WebTestCase
             ->setCallback('1')
             ->setDateCreate()
             ->setDateDelete()
-            ->setHost(new Host(1))
+            ->setHost(self::getHost())
             ->setName('test')
             ->save();
         
@@ -185,5 +185,15 @@ class AllowConnectionTest extends WebTestCase
     protected function getBalance()
     {
         return self::$balance;
+    }
+
+    /**
+     * @return Host
+     */
+    protected static function getHost()
+    {
+        $vpnServer = new Host();
+        $vpnServer->where('name', '=', 'pa1')->find();
+        return $vpnServer;
     }
 }

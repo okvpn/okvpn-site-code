@@ -101,4 +101,24 @@ class Roles extends ORM
         $this->setRolesName(array_merge($rolesName, [$name]));
         return $this;
     }
+
+    /**
+     * Return all names class of config extensions
+     *
+     * @return array
+     */
+    public function getExtensions()
+    {
+        return unserialize($this->extensions);
+    }
+
+    /**
+     * @param array $extensions
+     * @return $this
+     */
+    public function setExtensions(array $extensions)
+    {
+        $this->extensions =  serialize($extensions);
+        return $this;
+    }
 }

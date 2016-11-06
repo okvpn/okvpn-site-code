@@ -20,35 +20,7 @@
 <body>
 <div class="container">
 <div class="zero-20"></div>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          </button>
-          <a class="navbar-brand" href="<?=URL::base()?>">OkVPN</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="<?=URL::base()?>faq">FAQ</a></li>
-            <li><a href="<?=URL::base()?>guides">Подключение</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown active">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="<?=URL::base()?>profile">Статистика</a></li>
-                <li><a href="#">Оплатить доступ</a></li>
-                <li><a href="<?=URL::base()?>profile/settings">Настройки</a></li>
-                <li><a href="<?=URL::base()?>profile/create">Создать VPN</a></li>
-                <li><a href="<?=URL::base()?>user/logout">Выйти</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+  <?php include 'include/navbar.php'?>
 <div class="settings-title">
   <h2>Настройки</h2>
 </div>  
@@ -58,17 +30,17 @@
   <div class ="col-md-6 col-md-offset-3">
     <form id="change-settings">
       <div class="input-group">
-        <input type="text" class="form-control" value ="<?=$email?>">
+        <input type="text" class="form-control" name="email" value ="<?=$email?>">
         <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbspНовый Email </span>
       </div>
       <div class ="zero-20"></div>
       <div class ="input-group">
-        <input type="password" class="form-control">
+        <input type="password" class="form-control" name="password">
         <span class="input-group-addon" id="sizing-addon2">Новый пароль</span>
       </div>
       <div class ="zero-20"></div>
       <div class ="input-group">
-        <input type="password" class="form-control">
+        <input type="password" class="form-control" name="re_password">
         <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp Re пароль</span>
       </div>
     </form>
@@ -161,9 +133,11 @@ $(function () {
 $('#set').click(function(){
   scroll(0,0);
   var form = $('#change-settings').serialize();
-  $.post("<?php echo URL::base()?>user/update",form,function(json){
+  
+  $.post("<?php echo URL::base()?>profile/update", form, function(json) {
+
     if (json.error) {
-      $('.settings-warming').load('<?=URL::base()?>public/ajax/warming.html', function(){
+      $('.settings-warming').load('<?=URL::base()?>public/ajax/warming.html', function() {
         for (var i = json.message.length - 1; i >= 0; i--) {
           $('.alert').append('<li>'+json.message[i]+'</li>');
         }
@@ -173,14 +147,15 @@ $('#set').click(function(){
         $('.alert').append('Изменения сохранены<br>');
       });
     }
-  }
+
+  });
 });
 
 $("#del-acc").click(function(event){
   scroll(0,0);
   if ($('#delete').prop('checked')) {
     if (confirm('Вы уверены, что хотите удалить аккаунт?')) {
-      $.post("<?php echo URL::base() ?>user/delete",{action:"delete"},function(json){
+      $.post("<?php echo URL::base() ?>profile/delete",{action:"delete"},function(json){
         if (json.error) {
           $('.alert').append('Неизвестная ошибка<br>');
         } else {
@@ -206,9 +181,9 @@ $('#del-vpn').click(function(e){
     }
   }
   if (arr.length > 0 && confirm('Вы уверены, что хотите удалить выбранные vpn?')) {
-    arr = btoa(JSON.stringify(arr));
+    arr = JSON.stringify(arr);
 
-    $.post('<?php echo URL::base() ?>user/vpndelete',{host:arr}, function(res){
+    $.post('<?php echo URL::base(true) ?>profile/deleteitemsvpn',{hosts :arr}, function(res){
       
       if (res.error) {
         $('.settings-warming').load('<?=URL::base()?>public/ajax/warming.html', function(){

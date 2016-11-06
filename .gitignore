@@ -1,10 +1,10 @@
 application/cache/*
 application/logs/*
+application/phinx.yml
 .idea
 sftp-config.json
 application/out/*
 application/config/parameters.php
-composer.lock
 vendor
 system
 modules
@@ -16,5 +16,7 @@ modules
 *.mwb
 *.bak
 var/openssl/*
+phpunit.xml
 !var/openssl/example/
+!application/logs/monolog
 !.gitkeep

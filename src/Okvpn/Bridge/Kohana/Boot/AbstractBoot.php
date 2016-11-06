@@ -14,10 +14,9 @@ use Okvpn\KohanaProxy\Cookie;
 abstract class AbstractBoot
 {
 
-    public function boot($envelopment = 'prod')
+    public function boot($envelopment)
     {
-        $this->loadKohanaKernel();
-        $this->setLanguage();
+        $this->loadKohanaKernel($envelopment);
         $this->setDefaultTimeZone();
         $this->setLocation();
 
@@ -69,7 +68,7 @@ abstract class AbstractBoot
         date_default_timezone_set('Europe/Minsk');
     }
     
-    protected function loadKohanaKernel()
+    protected function loadKohanaKernel($envelopment)
     {
         require_once SYSPATH . 'classes/Kohana/Core' . EXT;
 
@@ -82,6 +81,7 @@ abstract class AbstractBoot
         }
 
         spl_autoload_register(array('Kohana', 'auto_load'));
+        $this->setLanguage();
 
         /**
          * Enable the Kohana auto-loader for unserialization.
@@ -104,21 +104,12 @@ abstract class AbstractBoot
             HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
         }
 
-        if (isset($_SERVER['HTTP_CLIENT_IP'])
-            || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
-            || !(in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', 'fe80::1', '::1'])
-            || php_sapi_name() === 'cli-server')
-        ) {
-            Kohana::init(array(
-                'base_url' => '/',
-            ));
-            Kohana::$environment = Kohana::PRODUCTION;
+        Kohana::init(['base_url' => '/']);
 
-        } else {
-            Kohana::init(array(
-                'base_url' => '/',
-            ));
+        if (in_array($envelopment, ['dev', 'test'])) {
             Kohana::$environment = Kohana::DEVELOPMENT;
+        } else {
+            Kohana::$environment = Kohana::PRODUCTION;
         }
 
         Kohana::$log->attach(new \Log_File(APPPATH . 'logs'));

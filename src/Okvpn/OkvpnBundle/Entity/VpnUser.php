@@ -70,7 +70,11 @@ class VpnUser extends ORM
 
     public function getActive()
     {
-        return $this->active;
+        if (is_bool($this->active)) {
+            return $this->active;
+        }
+
+        return $this->active == 't';
     }
 
     public function setActive($active)
@@ -90,6 +94,9 @@ class VpnUser extends ORM
         return $this;
     }
 
+    /**
+     * @return Users
+     */
     public function getUser()
     {
         return $this->user;
@@ -101,6 +108,9 @@ class VpnUser extends ORM
         return $this;
     }
 
+    /**
+     * @return Host
+     */
     public function getHost()
     {
         return $this->host;

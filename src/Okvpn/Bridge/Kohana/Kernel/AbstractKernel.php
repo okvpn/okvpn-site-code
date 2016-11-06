@@ -82,7 +82,7 @@ abstract class AbstractKernel
         $this->prepareContainer($container);
 
         $container->compile();
-
+        
         return $container;
     }
 

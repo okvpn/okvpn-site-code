@@ -2,9 +2,11 @@
 
 namespace Okvpn\OkvpnBundle;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+
 use Okvpn\Bridge\Kohana\Kernel\AbstractBundle;
 use Okvpn\OkvpnBundle\DependencyInjection\CompilerPass\SecurityPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OkvpnFramework extends AbstractBundle
 {
@@ -13,5 +15,6 @@ class OkvpnFramework extends AbstractBundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new SecurityPass());
+        $container->addCompilerPass(new RegisterListenersPass());
     }
 }

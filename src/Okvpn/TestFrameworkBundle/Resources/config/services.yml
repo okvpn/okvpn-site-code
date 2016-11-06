@@ -1,0 +1,12 @@
+services:
+    ovpn_recaptcha.decorating:
+        class: Okvpn\TestFrameworkBundle\Mock\MockRecaptcha
+        decorates: ovpn_recaptcha
+        public:    false
+        arguments:
+            - '@ovpn_config'
+
+    ovpn_mailer.decorating:
+        class: Okvpn\TestFrameworkBundle\Mock\MockMailer
+        decorates: ovpn_mailer
+        public: false

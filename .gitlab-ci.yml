@@ -1,10 +1,34 @@
+stages:
+    - test
+    - migrate
+    - dump_database
+    - deploy
+
 before_script:
     - bash .ci/gitlab-ci.sh install
 
-test:
+test_job:
+    stage: test
     script:
-        - bash .ci/gitlab-ci.sh script
+        - bash .ci/gitlab-ci.sh script unit
+        - bash .ci/gitlab-ci.sh script functional
+        - bash .ci/gitlab-ci.sh script phpcs
 
+migrate_job:
+    stage: migrate
+    script:
+        - bash .ci/gitlab-ci.sh script functional
+
+dump_database_job:
+    stage: dump_database
+    script:
+        - bash .ci/dumper.sh
     only:
         - master
-        - develop
+
+deploy_job:
+    stage: deploy
+    script:
+        - bash .ci/deploy.sh
+    only:
+        - master

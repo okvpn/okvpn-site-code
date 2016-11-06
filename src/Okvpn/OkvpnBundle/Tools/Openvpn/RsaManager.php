@@ -2,6 +2,8 @@
 
 namespace Okvpn\OkvpnBundle\Tools\Openvpn;
 
+use Okvpn\OkvpnBundle\Tools\Openvpn\Config\Context;
+
 class RsaManager implements RsaManagerInterface
 {
     /**
@@ -11,42 +13,38 @@ class RsaManager implements RsaManagerInterface
     protected $resource;
 
     /**
-     * @var string
+     * @var Context
      */
-    protected $client;
-
-    /**
-     * @var string
-     */
-    protected $hostname;
+    protected $context;
 
     protected $init = false;
     
     protected $opensslDir;
 
-    public function __construct($client, $hostname)
+    public function __construct(Context $context)
     {
-        $this->opensslDir = DOCROOT . "var/openssl/$hostname/";
+        $this->context = $context;
+        
+        $this->opensslDir = DOCROOT . sprintf("var/openssl/%s/", $context->getHostname());
         if (! file_exists($this->opensslDir)) {
             throw new \Exception('Openssl dir not exist');
         }
 
         if (! file_exists($this->pathToCa())) {
-            throw new \Exception(sprintf('EasyRSA must be init for host "%s".', $hostname));
+            throw new \Exception(
+                sprintf('EasyRSA must be init for host "%s".', $context->getHostname())
+            );
         }
 
         $this->resource['ca'] = file_get_contents($this->pathToCa());
 
-        if (file_exists($this->pathToClientCert($client)) &&
-            file_exists($this->pathToClientKey($client))
+        if (file_exists($this->pathToClientCert($context->getClient())) &&
+            file_exists($this->pathToClientKey($context->getClient()))
         ) {
-            $this->resource['key'] = file_get_contents($this->pathToClientKey($client));
-            $this->resource['cert'] = file_get_contents($this->pathToClientCert($client));
+            $this->resource['key'] = file_get_contents($this->pathToClientKey($context->getClient()));
+            $this->resource['cert'] = file_get_contents($this->pathToClientCert($context->getClient()));
             $this->init = true;
         }
-
-        $this->client = $client;
-        $this->hostname = $hostname;
     }
 
     /**
@@ -58,7 +56,10 @@ class RsaManager implements RsaManagerInterface
             return;
         }
         
-        $payload = $this->getCommandForGenerateCert($this->client);
+        $payload = $this->getCommandForGenerateCert(
+            $this->context->getClient(),
+            $this->context->getExpire()
+        );
        
         if (! function_exists('shell_exec')) {
             throw new \Exception('shell_exec');
@@ -66,11 +67,11 @@ class RsaManager implements RsaManagerInterface
         
         shell_exec($payload);
 
-        if (file_exists($this->pathToClientCert($this->client)) &&
-            file_exists($this->pathToClientKey($this->client))
+        if (file_exists($this->pathToClientCert($this->context->getClient())) &&
+            file_exists($this->pathToClientKey($this->context->getClient()))
         ) {
-            $this->resource['key'] = file_get_contents($this->pathToClientKey($this->client));
-            $this->resource['cert'] = file_get_contents($this->pathToClientCert($this->client));
+            $this->resource['key'] = file_get_contents($this->pathToClientKey($this->context->getClient()));
+            $this->resource['cert'] = file_get_contents($this->pathToClientCert($this->context->getClient()));
             $this->init = true;
         } else {
             throw new \RuntimeException('Openssl not installed. Check needs regiments');
@@ -92,7 +93,7 @@ class RsaManager implements RsaManagerInterface
     public function get($name)
     {
         if (! $this->has($name)) {
-            throw new \InvalidArgumentException(sprintf('Parameters "%s" do not exist'));
+            throw new \InvalidArgumentException(sprintf('Parameters "%s" do not exist', $name));
         }
         
         return $this->resource[$name];
@@ -113,9 +114,10 @@ class RsaManager implements RsaManagerInterface
         return $this->opensslDir . 'pki/ca.crt';
     }
 
-    private function getCommandForGenerateCert($name)
+    private function getCommandForGenerateCert($name, $expire)
     {
         return <<<BASH
+export EASYRSA_CERT_EXPIRE=$expire
 cd $this->opensslDir
 bash easyrsa.sh build-client-full $name nopass  > /dev/null 2>&1
 BASH;

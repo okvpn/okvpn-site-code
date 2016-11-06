@@ -37,4 +37,12 @@ class TokenSession implements TokenInterface
     {
         $this->sessionDriver = $driver;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeToken()
+    {
+        $this->sessionDriver->delete($this->name);
+    }
 }

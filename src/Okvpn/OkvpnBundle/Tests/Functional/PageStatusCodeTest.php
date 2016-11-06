@@ -63,7 +63,7 @@ class PageStatusCodeTest extends WebTestCase
     {
         return [
             ['/profile'],
-            ['/profile/create'],
+            ['/profile/viewvpn'],
             ['/profile/getinfovpn'],
             ['/profile/billing']
         ];

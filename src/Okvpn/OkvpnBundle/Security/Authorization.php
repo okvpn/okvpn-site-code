@@ -26,7 +26,7 @@ class Authorization implements AuthorizationInterface
      */
     public function doLogin(string $login, string $password):bool
     {
-        $user = $this->userProvider->findUserByEmail($login);
+        $user = $this->userProvider->findUserByEmail($login, true);
         if (!$user) {
             return false;
         }
@@ -39,5 +39,16 @@ class Authorization implements AuthorizationInterface
             }
         }
         return $login;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doLogout()
+    {
+        /** @var TokenInterface $token */
+        foreach ($this->tokenStorage as $token) {
+            $token->removeToken();
+        }
     }
 }

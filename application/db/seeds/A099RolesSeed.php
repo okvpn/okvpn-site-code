@@ -18,7 +18,8 @@ class A099RolesSeed extends AbstractSeed
                 'hosts_limit' => 1,
                 'min_balance' => -0.0001,
                 'day_cost' => 0,
-                'role_name' => serialize(['USER_ROLE', 'FREE_USER_ROLE'])
+                'role_name' => serialize(['USER_ROLE', 'FREE_USER_ROLE']),
+                'extensions' => serialize(['UPD'])
             ],
             [
                 'id'    => 'full',
@@ -28,7 +29,8 @@ class A099RolesSeed extends AbstractSeed
                 'hosts_limit' => 7,
                 'day_cost' => 0.0334,
                 'min_balance' => 0.0001,
-                'role_name' => serialize(['USER_ROLE', 'PAY_USER_ROLE'])
+                'role_name' => serialize(['USER_ROLE', 'PAY_USER_ROLE']),
+                'extensions' => serialize(['UPD', 'TCP'])
             ],
             [
                 'id'    => 'admin',
@@ -36,9 +38,10 @@ class A099RolesSeed extends AbstractSeed
                 'tag_name' => 'admin',
                 'traffic_limit' => 76400,
                 'hosts_limit' => 1000,
-                'day_cost' => 0.0334,
-                'min_balance' => 0.0001,
-                'role_name' => serialize(['USER_ROLE', 'PAY_USER_ROLE', 'SUPER_ADMIN_ROLE', 'ADMIN_ROLE'])
+                'day_cost' => 0.0,
+                'min_balance' => -0.0001,
+                'role_name' => serialize(['USER_ROLE', 'PAY_USER_ROLE', 'SUPER_ADMIN_ROLE', 'ADMIN_ROLE']),
+                'extensions' => serialize(['UPD', 'TCP'])
             ],
         ];
         

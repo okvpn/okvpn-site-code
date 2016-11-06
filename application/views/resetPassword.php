@@ -34,7 +34,7 @@
                             <li><a href="<?=URL::base()?>profile">Статистика</a></li>
                             <li><a href="#">Оплатить доступ</a></li>
                             <li><a href="<?=URL::base()?>profile/settings">Настройки</a></li>
-                            <li><a href="<?=URL::base()?>profile/create">Создать VPN</a></li>
+                            <li><a href="<?=URL::base()?>profile/viewvpn">Создать VPN</a></li>
                             <li><a href="<?=URL::base()?>user/logout">Выйти</a></li>
                         </ul>
                     </li>
@@ -82,6 +82,9 @@
                 if (! json.error) {
                     $('.message').load('<?=URL::base()?>public/ajax/success.html',function(){
                         $('.alert').append('Пароль сброшен<br>');
+                        setTimeout(function () {
+                            window.location.replace('/');
+                        }, 1500);
                     });
                 } else {
                     $('.message').load('<?=URL::base()?>public/ajax/warming.html',function(){
