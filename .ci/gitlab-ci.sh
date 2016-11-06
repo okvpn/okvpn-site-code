@@ -82,12 +82,7 @@ EOF
 
         cd application;
         php ../vendor/bin/phinx migrate
-
-        if [ "$CI_BUILD_NAME" != "migrate_job" ]; then
-            php ../vendor/bin/phinx seed:run
-        else
-            php ../vendor/bin/phinx seed:run -s A105VpnHosts -s A100UsersSeed
-        fi
+        php ../vendor/bin/phinx seed:run
         cd -
     ;;
     script)
