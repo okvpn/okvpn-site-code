@@ -8,9 +8,6 @@ parameters:
     user.class:                     Okvpn\OkvpnBundle\Entity\Users
     security.class:                 Okvpn\OkvpnBundle\Security\Security
     authorization.class:            Okvpn\OkvpnBundle\Security\Authorization
-    mail.mailgun.class:             Okvpn\OkvpnBundle\Tools\MailgunMailer
-
-
 
 services:
     container:
@@ -21,6 +18,10 @@ services:
         class: 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher'
         arguments:
             - '@container'
+
+    request:
+        class: 'Okvpn\KohanaProxy\Request'
+        factory: ['Okvpn\KohanaProxy\Request', current]
 
     logger:
         class: 'Monolog\Logger'
@@ -78,13 +79,22 @@ services:
         class: 'Okvpn\OkvpnBundle\Security\TokenSession'
         public: false
         tags:
-            - { name: secure.token, priority: 1 }
+            - { name: secure.token, priority: 10 }
 
     ovpn_token.cookie:
         class: 'Okvpn\OkvpnBundle\Security\TokenCookie'
         public: false
         tags:
-            - { name: secure.token, priority: 2 }
+            - { name: secure.token, priority: 20 }
+
+    ovpn_token.api:
+        class: 'Okvpn\OkvpnBundle\Security\ApiToken'
+        public: false
+        arguments:
+            - '@ovpn_user.repository'
+            - '@request'
+        tags:
+            - { name: secure.token, priority: 30 }
 
     ovpn_user.filter:
         class: 'Okvpn\OkvpnBundle\Filter\UserFilter'
