@@ -106,10 +106,15 @@ abstract class AbstractBoot
 
         Kohana::init(['base_url' => '/']);
 
-        if (in_array($envelopment, ['dev', 'test'])) {
-            Kohana::$environment = Kohana::DEVELOPMENT;
-        } else {
-            Kohana::$environment = Kohana::PRODUCTION;
+        switch ($envelopment) {
+            case 'dev':
+                Kohana::$environment = Kohana::DEVELOPMENT;
+                break;
+            case 'test':
+                Kohana::$environment = Kohana::TESTING;
+                break;
+            default:
+                Kohana::$environment = Kohana::PRODUCTION;
         }
 
         Kohana::$log->attach(new \Log_File(APPPATH . 'logs'));

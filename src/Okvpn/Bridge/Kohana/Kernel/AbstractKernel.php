@@ -112,7 +112,7 @@ abstract class AbstractKernel
      */
     private function getContainerCacheFileName()
     {
-        return APPPATH . 'cache/appContainerCache.php';
+        return APPPATH . sprintf('cache/%s-appContainerCache.php', Kohana::$environment);
     }
 
     /**
@@ -128,6 +128,6 @@ abstract class AbstractKernel
      */
     private function isDebug()
     {
-        return Kohana::$environment > 10;
+        return Kohana::$environment >= Kohana::DEVELOPMENT;
     }
 }

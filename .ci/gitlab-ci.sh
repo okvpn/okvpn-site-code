@@ -23,6 +23,10 @@ case "$STEP" in
             rm -r vendor;
         fi
 
+        if [ -d application/cache ]; then
+            rm -r application/cache/*;
+        fi
+
         # install all dependency using composer.lock
         composer install
         cp application/phinx.yml.dist application/phinx.yml
@@ -64,8 +68,8 @@ case "$STEP" in
 
 
         # install database
-        psql -U "$DB_USER" -h 127.0.0.1 -c "DROP SCHEMA IF EXISTS public CASCADE";
-        psql -U "$DB_USER" -h 127.0.0.1 -c "CREATE SCHEMA public";
+        psql -U "$DB_USER" -h 127.0.0.1 -d "$DB_NAME" -c "DROP SCHEMA IF EXISTS public CASCADE";
+        psql -U "$DB_USER" -h 127.0.0.1 -d "$DB_NAME" -c "CREATE SCHEMA public";
 
         if [ "$CI_BUILD_NAME" = "migrate_job" ]; then
             export DUMP_USER;
