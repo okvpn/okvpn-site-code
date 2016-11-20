@@ -7,8 +7,8 @@ export DUMP_USER;
 export DUMP_PASS;
 export DUMP_HOST;
 
-psql -U "$DB_USER" -h 127.0.0.1 -c "DROP SCHEMA IF EXISTS public CASCADE";
-psql -U "$DB_USER" -h 127.0.0.1 -c "CREATE SCHEMA public";
+psql -U "$DB_USER" -h 127.0.0.1 -d "$DB_NAME" -c "DROP SCHEMA IF EXISTS public CASCADE";
+psql -U "$DB_USER" -h 127.0.0.1 -d "$DB_NAME" -c "CREATE SCHEMA public";
 
 echo "Installing...";
 # remove vendor dir
