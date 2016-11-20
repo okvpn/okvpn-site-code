@@ -2,7 +2,9 @@
 
 namespace Okvpn\Bridge\Kohana\Kernel;
 
+use Okvpn\KohanaProxy\Kohana;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
 abstract class AbstractKernel
 {
@@ -78,11 +80,24 @@ abstract class AbstractKernel
      */
     public function getContainerBuilder()
     {
-        $container = new ContainerBuilder();
-        $this->prepareContainer($container);
+        if ($this->isDebug() || !file_exists($this->getContainerCacheFileName())) {
+            $container = new ContainerBuilder();
+            $this->prepareContainer($container);
+            $container->compile();
 
-        $container->compile();
-        
+            if (!$this->isDebug()) {
+                $dumper = new PhpDumper($container);
+                file_put_contents(
+                    $this->getContainerCacheFileName(),
+                    $dumper->dump(['class' => $this->getContainerCacheClassName()])
+                );
+            }
+        } else {
+            require_once $this->getContainerCacheFileName();
+            $class = $this->getContainerCacheClassName();
+            $container = new $class();
+        }
+
         return $container;
     }
 
@@ -91,4 +106,28 @@ abstract class AbstractKernel
      * @throws \Exception
      */
     abstract public function prepareContainer(ContainerBuilder $container);
+
+    /**
+     * @return string
+     */
+    private function getContainerCacheFileName()
+    {
+        return APPPATH . 'cache/appContainerCache.php';
+    }
+
+    /**
+     * @return string
+     */
+    private function getContainerCacheClassName()
+    {
+        return 'appContainerCache';
+    }
+
+    /**
+     * @return bool
+     */
+    private function isDebug()
+    {
+        return Kohana::$environment > 10;
+    }
 }
