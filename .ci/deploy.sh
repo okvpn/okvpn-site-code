@@ -11,9 +11,11 @@ git checkout .
 git pull origin master
 git push github master
 rm -r vendor
+rm -r application/cache/*
 composer install
 cd application
 php ../vendor/bin/phinx migrate
+cd -
 chown www-data:www-data -R /var/www/okvpn
 SSH
 
