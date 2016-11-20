@@ -269,7 +269,7 @@
 
 <!-- modal -->
 <script type="text/javascript">
-  var system;
+  var system = {auth: false, login: "/user/login"};
   $.ajax({
       url:"<?=URL::base()?>ajax/api",
       cache: false,
@@ -288,7 +288,7 @@ $(function () {
 });
 
 $("#signin").click(function(event){
-  if (system.auth) {
+  if (typeof system !== 'undefined' && system.auth) {
     window.location.replace(system.profile);
   } else {
     $("#modal").load('<?=URL::base()?>public/ajax/sign-in.html');
