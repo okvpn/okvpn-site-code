@@ -113,12 +113,12 @@ EOF
         esac
     ;;
     after_script)
-        echo "Off xdebug..."
         if grep -q ";zend_extension=xdebug.so" "$PHPMODDIR"; then
             exit 0
         fi
 
         if [ -w "$PHPMODDIR" ]; then
+            echo "Off xdebug..."
             sed -i 's|zend_extension=xdebug.so|;zend_extension=xdebug.so|' "$PHPMODDIR"
         fi
     ;;
