@@ -90,10 +90,8 @@ EOF
         php ../vendor/bin/phinx seed:run
         cd -
 
-        if [ -w "$PHPMODDIR" ]; then
-            echo "On xdebug...";
-            sed -i 's|;zend_extension=xdebug.so|zend_extension=xdebug.so|' "$PHPMODDIR"
-        fi
+        echo "On xdebug...";
+        sudo sed -i 's|;zend_extension=xdebug.so|zend_extension=xdebug.so|' "$PHPMODDIR"
     ;;
     script)
         echo "Run tests...";
@@ -117,9 +115,7 @@ EOF
             exit 0
         fi
 
-        if [ -w "$PHPMODDIR" ]; then
-            echo "Off xdebug..."
-            sed -i 's|zend_extension=xdebug.so|;zend_extension=xdebug.so|' "$PHPMODDIR"
-        fi
+        echo "Off xdebug..."
+        sudo sed -i 's|zend_extension=xdebug.so|;zend_extension=xdebug.so|' "$PHPMODDIR"
     ;;
 esac
