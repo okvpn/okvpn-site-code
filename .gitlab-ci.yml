@@ -32,3 +32,6 @@ deploy_job:
         - bash .ci/deploy.sh
     only:
         - master
+
+after_script:
+    - bash .ci/gitlab-ci.sh after_script
