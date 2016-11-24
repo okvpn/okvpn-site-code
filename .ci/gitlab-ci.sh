@@ -4,7 +4,8 @@ STEP=$1
 TEST=$2
 DB_NAME=okvpn;
 DB_USER=okvpn;
-ARRAY=( "var/openssl/pa1" "var/openssl/uk1" )
+ARRAY=( "var/openssl/pa1" "var/openssl/uk1" );
+PHPMODDIR=/etc/php/7.0/mods-available/xdebug.ini;
 
 #export gitlab variables
 export CI_BUILD_NAME;
@@ -88,6 +89,9 @@ EOF
         php ../vendor/bin/phinx migrate
         php ../vendor/bin/phinx seed:run
         cd -
+
+        echo "On xdebug...";
+        sed -i 's|;zend_extension=xdebug.so|zend_extension=xdebug.so|' "$PHPMODDIR"
     ;;
     script)
         echo "Run tests...";
@@ -105,5 +109,12 @@ EOF
                 phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p
             ;;
         esac
+    ;;
+    after_script)
+        echo "Off xdebug..."
+        if grep -q ";zend_extension=xdebug.so" "$PHPMODDIR"; then
+            exit 0
+        fi
+        sed -i 's|zend_extension=xdebug.so|;zend_extension=xdebug.so|' "$PHPMODDIR"
     ;;
 esac

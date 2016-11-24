@@ -17,6 +17,7 @@ cd application
 php ../vendor/bin/phinx migrate
 cd -
 chown www-data:www-data -R /var/www/okvpn
+service php7.0-fpm restart
 SSH
 
 chmod 600 ssh.key;
