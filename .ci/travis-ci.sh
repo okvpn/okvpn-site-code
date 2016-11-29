@@ -69,7 +69,4 @@ case "$STEP" in
             ;;
         esac
     ;;
-    after_script)
-        echo "Off xdebug..."
-    ;;
 esac
