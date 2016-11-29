@@ -42,7 +42,12 @@ case "$STEP" in
         # install database
         psql -c 'create database okvpn;' -U postgres
 
-        cd application;
+        cp application/phinx.yml.dist application/phinx.yml
+        sed -i "s/name"\:".*/name"\:" okvpn/g" application/phinx.yml
+        sed -i "s/pass"\:".*/pass"\:" /g" application/phinx.yml
+        sed -i "s/user"\:".*/user"\:" postgres/g" application/phinx.yml
+
+        cd application
         php ../vendor/bin/phinx migrate
         php ../vendor/bin/phinx seed:run
         cd -

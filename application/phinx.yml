@@ -10,7 +10,7 @@ environments:
         host: localhost
         name: okvpn
         user: postgres
-        pass: ppkt731415926
+        pass: 
         port: 5432
         charset: utf8
 
@@ -19,7 +19,7 @@ environments:
         host: localhost
         name: okvpn
         user: postgres
-        pass: ppkt731415926
+        pass: 
         port: 5432
         charset: utf8
 
@@ -28,6 +28,6 @@ environments:
         host: localhost
         name: okvpn
         user: postgres
-        pass: ppkt731415926
+        pass: 
         port: 5432
         charset: utf8
