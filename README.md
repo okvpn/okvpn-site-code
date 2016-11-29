@@ -1,5 +1,7 @@
 # The okvpn.org site code
 
+[![The Build Status](https://travis-ci.org/okvpn/okvpn-site-code.svg?branch=master)](https://travis-ci.org/okvpn/okvpn-site-code)
+
 | Branches      | Builds                                                                                                                                            |
 | ------------- |:------------------------------------------------------------------------------------------------------------------------------------------------- |
 | master        | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/master/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/master)    |
