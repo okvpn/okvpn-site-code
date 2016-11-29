@@ -4,18 +4,16 @@ language: php
 
 branches:
     only:
-        - develop
+        - master
 
 services:
-  - postgresql
+    - postgresql
 
 php:
     - 7.0
+    - 7.1
 
 before_script:
-    - psql -c 'create database okvpn;' -U postgres
-    - composer self-update
-    - composer install
-
+    - bash .ci/travis-ci.sh
 script:
-    - ./vendor/bin/phpunit --verbose --testsuite=unit
+    - bash .ci/travis-ci.sh 
