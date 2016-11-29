@@ -69,7 +69,7 @@ case "$STEP" in
             ;;
             phpcs)
                 echo "Run phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p...";
-                phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p
+                php vendor/bin/phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p
             ;;
         esac
     ;;
