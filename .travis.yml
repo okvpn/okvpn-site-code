@@ -2,6 +2,11 @@ sudo: false
 
 language: php
 
+cache:
+    directories:
+        - .autoconf
+        - $HOME/.composer
+
 branches:
     only:
         - master

@@ -4,14 +4,12 @@ STEP=$1
 TEST=$2
 ARRAY=( "var/openssl/pa1" "var/openssl/uk1" );
 
-echo $TEST;
-echo $STEP;
-
 case "$STEP" in
     install)
 
         echo "Installing...";
         # remove vendor dir
+
         if [ -d vendor ]; then
             rm -r vendor;
         fi
@@ -46,6 +44,12 @@ case "$STEP" in
         sed -i "s/name"\:".*/name"\:" okvpn/g" application/phinx.yml
         sed -i "s/pass"\:".*/pass"\:" /g" application/phinx.yml
         sed -i "s/user"\:".*/user"\:" postgres/g" application/phinx.yml
+
+        echo 'Auto-generate parameters form parameters.dist...';
+        cp application/config/parameters.php.dist application/config/parameters.php
+        sed -i "s/'username'\s"\=\>".*/'username' "\=\>" 'postgres',/g" application/config/parameters.php
+        sed -i "s/'password'\s"\=\>".*/'password' "\=\>" '',/g" application/config/parameters.php
+        sed -i "s/'database'\s"\=\>".*/'database' "\=\>" 'okvpn',/g" application/config/parameters.php
 
         cd application
         php ../vendor/bin/phinx migrate
