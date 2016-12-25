@@ -11,7 +11,6 @@ class TestController extends Controller
     public function indexAction()
     {
         $t = $this->getSecurityFacade()->getUser();
-        var_dump($t);
     }
 }
 // @codingStandardsIgnoreEnd
