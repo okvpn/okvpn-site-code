@@ -1,8 +1,8 @@
 # The okvpn.org site code 
 
-[![The Build Status](https://travis-ci.org/okvpn/okvpn-site-code.svg?branch=master)](https://travis-ci.org/okvpn/okvpn-site-code)
+[![The Build Status](https://travis-ci.org/okvpn/okvpn-site-code.svg?branch=master)](https://travis-ci.org/okvpn/okvpn-site-code)  [![SensioLabsInsight](https://insight.sensiolabs.com/projects/61edaf5b-8b1d-4980-b354-d7217bc28849/mini.png)](https://insight.sensiolabs.com/projects/61edaf5b-8b1d-4980-b354-d7217bc28849)
 
-| Branches      | Builds                                                                                                                                            |
+| Branches      | Private Builds                                                                                                                                    |
 | ------------- |:------------------------------------------------------------------------------------------------------------------------------------------------- |
 | master        | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/master/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/master)    |
 | develop       | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/develop/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/develop)  |
