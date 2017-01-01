@@ -98,11 +98,11 @@ EOF
         case "$TEST" in
             unit)
                 echo "Run  phpunit --verbose --testsuite=unit...";
-                phpunit --verbose --testsuite=unit
+                php vendor/bin/phpunit --verbose --testsuite=unit
             ;;
             functional)
                 echo "phpunit --verbose --testsuite=functional...";
-                phpunit --verbose --testsuite=functional
+                php vendor/bin/phpunit --verbose --testsuite=functional
             ;;
             phpcs)
                 echo "Run phpcs --encoding=utf-8 --extensions=php --standard=psr2 src/ -p...";
