@@ -4,8 +4,8 @@
 
 | Branches      | Private Builds                                                                                                                                    |
 | ------------- |:------------------------------------------------------------------------------------------------------------------------------------------------- |
-| master        | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/master/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/master)    |
-| develop       | [![The Build Status](https://fr1.jurk.xyz/Jurasikt/okvpn.org/badges/develop/build.svg)](https://fr1.jurk.xyz/Jurasikt/okvpn.org/commits/develop)  |
+| master        | [![build status](https://git.yandex.ovh/root/okvpn/badges/master/build.svg)](https://git.yandex.ovh/root/okvpn/commits/master)    |
+| develop       | [![build status](https://git.yandex.ovh/root/okvpn/badges/develop/build.svg)](https://git.yandex.ovh/root/okvpn/commits/develop)  |
 
 
 ## Installation
